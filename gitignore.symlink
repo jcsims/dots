@@ -1,0 +1,11 @@
+.DS_Store
+*-autoloads.el
+*-pkg.el
+*.elc
+*.info
+.#*
+auto-save-list
+flycheck_*.el
+tramp
+.clj-kondo
+.lsp

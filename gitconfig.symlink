@@ -1,0 +1,40 @@
+# -*- mode: conf;-*-
+[alias]
+	recent = "branch --sort=-committerdate --format=\"%(committerdate:relative)%09%(refname:short)\""
+
+[credential]
+	helper = "osxkeychain"
+
+[diff "gpg"]
+	textconv = "gpg --no-tty --decrypt"
+
+[fetch]
+	prune = true
+
+[github]
+	user = "jcsims"
+
+[init]
+	defaultBranch = "main"
+
+[magit]
+	hideCampaign = true
+
+[pull]
+	rebase = true
+
+[rebase]
+	autostash = true
+
+[status]
+	submoduleSummary = true
+
+[user]
+	email = "chris@jcsi.ms"
+	name = "Chris Sims"
+
+[includeIf "gitdir:~/code/work/"]
+	path = "~/code/work/.gitconfig"
+
+[includeIf "gitdir:~/code"]
+	path = "~/code/.gitconfig"

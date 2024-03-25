@@ -1,0 +1,24 @@
+# -*- mode: toml-ts;-*-
+add_newline = false
+
+[gcloud]
+disabled = true
+
+[git_status]
+disabled = true
+
+[java]
+disabled = true
+
+# [kubernetes]
+# detect_folders = ["k8s"]
+# disabled = false
+# [kubernetes.context_aliases]
+# k8s-dev-1 = "dev"
+# k8s-ue-1 = "prod"
+
+[nodejs]
+disabled = true
+
+[python]
+disabled = true

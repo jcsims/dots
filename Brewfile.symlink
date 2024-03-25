@@ -1,0 +1,67 @@
+# -*- mode: ruby-ts;-*-
+tap "babashka/brew"
+tap "borkdude/brew"
+tap "clojure-lsp/brew"
+tap "clojure/tools"
+tap "homebrew/bundle"
+tap "homebrew/cask-fonts"
+
+brew "borkdude/brew/babashka"
+brew "babashka/brew/neil"
+brew "clojure-lsp/brew/clojure-lsp-native"
+brew "clojure/tools/clojure"
+
+brew "aspell"
+brew "bash"
+brew "bash-completion@2"
+brew "bash-language-server"
+brew "bat"
+brew "enchant" # For jinx module build
+brew "exercism"
+brew "eza"
+brew "fd"
+brew "fzf"
+brew "git"
+brew "go"
+brew "golangci-lint"
+brew "gopls"
+brew "htop"
+brew "jq"
+# For the system Java wrappers to find this JDK, symlink it with
+#   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+brew "openjdk"
+brew "leiningen"
+brew "mas"
+brew "tree"
+brew "pass"
+brew "pkg-config" # For jinx module build
+brew "ripgrep"
+brew "rustup-init"
+brew "shellcheck"
+brew "starship"
+brew "terminal-notifier"
+brew "tmux"
+brew "tokei"
+brew "watch"
+
+cask "1password"
+cask "alacritty"
+cask "alfred"
+cask "dash"
+cask "discord"
+cask "emacs"
+cask "font-hack-nerd-font"
+cask "istat-menus"
+cask "launchcontrol"
+cask "monitorcontrol"
+cask "obsidian"
+cask "plexamp"
+cask "rectangle"
+cask "slack"
+cask "spotify"
+cask "syncthing"
+
+mas "Deliveries", id: 290986013
+mas "Ivory", id: 6444602274
+mas "Tailscale", id: 1475387142
+mas "Things", id: 904280696

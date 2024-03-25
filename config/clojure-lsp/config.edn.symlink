@@ -1,0 +1,3 @@
+; -*- mode: clojure;-*-
+{:dependency-scheme  "jar"
+ :java {:jdk-source-uri "file:///Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home/lib/src.zip"}}
