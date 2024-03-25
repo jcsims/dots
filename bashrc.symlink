@@ -68,6 +68,7 @@ prepend_path "$(go env GOPATH)/bin"
 prepend_path "/opt/homebrew/bin"
 prepend_path "/opt/homebrew/sbin"
 prepend_path "$HOME/bin"
+prepend_path "$HOME/.bin"
 
 export PATH
 
