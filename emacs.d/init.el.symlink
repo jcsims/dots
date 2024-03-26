@@ -49,8 +49,8 @@
 
 (use-package server
   :ensure f
-  :commands (server-running-p)
-  :config (or (server-running-p) (server-mode)))
+  :config (or (bound-and-true-p server-process)
+              (server-mode)))
 
 ;; Font
 (if (eq system-type 'gnu/linux)
