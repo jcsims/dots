@@ -47,6 +47,10 @@ brew "watch"
 cask "1password"
 cask "alacritty"
 cask "alfred"
+cask "arq"
+cask "balenaetcher"
+cask "calibre"
+cask "daisydisk"
 cask "dash"
 cask "discord"
 cask "emacs"
@@ -60,6 +64,7 @@ cask "rectangle"
 cask "slack"
 cask "spotify"
 cask "syncthing"
+cask "transmit"
 
 mas "Deliveries", id: 290986013
 mas "Ivory", id: 6444602274
