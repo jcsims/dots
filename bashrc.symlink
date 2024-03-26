@@ -64,9 +64,9 @@ export BAT_THEME='Monokai Extended'
 export HOMEBREW_BUNDLE_FILE="$HOME/.Brewfile"
 
 prepend_path "$HOME/.cargo/bin"
-prepend_path "$(go env GOPATH)/bin"
 prepend_path "/opt/homebrew/bin"
 prepend_path "/opt/homebrew/sbin"
+prepend_path "$(go env GOPATH)/bin"
 prepend_path "$HOME/bin"
 prepend_path "$HOME/.bin"
 
