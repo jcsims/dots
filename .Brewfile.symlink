@@ -20,6 +20,7 @@ brew "enchant" # For jinx module build
 brew "exercism"
 brew "eza"
 brew "fd"
+brew "fish"
 brew "fzf"
 brew "git"
 brew "go"
