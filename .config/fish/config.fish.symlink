@@ -1,0 +1,39 @@
+# -*- mode: sh -*-
+
+fish_add_path "$HOME/.cargo/bin"
+fish_add_path "/opt/homebrew/bin"
+fish_add_path "/opt/homebrew/sbin"
+fish_add_path "$(go env GOPATH)/bin"
+fish_add_path "$HOME/bin"
+fish_add_path "$HOME/.bin"
+
+set -x CLICOLOR "1"
+set -x EDITOR "$HOME/bin/e"
+set -x VISUAL "$HOME/bin/ec"
+set -x GNUPGHOME "/Users/jcsims/.gnupg"
+set -x BAT_THEME 'Monokai Extended'
+set -x HOMEBREW_BUNDLE_FILE "$HOME/.Brewfile"
+
+# Increase the count of open files allowed (default is 256 on macOS)
+ulimit -Sn 4096
+
+if status is-interactive
+  abbr --add ga 'git add'
+  abbr --add gc 'git commit'
+  abbr --add gco 'git checkout'
+  abbr --add gd 'git diff'
+  abbr --add gdc 'git diff --cached'
+  abbr --add gl 'git log --graph --abbrev-commit --date=relative --pretty=format:'\''%C(bold blue)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'''
+  abbr --add gp 'git push origin HEAD'
+  abbr --add gpl 'git pull --rebase --prune'
+  abbr --add gs 'git status -sb'
+
+  abbr --add cat 'bat'
+
+  abbr --add eza 'eza '\''--icons'\'' '\''--git'\'''
+  abbr --add la 'eza -a'
+  abbr --add ll 'eza -l'
+  abbr --add lla 'eza -la'
+  abbr --add ls 'eza'
+  abbr --add lt 'eza --tree'
+end
