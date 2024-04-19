@@ -1,18 +1,17 @@
 # -*- mode: sh -*-
 
-fish_add_path "$HOME/.cargo/bin"
-fish_add_path "/opt/homebrew/bin"
-fish_add_path "/opt/homebrew/sbin"
-fish_add_path "$(go env GOPATH)/bin"
-fish_add_path "$HOME/bin"
-fish_add_path "$HOME/.bin"
+fish_add_path $HOME/.cargo/bin
+fish_add_path /opt/homebrew/bin
+fish_add_path /opt/homebrew/sbin
+fish_add_path $(go env GOPATH)/bin
+fish_add_path $HOME/bin
 
-set -x CLICOLOR "1"
-set -x EDITOR "$HOME/bin/e"
-set -x VISUAL "$HOME/bin/ec"
-set -x GNUPGHOME "/Users/jcsims/.gnupg"
-set -x BAT_THEME 'Monokai Extended'
-set -x HOMEBREW_BUNDLE_FILE "$HOME/.Brewfile"
+set -gx CLICOLOR "1"
+set -gx EDITOR $HOME/bin/e
+set -gx VISUAL $HOME/bin/ec
+set -gx GNUPGHOME $HOME/jcsims/.gnupg
+set -gx BAT_THEME 'Monokai Extended'
+set -gx HOMEBREW_BUNDLE_FILE $HOME/.Brewfile
 set -gx PROJECT_PATHS $HOME/code $HOME/code/work
 
 # Increase the count of open files allowed (default is 256 on macOS)
