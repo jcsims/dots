@@ -16,6 +16,12 @@ set -gx PROJECT_PATHS $HOME/code $HOME/code/work
 
 # Remove the default greeting message on a new shell
 set -g fish_greeting
+
+# Some prompt color
+set -g hydro_color_prompt green
+set -g hydro_color_pwd blue
+set -g hydro_color_duration yellow
+
 # Increase the count of open files allowed (default is 256 on macOS)
 ulimit -Sn 4096
 
