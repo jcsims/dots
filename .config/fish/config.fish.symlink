@@ -13,6 +13,7 @@ set -x VISUAL "$HOME/bin/ec"
 set -x GNUPGHOME "/Users/jcsims/.gnupg"
 set -x BAT_THEME 'Monokai Extended'
 set -x HOMEBREW_BUNDLE_FILE "$HOME/.Brewfile"
+set -gx PROJECT_PATHS $HOME/code $HOME/code/work
 
 # Increase the count of open files allowed (default is 256 on macOS)
 ulimit -Sn 4096
@@ -36,4 +37,7 @@ if status is-interactive
   abbr --add lla 'eza -la'
   abbr --add ls 'eza'
   abbr --add lt 'eza --tree'
+
+  abbr --add c 'pj'
+  abbr --add co 'pj open'
 end
