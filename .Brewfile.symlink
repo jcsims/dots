@@ -1,4 +1,8 @@
 # -*- mode: ruby-ts;-*-
+# An example of OS-specific packages:
+# install only on specified OS
+#brew "gnupg" if OS.mac?
+#brew "glibc" if OS.linux?
 tap "babashka/brew"
 tap "borkdude/brew"
 tap "clojure-lsp/brew"
@@ -33,7 +37,7 @@ brew "jq"
 #   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 brew "openjdk"
 brew "leiningen"
-brew "mas"
+brew "mas" if OS.mac?
 brew "tree"
 brew "pass"
 brew "pkg-config" # For jinx module build
@@ -41,33 +45,33 @@ brew "ripgrep"
 brew "rustup-init"
 brew "shellcheck"
 brew "starship"
-brew "terminal-notifier"
+brew "terminal-notifier" if OS.mac?
 brew "tmux"
 brew "tokei"
 brew "watch"
 
 cask "1password"
 cask "alacritty"
-cask "alfred"
-cask "arq"
-cask "balenaetcher"
-cask "calibre"
-cask "daisydisk"
-cask "dash"
+cask "alfred" if OS.mac?
+cask "arq" if OS.mac?
+cask "balenaetcher" if OS.mac?
+cask "calibre" if OS.mac?
+cask "daisydisk" if OS.mac?
+cask "dash" if OS.mac?
 cask "discord"
 cask "emacs"
 cask "font-hack-nerd-font"
-cask "gpg-suite"
-cask "istat-menus"
-cask "launchcontrol"
-cask "monitorcontrol"
-cask "obsidian"
+cask "gpg-suite" if OS.mac?
+cask "istat-menus" if OS.mac?
+cask "launchcontrol" if OS.mac?
+cask "monitorcontrol" if OS.mac?
+cask "obsidian" if OS.mac?
 cask "plexamp"
-cask "rectangle"
+cask "rectangle" if OS.mac?
 cask "slack"
 cask "spotify"
 cask "syncthing"
-cask "transmit"
+cask "transmit" if OS.mac?
 
 mas "Deliveries", id: 290986013
 mas "Ivory", id: 6444602274
