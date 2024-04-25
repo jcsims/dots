@@ -16,16 +16,13 @@ brew "clojure-lsp/brew/clojure-lsp-native"
 brew "clojure/tools/clojure"
 
 brew "aspell"
-brew "bash"
-brew "bash-completion@2"
 brew "bash-language-server"
 brew "bat"
-brew "enchant" # For jinx module build
+brew "enchant" if OS.mac? # For jinx module build
 brew "exercism"
 brew "eza"
 brew "fd"
 brew "fish"
-brew "fisher"
 brew "fzf"
 brew "git"
 brew "go"
@@ -35,16 +32,14 @@ brew "htop"
 brew "jq"
 # For the system Java wrappers to find this JDK, symlink it with
 #   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
-brew "openjdk"
+brew "openjdk" if OS.mac?
 brew "leiningen"
 brew "mas" if OS.mac?
-brew "tree"
 brew "pass"
-brew "pkg-config" # For jinx module build
+brew "pkg-config" if OS.mac? # For jinx module build
 brew "ripgrep"
 brew "rustup-init"
 brew "shellcheck"
-brew "starship"
 brew "terminal-notifier" if OS.mac?
 brew "tmux"
 brew "tokei"
