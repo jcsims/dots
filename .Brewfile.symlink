@@ -7,6 +7,7 @@ tap "babashka/brew"
 tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
+tap "d12frosted/emacs-plus"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 
@@ -18,6 +19,7 @@ brew "clojure/tools/clojure"
 brew "aspell"
 brew "bash-language-server"
 brew "bat"
+brew "emacs-plus", args: ["with-native-comp"] if OS.mac?
 brew "enchant" if OS.mac? # For jinx module build
 brew "exercism"
 brew "eza"
@@ -54,7 +56,6 @@ cask "calibre" if OS.mac?
 cask "daisydisk" if OS.mac?
 cask "dash" if OS.mac?
 cask "discord"
-cask "emacs"
 cask "font-hack-nerd-font"
 cask "gpg-suite" if OS.mac?
 cask "istat-menus" if OS.mac?
