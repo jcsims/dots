@@ -11,8 +11,13 @@ set -gx EDITOR $HOME/bin/e
 set -gx VISUAL $HOME/bin/ec
 set -gx GNUPGHOME $HOME/jcsims/.gnupg
 set -gx BAT_THEME 'Monokai Extended'
-set -gx HOMEBREW_BUNDLE_FILE $HOME/.Brewfile
 set -gx PROJECT_PATHS $HOME/code $HOME/code/work
+
+if test $(hostname) = "splash"
+   set -gx HOMEBREW_BUNDLE_FILE $HOME/.Brewfile-work
+else
+   set -gx HOMEBREW_BUNDLE_FILE $HOME/.Brewfile
+end
 
 # Remove the default greeting message on a new shell
 set -g fish_greeting
