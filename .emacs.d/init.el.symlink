@@ -84,8 +84,8 @@
 (use-package smart-mode-line
   :custom (sml/theme 'automatic)
   :config
-  (add-to-list 'sml/replacer-regexp-list '("^~/code/work/patch" ":patch:") t)
-  (add-to-list 'sml/replacer-regexp-list '("^~/.config/home-manager/" ":home-manager:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/code/work" ":work:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^~/.dotfiles" ":dots:") t)
   (sml/setup))
 
 (progn ;     startup
@@ -94,11 +94,6 @@
                                       before-user-init-time))))
 
 ;;; Long tail
-
-(use-package age
-  :demand t
-  :config
-  (age-file-enable))
 
 (use-package atomic-chrome
   :if (display-graphic-p)
@@ -169,11 +164,6 @@
     (remove-hook 'completion-at-point-functions #'cider-complete-at-point t))
 
   (add-hook 'cider-mode-hook #'mu-cider-disable-completion))
-
-(use-package chatgpt-shell
-  :config (setq chatgpt-shell-openai-key
-                (lambda ()
-                  (auth-source-pick-first-password :host "api.openai.com"))))
 
 (use-package clojure-mode
   :after (paredit)
@@ -318,8 +308,6 @@
     (setq-local tab-width 2
                 compile-command "go test -v && go vet && golangci-lint run --color never")))
 
-(use-package graphql-mode)
-
 (use-package help
   :ensure f
   :defer t
@@ -331,11 +319,6 @@
          ("C-h k" . helpful-key)
          :map emacs-lisp-mode-map
          ("C-c C-d" . helpful-at-point)))
-
-(use-package hippie-exp
-  :disabled
-  :ensure f
-  :bind (([remap dabbrev-expand] . hippie-expand)))
 
 (use-package hl-todo
   :config (global-hl-todo-mode))
@@ -355,9 +338,6 @@
   :bind (:map jinx-mode-map
               ("C-." . jinx-correct))
   :config (global-jinx-mode))
-
-(use-package kubel
-  :when (executable-find "kubectl"))
 
 (use-package lisp-mode
   :ensure f
@@ -410,29 +390,6 @@
 (use-package nix-mode)
 
 (use-package no-littering)
-
-(use-package obsidian
-  :demand t
-  :config
-  (obsidian-specify-path "~/notes/patch")
-  (global-obsidian-mode)
-
-  (require 'dash)
-  (require 's)
-  (require 'seq)
-  (defun jcs/open-todays-meeting ()
-    "Open an Obsidian meeting note from today."
-    (interactive)
-    (let* ((today-string (format-time-string "%Y-%m-%d"))
-           (meeting-dir (expand-file-name "meetings" obsidian-directory))
-           (choices (->> (directory-files-recursively meeting-dir "\.*.md$")
-                         (seq-filter #'obsidian-file-p)
-                         (seq-map (lambda (f) (file-relative-name f meeting-dir)))
-                         (seq-filter (lambda (f) (s-starts-with? today-string f))))))
-      (if choices
-          (obsidian-find-file (expand-file-name (completing-read "Select file: " choices)
-                                                meeting-dir))
-        (message "No meeting files for today.")))))
 
 (use-package orderless
   :init
