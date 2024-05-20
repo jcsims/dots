@@ -26,6 +26,8 @@ brew "eza"
 brew "fd"
 brew "fish"
 brew "fzf"
+# For the emacs-plus build
+brew "gcc" if OS.mac?
 brew "git"
 brew "go"
 brew "golangci-lint"
@@ -67,6 +69,7 @@ cask "rectangle" if OS.mac?
 cask "slack" if OS.mac?
 cask "spotify" if OS.mac?
 cask "syncthing" if OS.mac?
+cask "transmission" if OS.mac?
 cask "transmit" if OS.mac?
 
 mas "Deliveries", id: 290986013
