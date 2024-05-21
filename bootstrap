@@ -1,0 +1,49 @@
+#!/usr/bin/env fish
+
+# Create some directories we need, in case they don't already exist
+
+mkdir -p ~/bin ~/.emacs.d ~/.gnupg ~/.hammerspoon
+mkdir -p ~/.config/alacritty ~/.config/git ~/.config/clojure-lsp ~/.config/fish
+
+# Link all the things
+
+set DOTS (dirname (realpath (status filename)))
+
+function maybe-link
+    set -l source "$DOTS/$argv[1]"
+    set -l target $argv[2]
+
+    if test -e $target
+        if test -L $target
+            set -l target_real (realpath $target)
+            if [ $target_real = $source ]
+                #echo "$source is already linked"
+            else
+                echo "$target is linked to something else: $target_real"
+            end
+        else
+            echo "Real file $target is in the way of symlinking!"
+        end
+    else
+        ln -s $DOTS/$argv[1] $argv[2]
+    end
+end
+
+maybe-link bin/bookmarks ~/bin/bookmarks
+maybe-link bin/e ~/bin/e
+maybe-link bin/ec ~/bin/ec
+maybe-link Brewfile ~/.Brewfile
+maybe-link Brewfile-work ~/.Brewfile-work
+maybe-link config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
+maybe-link config/clojure-lsp/config.edn ~/.config/clojure-lsp/config.edn
+maybe-link config/fish/config.fish ~/.config/fish/config.fish
+maybe-link config/fish/fish_plugins ~/.config/fish/fish_plugins
+maybe-link config/git/config ~/.config/git/config
+maybe-link config/git/ignore ~/.config/git/ignore
+maybe-link emacs.d/init.el ~/.emacs.d/init.el
+maybe-link gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
+maybe-link gnupg/gpg.conf ~/.gnupg/gpg.conf
+maybe-link gnupg/scdaemon.conf ~/.gnupg/scdaemon.conf
+maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
+maybe-link psqlrc ~/.psqlrc
+maybe-link tmux.conf ~/.tmux.conf

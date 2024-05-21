@@ -260,6 +260,9 @@
   :if (memq window-system '(mac ns x))
   :config (exec-path-from-shell-initialize))
 
+(use-package fish-mode
+  :hook (fish-mode . fish_indent-before-save))
+
 (use-package files
   :ensure f
   :after (no-littering)

@@ -1,4 +1,8 @@
 # -*- mode: ruby-ts;-*-
+# An example of OS-specific packages:
+# install only on specified OS
+#brew "gnupg" if OS.mac?
+#brew "glibc" if OS.linux?
 tap "babashka/brew"
 tap "borkdude/brew"
 tap "clojure-lsp/brew"
@@ -17,10 +21,14 @@ brew "bash-language-server"
 brew "bat"
 brew "emacs-plus", args: ["with-native-comp"] if OS.mac?
 brew "enchant" if OS.mac? # For jinx module build
+brew "exercism"
 brew "eza"
 brew "fd"
 brew "fish"
+brew "fisher"
 brew "fzf"
+# For the emacs-plus build
+brew "gcc" if OS.mac?
 brew "git"
 brew "go"
 brew "golangci-lint"
@@ -35,6 +43,7 @@ brew "mas" if OS.mac?
 brew "pass"
 brew "pkg-config" if OS.mac? # For jinx module build
 brew "ripgrep"
+brew "rustup-init"
 brew "shellcheck"
 brew "terminal-notifier" if OS.mac?
 brew "tmux"
@@ -45,17 +54,26 @@ cask "1password" if OS.mac?
 cask "alacritty" if OS.mac?
 cask "alfred" if OS.mac?
 cask "arq" if OS.mac?
+cask "balenaetcher" if OS.mac?
+cask "calibre" if OS.mac?
 cask "daisydisk" if OS.mac?
 cask "dash" if OS.mac?
+cask "discord" if OS.mac?
 cask "font-hack-nerd-font" if OS.mac?
 cask "gpg-suite" if OS.mac?
 cask "istat-menus" if OS.mac?
+cask "launchcontrol" if OS.mac?
 cask "monitorcontrol" if OS.mac?
+cask "obsidian" if OS.mac?
 cask "plexamp" if OS.mac?
 cask "rectangle" if OS.mac?
 cask "slack" if OS.mac?
 cask "spotify" if OS.mac?
 cask "syncthing" if OS.mac?
+cask "transmission" if OS.mac?
+cask "transmit" if OS.mac?
 
+mas "Deliveries", id: 290986013
+mas "Ivory", id: 6444602274
 mas "Tailscale", id: 1475387142
 mas "Things", id: 904280696
