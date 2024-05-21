@@ -50,28 +50,28 @@ brew "tmux"
 brew "tokei"
 brew "watch"
 
-cask "1password" if OS.mac?
-cask "alacritty" if OS.mac?
-cask "alfred" if OS.mac?
-cask "arq" if OS.mac?
-cask "balenaetcher" if OS.mac?
-cask "calibre" if OS.mac?
-cask "daisydisk" if OS.mac?
-cask "dash" if OS.mac?
-cask "discord" if OS.mac?
-cask "font-hack-nerd-font" if OS.mac?
-cask "gpg-suite" if OS.mac?
-cask "istat-menus" if OS.mac?
-cask "launchcontrol" if OS.mac?
-cask "monitorcontrol" if OS.mac?
-cask "obsidian" if OS.mac?
-cask "plexamp" if OS.mac?
-cask "rectangle" if OS.mac?
-cask "slack" if OS.mac?
-cask "spotify" if OS.mac?
-cask "syncthing" if OS.mac?
-cask "transmission" if OS.mac?
-cask "transmit" if OS.mac?
+cask "1password"
+cask "alacritty", args: {"no-quarantine": true}
+cask "alfred"
+cask "arq"
+cask "balenaetcher"
+cask "calibre"
+cask "daisydisk"
+cask "dash"
+cask "discord"
+cask "font-hack-nerd-font"
+cask "gpg-suite"
+cask "istat-menus"
+cask "launchcontrol"
+cask "monitorcontrol"
+cask "obsidian"
+cask "plexamp"
+cask "rectangle"
+cask "slack"
+cask "spotify"
+cask "syncthing"
+cask "transmission"
+cask "transmit"
 
 mas "Deliveries", id: 290986013
 mas "Ivory", id: 6444602274
