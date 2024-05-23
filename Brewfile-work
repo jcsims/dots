@@ -42,21 +42,21 @@ brew "tmux"
 brew "tokei"
 brew "watch"
 
-cask "1password" if OS.mac?
-cask "alacritty" if OS.mac?
-cask "alfred" if OS.mac?
-cask "arq" if OS.mac?
-cask "daisydisk" if OS.mac?
-cask "dash" if OS.mac?
-cask "font-hack-nerd-font" if OS.mac?
-cask "gpg-suite" if OS.mac?
-cask "istat-menus" if OS.mac?
-cask "monitorcontrol" if OS.mac?
-cask "plexamp" if OS.mac?
-cask "rectangle" if OS.mac?
-cask "slack" if OS.mac?
-cask "spotify" if OS.mac?
-cask "syncthing" if OS.mac?
+cask "1password"
+cask "alacritty"
+cask "alfred"
+cask "arq"
+cask "daisydisk"
+cask "dash"
+cask "font-hack-nerd-font"
+cask "gpg-suite"
+cask "istat-menus"
+cask "monitorcontrol"
+cask "plexamp"
+cask "rectangle"
+cask "slack"
+cask "spotify"
+cask "syncthing"
 
 mas "Tailscale", id: 1475387142
 mas "Things", id: 904280696
