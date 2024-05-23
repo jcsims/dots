@@ -1,5 +1,4 @@
 fish_add_path $HOME/.cargo/bin
-# TODO: Add paths for Linux homebrew
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
 fish_add_path $(go env GOPATH)/bin

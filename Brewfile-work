@@ -12,6 +12,15 @@ brew "babashka/brew/neil"
 brew "clojure-lsp/brew/clojure-lsp-native"
 brew "clojure/tools/clojure"
 
+## Work-specific tools
+tap "hashicorp/tap"
+brew "awscli"
+brew "bazel"
+brew "php"
+brew "python@3.10"
+brew "hashicorp/tap/terraform"
+
+## Common tools
 brew "aspell"
 brew "bash-language-server"
 brew "bat"
@@ -23,9 +32,6 @@ brew "fish"
 brew "fisher"
 brew "fzf"
 brew "git"
-brew "go"
-brew "golangci-lint"
-brew "gopls"
 brew "htop"
 brew "jq"
 # For the system Java wrappers to find this JDK, symlink it with
@@ -33,7 +39,6 @@ brew "jq"
 brew "openjdk" if OS.mac?
 brew "leiningen"
 brew "mas" if OS.mac?
-brew "pass"
 brew "pkg-config" if OS.mac? # For jinx module build
 brew "ripgrep"
 brew "shellcheck"
@@ -45,7 +50,6 @@ brew "watch"
 cask "1password"
 cask "alacritty"
 cask "alfred"
-cask "arq"
 cask "daisydisk"
 cask "dash"
 cask "font-hack-nerd-font"
@@ -56,7 +60,6 @@ cask "plexamp"
 cask "rectangle"
 cask "slack"
 cask "spotify"
-cask "syncthing"
 
 mas "Tailscale", id: 1475387142
 mas "Things", id: 904280696
