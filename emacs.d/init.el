@@ -59,7 +59,7 @@
 
 ;; Font
 (if (eq system-type 'gnu/linux)
-    (set-frame-font "Hack Nerd Font 10")
+    (set-frame-font "Hack Nerd Font 9")
   (set-frame-font "Hack Nerd Font 12"))
 
 (progn                                  ;theme
