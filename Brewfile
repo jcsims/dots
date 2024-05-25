@@ -74,7 +74,5 @@ cask "syncthing"
 cask "transmission"
 cask "transmit"
 
-mas "Deliveries", id: 290986013
-mas "Ivory", id: 6444602274
 mas "Tailscale", id: 1475387142
 mas "Things", id: 904280696
