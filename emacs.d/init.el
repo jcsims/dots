@@ -9,7 +9,7 @@
   "Comment out one or more s-expressions. Borrowed from Clojure."
   nil)
 
-(progn ;;     startup
+(eval-and-compile ;;     startup
   (defvar before-user-init-time (current-time)
     "Value of `current-time' when Emacs begins loading `user-init-file'.")
   (message "Loading Emacs...done (%.3fs)"
@@ -23,7 +23,7 @@
   (setq initial-scratch-message "")
   (setq ring-bell-function 'ignore)
   (when (string= "csims" user-login-name)
-      (setq shell-file-name "/opt/homebrew/bin/fish"))
+    (setq shell-file-name "/opt/homebrew/bin/fish"))
   (when (fboundp 'scroll-bar-mode)
     (scroll-bar-mode 0))
   (when (fboundp 'tool-bar-mode)
@@ -62,7 +62,7 @@
     (set-frame-font "Hack Nerd Font 9")
   (set-frame-font "Hack Nerd Font 12"))
 
-(progn                                  ;theme
+(eval-and-compile                                  ;theme
   (defvar jcs-active-theme)
   (defvar jcs-dark-theme)
   (defvar jcs-light-theme)
@@ -71,7 +71,9 @@
     :config
     (setq jcs-active-theme 'sanityinc-tomorrow-eighties
           jcs-dark-theme 'sanityinc-tomorrow-eighties
-          jcs-light-theme 'sanityinc-tomorrow-day))
+          jcs-light-theme 'sanityinc-tomorrow-day)
+    ;; Do the initial load.
+    (load-theme jcs-active-theme t))
 
   (defun jcs/toggle-dark-light-theme ()
     "Toggle the current theme between light and dark."
@@ -81,10 +83,7 @@
         (setq jcs-active-theme jcs-dark-theme)
       (setq jcs-active-theme jcs-light-theme))
     (load-theme jcs-active-theme t)
-    (sml/apply-theme 'automatic))
-
-  ;; Do the initial load.
-  (load-theme jcs-active-theme t))
+    (sml/apply-theme 'automatic)))
 
 (use-package smart-mode-line
   :custom (sml/theme 'automatic)
@@ -93,7 +92,7 @@
   (add-to-list 'sml/replacer-regexp-list '("^~/.dotfiles" ":dots:") t)
   (sml/setup))
 
-(progn ;     startup
+(eval-and-compile ;     startup
   (message "Loading early birds...done (%.3fs)"
            (float-time (time-subtract (current-time)
                                       before-user-init-time))))
@@ -333,7 +332,7 @@
 (use-package hl-todo
   :config (global-hl-todo-mode))
 
-(progn ;    `isearch'
+(eval-and-compile ;    `isearch'
   (setq isearch-allow-scroll t
         ;; Show a count of matches in the minibuffer (and which one you're at).
         isearch-lazy-count t))
@@ -819,7 +818,7 @@ canceled tasks."
               ("h n" . symbol-overlay-switch-forward)
               ("h p" . symbol-overlay-switch-backward)))
 
-(progn ;    `text-mode'
+(eval-and-compile ;    `text-mode'
   (add-hook 'text-mode-hook 'indicate-buffer-boundaries-left))
 
 (use-package tramp
@@ -953,7 +952,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
 
 ;;; Tequila worms
 
-(progn ;     startup
+(eval-and-compile ;     startup
   (message "Loading %s...done (%.3fs)" user-init-file
            (float-time (time-subtract (current-time)
                                       before-user-init-time)))
@@ -966,7 +965,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
             t))
 
 
-(progn                                  ; personalize
+(eval-and-compile                                  ; personalize
 
   (setq sentence-end-double-space nil   ; Sentences can end with a single space.
         select-enable-primary t         ; Use the clipboard for yank and kill
@@ -998,7 +997,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.Brewfile")))
 
   ;; Taken from the Emacs Wiki: http://www.emacswiki.org/emacs/InsertDate
-  (progn
+  (eval-and-compile
     (defun insert-date (prefix)
       "Insert the current date. With PREFIX, use ISO format."
       (interactive "P")
@@ -1009,7 +1008,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
     (global-set-key (kbd "C-c d") 'insert-date))
 
   ;; Taken from http://whattheemacsd.com/editing-defuns.el-01.html
-  (progn
+  (eval-and-compile
     (defun open-line-below ()
       "Anywhere on the line, open a new line below current line."
       (interactive)
@@ -1028,7 +1027,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
     (global-set-key (kbd "<C-return>") 'open-line-below)
     (global-set-key (kbd "<C-S-return>") 'open-line-above))
 
-  (progn
+  (eval-and-compile
     (defvar jcs/tab-sensitive-modes '(makefile-bsdmake-mode))
     (defvar jcs/indent-sensitive-modes '(conf-mode
                                          python-mode
@@ -1046,7 +1045,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
       (whitespace-cleanup))
     (global-set-key (kbd "C-c n") 'cleanup-buffer))
 
-  (progn
+  (eval-and-compile
     (defun jcs/epoch-at-point (prefix)
       "Convert the epoch timestamp at point into a human-readable
 format. With PREFIX, copy to kill ring."
@@ -1060,7 +1059,7 @@ format. With PREFIX, copy to kill ring."
 
     (global-set-key (kbd "C-c t") 'jcs/epoch-at-point))
 
-  (progn
+  (eval-and-compile
     (defun jcs/decode-jwt-at-point ()
       "Decode JWT at point into a temporary buffer."
       (interactive)
@@ -1085,7 +1084,7 @@ format. With PREFIX, copy to kill ring."
 
     (global-set-key (kbd "C-c j") 'jcs/decode-jwt-at-point))
 
-  (progn ;; Borrowed from
+  (eval-and-compile ;; Borrowed from
     ;; https://github.com/chopmo/dotfiles/blob/master/.emacs.d/customizations/jpt-yaml.el
     ;; Print the yaml path at point.
     (defun jpt-yaml-indentation-level (s)
@@ -1127,10 +1126,10 @@ format. With PREFIX, copy to kill ring."
       (message (jpt-yaml-path-to-point)))
 
     (eval-after-load 'yaml-ts-mode
-      '(progn
+      '(eval-and-compile
          (define-key yaml-ts-mode-map (kbd "C-c p") 'jpt-yaml-show-path-to-point))))
 
-  (progn ;; Brightness helper
+  (eval-and-compile ;; Brightness helper
     (defun set-brightness (level)
       (interactive "n")
       (if (<= 0 level 100)
@@ -1145,7 +1144,7 @@ format. With PREFIX, copy to kill ring."
       (interactive)
       (set-brightness 5)))
 
-  (progn ;; Reinstall packages via package.el, if needed
+  (eval-and-compile ;; Reinstall packages via package.el, if needed
     ;; Borrowed from https://emacsredux.com/blog/2020/09/12/reinstalling-emacs-packages/
     (defun jcs/reinstall-package (pkg)
       (interactive (list (intern (completing-read "Reinstall package: " (mapcar #'car package-alist)))))
