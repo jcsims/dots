@@ -15,7 +15,6 @@
   (message "Loading Emacs...done (%.3fs)"
            (float-time (time-subtract before-user-init-time
                                       before-init-time)))
-  (setq user-emacs-directory "~/.emacs.d/")
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (message "Loading %s..." user-init-file)
   (setq inhibit-startup-buffer-menu t)
@@ -60,7 +59,7 @@
 
 ;; Font
 (if (eq system-type 'gnu/linux)
-    (set-frame-font "Hack Nerd Font 9")
+    (set-frame-font "Hack Nerd Font 10")
   (set-frame-font "Hack Nerd Font 12"))
 
 (progn                                  ;theme

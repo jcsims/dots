@@ -7,7 +7,7 @@ tap "babashka/brew"
 tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
-tap "d12frosted/emacs-plus"
+tap "d12frosted/emacs-plus" if OS.mac?
 tap "homebrew/bundle"
 
 brew "borkdude/brew/babashka"
@@ -23,7 +23,7 @@ brew "enchant" if OS.mac? # For jinx module build
 brew "exercism"
 brew "eza"
 brew "fd"
-brew "fish"
+brew "fish" if OS.mac?
 brew "fisher"
 brew "fzf"
 # For the emacs-plus build
