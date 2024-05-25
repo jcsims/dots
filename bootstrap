@@ -29,6 +29,7 @@ function maybe-link
     end
 end
 
+maybe-link bootstrap ~/bin/boostrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
@@ -47,3 +48,9 @@ maybe-link gnupg/scdaemon.conf ~/.gnupg/scdaemon.conf
 maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf
+
+# TODO: Compile jinx module on macos
+# gcc -I. -O2 -Wall -Wextra -fPIC -shared -o jinx-mod.dylib jinx-mod.c -I/opt/homebrew/opt/enchant/include/enchant-2 -L /opt/homebrew/opt/enchant/lib -lenchant-2
+
+echo "Updating/installing fisher plugins"
+fisher update

@@ -5,6 +5,10 @@
 ;; Seed the PRNG anew, from the system's entropy pool
 (random t)
 
+(defmacro comment (&rest _body)
+  "Comment out one or more s-expressions. Borrowed from Clojure."
+  nil)
+
 (progn ;;     startup
   (defvar before-user-init-time (current-time)
     "Value of `current-time' when Emacs begins loading `user-init-file'.")
@@ -19,6 +23,8 @@
   (setq initial-buffer-choice t)
   (setq initial-scratch-message "")
   (setq ring-bell-function 'ignore)
+  (when (string= "csims" user-login-name)
+      (setq shell-file-name "/opt/homebrew/bin/fish"))
   (when (fboundp 'scroll-bar-mode)
     (scroll-bar-mode 0))
   (when (fboundp 'tool-bar-mode)
@@ -114,14 +120,16 @@
   ;; Auto-refresh buffers
   (global-auto-revert-mode))
 
+(use-package bazel)
+
 ;; Borrowed from
 ;; https://skybert.net/emacs/get-clickable-jira-links-in-your-org-files/
 ;; This highlights the Linear ticket comments we use in the code.
 (use-package bug-reference
   :ensure f
   :config
-  (setq bug-reference-bug-regexp "\\(\\(PAT-[0-9]+\\)\\)"
-        bug-reference-url-format "https://linear.app/patch-tech/issue/%s")
+  (setq bug-reference-bug-regexp "\\(\\(RATE-[0-9]+\\)\\)"
+        bug-reference-url-format "https://splashfinancial.atlassian.net/browse/%s")
   :hook (prog-mode . bug-reference-prog-mode))
 
 (use-package cider
@@ -735,6 +743,8 @@ canceled tasks."
 
 ;; TODO: Try out pixel-scroll-precision-mode
 
+(use-package php-mode)
+
 (use-package prog-mode
   :ensure f
   :config
@@ -776,7 +786,7 @@ canceled tasks."
 
 (use-package savehist
   :ensure f
-  :config (savehist-mode))
+  :init (savehist-mode))
 
 (use-package saveplace
   :ensure f

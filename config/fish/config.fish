@@ -1,8 +1,10 @@
-fish_add_path $HOME/.cargo/bin
-fish_add_path /opt/homebrew/bin
-fish_add_path /opt/homebrew/sbin
-fish_add_path $(go env GOPATH)/bin
-fish_add_path $HOME/bin
+fish_add_path -m ~/.cargo/bin
+fish_add_path -m /opt/homebrew/bin
+fish_add_path -m /opt/homebrew/sbin
+if type -q go
+    fish_add_path -m $(go env GOPATH)/bin
+end
+fish_add_path -m ~/bin
 
 set -gx CLICOLOR 1
 set -gx EDITOR $HOME/bin/e
@@ -11,7 +13,7 @@ set -gx GNUPGHOME $HOME/jcsims/.gnupg
 set -gx BAT_THEME 'Monokai Extended'
 set -gx PROJECT_PATHS $HOME/code $HOME/code/work
 
-if test $(hostname) = splash
+if test $(whoami) = csims
     set -gx HOMEBREW_BUNDLE_FILE $HOME/.Brewfile-work
 else
     set -gx HOMEBREW_BUNDLE_FILE $HOME/.Brewfile

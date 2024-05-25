@@ -18,23 +18,6 @@ family = "Hack Nerd Font"
 [selection]
 save_to_clipboard = true
 
-[hints]
-alphabet = "jfkdls;ahgurieowpq"
-
-[[hints.enabled]]
-command = "open"
-hyperlinks = true
-post_processing = true
-regex = "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-<>\"\\s{-}\\^⟨⟩`]+"
-
-[hints.enabled.binding]
-key = "U"
-mods = "Command"
-
-[hints.enabled.mouse]
-enabled = true
-mods = "Command"
-
 [[keyboard.bindings]]
 action = "ClearLogNotice"
 key = "L"

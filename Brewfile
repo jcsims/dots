@@ -9,7 +9,6 @@ tap "clojure-lsp/brew"
 tap "clojure/tools"
 tap "d12frosted/emacs-plus"
 tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
 
 brew "borkdude/brew/babashka"
 brew "babashka/brew/neil"
@@ -19,7 +18,7 @@ brew "clojure/tools/clojure"
 brew "aspell"
 brew "bash-language-server"
 brew "bat"
-brew "emacs-plus", args: ["with-native-comp"] if OS.mac?
+brew "d12frosted/emacs-plus/emacs-plus", args: ["with-native-comp"] if OS.mac?
 brew "enchant" if OS.mac? # For jinx module build
 brew "exercism"
 brew "eza"

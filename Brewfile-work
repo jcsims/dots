@@ -5,7 +5,6 @@ tap "clojure-lsp/brew"
 tap "clojure/tools"
 tap "d12frosted/emacs-plus"
 tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
 
 brew "borkdude/brew/babashka"
 brew "babashka/brew/neil"
@@ -15,10 +14,14 @@ brew "clojure/tools/clojure"
 ## Work-specific tools
 tap "hashicorp/tap"
 brew "awscli"
-brew "bazel"
+brew "bazelisk"
+
 brew "php"
+brew "postgresql@15"
 brew "python@3.10"
 brew "hashicorp/tap/terraform"
+
+cask "cljstyle"
 
 ## Common tools
 brew "aspell"
@@ -31,6 +34,8 @@ brew "fd"
 brew "fish"
 brew "fisher"
 brew "fzf"
+# For the emacs-plus build
+brew "gcc" if OS.mac?
 brew "git"
 brew "htop"
 brew "jq"
@@ -48,18 +53,19 @@ brew "tokei"
 brew "watch"
 
 cask "1password"
-cask "alacritty"
+cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
 cask "daisydisk"
 cask "dash"
 cask "font-hack-nerd-font"
 cask "gpg-suite"
+cask "hammerspoon"
 cask "istat-menus"
+cask "jetbrains-toolbox"
 cask "monitorcontrol"
 cask "plexamp"
 cask "rectangle"
 cask "slack"
 cask "spotify"
 
-mas "Tailscale", id: 1475387142
 mas "Things", id: 904280696
