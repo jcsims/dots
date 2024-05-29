@@ -155,10 +155,8 @@
   (setq cider-repl-display-help-banner nil
         nrepl-log-messages nil
         ;; Let LSP handle eldoc
-        cider-eldoc-display-for-symbol-at-point nil
-        cider-known-endpoints '(("local-repl" "localhost" "12345")
-                                ("port-forward" "localhost" "5554")))
-  ;; Borrowed from https://manueluberti.eu//2023/03/25/clojure-lsp.html
+        cider-eldoc-display-for-symbol-at-point nil)
+  ;; Borrowed from https://manueluberti.eu/2023/03/25/clojure-lsp.html
   (defun mu-cider-disable-eldoc ()
     "Let LSP handle ElDoc instead of CIDER."
     (remove-hook 'eldoc-documentation-functions #'cider-eldoc t))
@@ -244,7 +242,7 @@
    . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :config (setq eglot-autoshutdown t
-                eglot-confirm-server-edits nil
+                eglot-confirm-server-initiated-edits nil
                 read-process-output-max (* 1024 1024)
                 eglot-extend-to-xref t
                 ;; Don't block on connecting to the lsp server at all
@@ -743,8 +741,6 @@ canceled tasks."
 
 ;; TODO: Try out pixel-scroll-precision-mode
 
-(use-package php-mode)
-
 (use-package prog-mode
   :ensure f
   :config
@@ -1156,8 +1152,13 @@ format. With PREFIX, copy to kill ring."
       (package-reinstall pkg)
       (require pkg)))
 
-
   (let ((file (expand-file-name (concat (user-real-login-name) ".el")
+                                user-emacs-directory)))
+    (when (file-exists-p file)
+      (load file)))
+
+  ;; Work config
+  (let ((file (expand-file-name "work.el"
                                 user-emacs-directory)))
     (when (file-exists-p file)
       (load file))))

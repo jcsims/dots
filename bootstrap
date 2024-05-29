@@ -29,7 +29,7 @@ function maybe-link
     end
 end
 
-maybe-link bootstrap ~/bin/boostrap
+maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
@@ -42,6 +42,9 @@ maybe-link config/fish/fish_plugins ~/.config/fish/fish_plugins
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
+if [ (whoami) = "csims" ]
+    maybe-link emacs.d/work.el ~/.emacs.d/work.el
+end
 maybe-link gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
 maybe-link gnupg/gpg.conf ~/.gnupg/gpg.conf
 maybe-link gnupg/scdaemon.conf ~/.gnupg/scdaemon.conf
