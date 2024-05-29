@@ -357,6 +357,8 @@
     (setq indent-tabs-mode nil))
   (add-hook 'lisp-interaction-mode-hook 'indent-spaces-mode))
 
+(use-package lua-mode)
+
 (use-package magit
   :bind (("C-c g"   . magit-status))
   :custom
@@ -402,9 +404,9 @@
 
 (use-package orderless
   :init
-  (setq completion-styles '(orderless)
+  (setq completion-styles '(orderless basic)
         completion-category-defaults nil
-        completion-category-overrides '((file (styles . (partial-completion))))))
+        completion-category-overrides '((file (styles partial-completion)))))
 
 (defvar org-dir (file-truename "~/org"))
 (defvar jcs/org-roam-dir (file-truename "~/org-roam"))
