@@ -864,6 +864,7 @@ canceled tasks."
                (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.20.4"))
                (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby" "v0.20.1"))
                (rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.21.2"))
+               (toml . ("https://github.com/tree-sitter/tree-sitter-toml" "v0.5.1"))
                (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src"))
                (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
                (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))))
