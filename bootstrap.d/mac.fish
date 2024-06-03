@@ -1,8 +1,10 @@
 if type -q brew; and set -q HOMEBREW_BUNDLE_FILE
     set target_jdk_path /Library/Java/JavaVirtualMachines/openjdk.jdk
-    info "Making sure brew packages are installed..."
-    brew bundle
-    if ! test -e $target_jdk_path ; or ! test /opt/homebrew/opt/openjdk/libexec/openjdk.jdk -ef $target_jdk_path
+    if ! brew bundle check -q
+	info "Making sure brew packages are installed..."
+	brew bundle
+    end
+    if ! test -e $target_jdk_path; or ! test /opt/homebrew/opt/openjdk/libexec/openjdk.jdk -ef $target_jdk_path
         info "Linking Homebrew JDK..."
         sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
     end
