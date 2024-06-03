@@ -1,5 +1,23 @@
 #!/usr/bin/env fish
 
+function error
+    set_color red
+    echo "ERROR: $argv"
+    set_color normal
+end
+
+function warn
+    set_color yellow
+    echo "WARN: $argv"
+    set_color normal
+end
+
+function info
+    set_color blue
+    echo "INFO: $argv"
+    set_color normal
+end
+
 # Create some directories we need, in case they don't already exist
 
 mkdir -p ~/bin ~/.emacs.d ~/.gnupg ~/.hammerspoon
@@ -8,6 +26,7 @@ mkdir -p ~/.config/alacritty ~/.config/git ~/.config/clojure-lsp ~/.config/fish
 # Link all the things
 
 set DOTS (dirname (realpath (status filename)))
+set OS (uname)
 
 function maybe-link
     set -l source "$DOTS/$argv[1]"
@@ -19,10 +38,10 @@ function maybe-link
             if [ $target_real = $source ]
                 #echo "$source is already linked"
             else
-                echo "$target is linked to something else: $target_real"
+                warn "$target is linked to something else: $target_real"
             end
         else
-            echo "Real file $target is in the way of symlinking!"
+            error "Real file $target is in the way of symlinking!"
         end
     else
         ln -s $DOTS/$argv[1] $argv[2]
@@ -52,8 +71,9 @@ maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf
 
-# TODO: Compile jinx module on macos
-# gcc -I. -O2 -Wall -Wextra -fPIC -shared -o jinx-mod.dylib jinx-mod.c -I/opt/homebrew/opt/enchant/include/enchant-2 -L /opt/homebrew/opt/enchant/lib -lenchant-2
+if [ "Darwin" = "$OS" ]
+    source $DOTS/bootstrap.d/mac.fish
+end
 
-echo "Updating/installing fisher plugins"
+info "Updating/installing fisher plugins..."
 fisher update
