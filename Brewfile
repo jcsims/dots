@@ -1,8 +1,4 @@
 # -*- mode: ruby-ts;-*-
-# An example of OS-specific packages:
-# install only on specified OS
-#brew "gnupg" if OS.mac?
-#brew "glibc" if OS.linux?
 tap "babashka/brew"
 tap "borkdude/brew"
 tap "clojure-lsp/brew"
@@ -26,7 +22,7 @@ brew "fd"
 brew "fish" if OS.mac?
 brew "fisher"
 brew "fzf"
-# For the emacs-plus build
+# For the emacs-plus build, native-comp, and the jinx module
 brew "gcc" if OS.mac?
 brew "git"
 brew "go"
@@ -34,8 +30,6 @@ brew "golangci-lint"
 brew "gopls"
 brew "htop"
 brew "jq"
-# For the system Java wrappers to find this JDK, symlink it with
-#   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 brew "openjdk" if OS.mac?
 brew "leiningen"
 brew "mas" if OS.mac?
@@ -66,6 +60,7 @@ cask "launchcontrol"
 cask "maestral"
 cask "monitorcontrol"
 cask "obsidian"
+cask "openaudible"
 cask "plexamp"
 cask "rectangle"
 cask "slack"
