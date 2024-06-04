@@ -61,7 +61,7 @@ maybe-link config/fish/fish_plugins ~/.config/fish/fish_plugins
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
-if [ (whoami) = "csims" ]
+if [ (whoami) = csims ]
     maybe-link emacs.d/work.el ~/.emacs.d/work.el
 end
 maybe-link gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
@@ -71,7 +71,7 @@ maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf
 
-if [ "Darwin" = "$OS" ]
+if [ "$OS" = Darwin ]
     source $DOTS/bootstrap.d/mac.fish
 end
 
