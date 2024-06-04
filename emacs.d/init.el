@@ -265,7 +265,7 @@
   :config (exec-path-from-shell-initialize))
 
 (use-package fish-mode
-  :hook (fish-mode . fish_indent-before-save))
+  :hook (before-save . fish_indent-before-save))
 
 (use-package files
   :ensure f
