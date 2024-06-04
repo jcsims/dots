@@ -46,12 +46,12 @@ if status is-interactive
 
     abbr --add cat bat
 
-    abbr --add eza 'eza '\''--icons'\'' '\''--git'\'''
-    abbr --add la 'eza -a'
-    abbr --add ll 'eza -l'
-    abbr --add lla 'eza -la'
-    abbr --add ls eza
-    abbr --add lt 'eza --tree'
+    alias eza 'eza '\''--icons'\'' '\''--git'\'''
+    alias la 'eza -a'
+    alias ll 'eza -l'
+    alias lla 'eza -la'
+    alias ls eza
+    alias lt 'eza --tree'
 
     abbr --add c pj
     abbr --add co 'pj open'
