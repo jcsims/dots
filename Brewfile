@@ -15,7 +15,7 @@ brew "aspell"
 brew "bash-language-server"
 brew "bat"
 brew "d12frosted/emacs-plus/emacs-plus", args: ["with-native-comp"] if OS.mac?
-brew "enchant" if OS.mac? # For jinx module build
+brew "enchant" # For jinx module build
 brew "exercism"
 brew "eza"
 brew "fd"
