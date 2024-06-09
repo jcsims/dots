@@ -33,7 +33,8 @@
           (filter (thing-at-point 'symbol))
           (escaped-case
            (replace-regexp-in-string (regexp-quote "$") "\\$" case nil
-                                     'literal))))))
+                                     'literal)))
+      (compile (concat "docker exec -t app php artisan test " class-path " --filter " filter "@'" escaped-case "'")))))
 
 
 (eval-and-compile ;; Borrowed from https://xenodium.com/building-your-own-bookmark-launcher/
