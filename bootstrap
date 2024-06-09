@@ -48,6 +48,7 @@ function maybe-link
     end
 end
 
+maybe-link authinfo.gpg ~/.authinfo.gpg
 maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
