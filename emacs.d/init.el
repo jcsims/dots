@@ -211,6 +211,7 @@
 (use-package dired
   :ensure f
   :defer t
+  :custom (dired-vc-rename-file t)
   :config (setq dired-listing-switches "-alh"))
 
 (use-package display-line-numbers
