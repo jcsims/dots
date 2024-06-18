@@ -240,7 +240,6 @@
   :hook
   ((clojure-mode
     go-ts-mode
-    nix-mode
     python-mode
     rust-ts-mode
     sh-mode)
