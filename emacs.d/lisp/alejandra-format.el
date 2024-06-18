@@ -30,7 +30,7 @@
 
 ;;; Code:
 
-(use-package reformatter)
+(require 'reformatter)
 
 (defgroup alejandra-format nil
   "Nix file formatting using Alejandra."

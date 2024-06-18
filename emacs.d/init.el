@@ -100,7 +100,7 @@
 ;;; Long tail
 
 (use-package alejandra-format
-  :ensure f
+  :load-path "lisp/"
   :hook (nix-mode . alejandra-format-on-save-mode))
 
 (use-package atomic-chrome
