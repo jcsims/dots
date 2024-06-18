@@ -269,6 +269,7 @@
   :config (exec-path-from-shell-initialize))
 
 (use-package fish-mode
+  :custom (fish-enable-auto-indent t)
   :hook (before-save . fish_indent-before-save))
 
 (use-package files
