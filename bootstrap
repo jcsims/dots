@@ -61,6 +61,7 @@ maybe-link config/fish/config.fish ~/.config/fish/config.fish
 maybe-link config/fish/fish_plugins ~/.config/fish/fish_plugins
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
+maybe-link emacs.d/alejandra-format.el ~/.emacs.d/alejandra-format.el
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
 if [ (whoami) = csims ]
     maybe-link emacs.d/work.el ~/.emacs.d/work.el

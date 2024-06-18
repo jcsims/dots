@@ -99,6 +99,10 @@
 
 ;;; Long tail
 
+(use-package alejandra-format
+  :ensure f
+  :hook (nix-mode . alejandra-format-on-save-mode))
+
 (use-package atomic-chrome
   :if (display-graphic-p)
   :config
