@@ -48,7 +48,7 @@ function maybe-link
     end
 end
 
-maybe-link authinfo.gpg ~/.authinfo.gpg
+maybe-link authinfo.age ~/.authinfo.age
 maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
@@ -66,9 +66,6 @@ maybe-link emacs.d/init.el ~/.emacs.d/init.el
 if [ (whoami) = csims ]
     maybe-link emacs.d/work.el ~/.emacs.d/work.el
 end
-maybe-link gnupg/gpg-agent.conf ~/.gnupg/gpg-agent.conf
-maybe-link gnupg/gpg.conf ~/.gnupg/gpg.conf
-maybe-link gnupg/scdaemon.conf ~/.gnupg/scdaemon.conf
 maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf

@@ -99,6 +99,12 @@
 
 ;;; Long tail
 
+(use-package age
+  :custom
+  (age-default-recipient "age1w3cld0g47deea2anr6ckhgrnnxrjfjzksx6hljt4hedth2cufqhsr4u2y3")
+  (age-default-identity (expand-file-name "~/.ssh/encrypt.age"))
+  :config (age-file-enable))
+
 (use-package alejandra-format
   :load-path "lisp/"
   :hook (nix-mode . alejandra-format-on-save-mode))
@@ -112,7 +118,7 @@
 
 (use-package auth-source
   :ensure f
-  :custom (auth-sources '("~/.authinfo.gpg")))
+  :custom (auth-sources '("~/.authinfo.age")))
 
 (use-package autorevert
   :ensure f
