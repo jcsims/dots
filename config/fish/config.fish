@@ -9,7 +9,7 @@ fish_add_path -m ~/bin
 set -gx CLICOLOR 1
 set -gx EDITOR $HOME/bin/e
 set -gx VISUAL $HOME/bin/ec
-set -gx GNUPGHOME $HOME/jcsims/.gnupg
+set -gx GNUPGHOME $HOME/.gnupg
 set -gx BAT_THEME 'Monokai Extended'
 set -gx PROJECT_PATHS $HOME/code $HOME/code/work
 
