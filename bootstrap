@@ -53,8 +53,11 @@ maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
-maybe-link Brewfile ~/.Brewfile
-maybe-link Brewfile-work ~/.Brewfile-work
+if [ (whoami) = csims ]
+    maybe-link Brewfile-work ~/.Brewfile
+else
+    maybe-link Brewfile ~/.Brewfile
+end
 maybe-link config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
 maybe-link config/clojure-lsp/config.edn ~/.config/clojure-lsp/config.edn
 maybe-link config/fish/config.fish ~/.config/fish/config.fish
