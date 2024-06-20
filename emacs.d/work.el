@@ -7,8 +7,7 @@
 (use-package graphql-mode)
 
 (use-package php-mode
-  :after (eglot)
-  :hook (php-mode . eglot-ensure)
+  :hook ((php-mode . eglot-ensure))
   :config
   (setq website-dir (expand-file-name "~/code/work/Website"))
 

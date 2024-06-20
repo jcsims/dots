@@ -38,6 +38,7 @@ brew "fisher"
 brew "fzf"
 # For the emacs-plus build
 brew "gcc" if OS.mac?
+brew "gh"
 brew "git"
 brew "htop"
 brew "jq"
