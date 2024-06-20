@@ -4,6 +4,7 @@ tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
 tap "d12frosted/emacs-plus" if OS.mac?
+tap "jcsims/formula"
 tap "homebrew/bundle"
 
 brew "borkdude/brew/babashka"
@@ -34,7 +35,7 @@ brew "jq"
 brew "openjdk" if OS.mac?
 brew "leiningen"
 brew "mas" if OS.mac?
-brew "pass"
+brew "passage"
 brew "pkg-config" if OS.mac? # For jinx module build
 brew "ripgrep"
 brew "rustup-init"
