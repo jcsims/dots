@@ -1,4 +1,9 @@
-# -*- mode: toml-ts;-*-
+# Be explicit about the shell, since it doesn't seem to work as expected
+# sometimes (looking at you, work laptop...).
+[shell]
+program = "/opt/homebrew/bin/fish"
+args = ["--login"]
+
 # To get the font not so bold on macOS, run this: `defaults write org.alacritty AppleFontSmoothing -int 0`
 [font]
 size = 12.0
