@@ -15,6 +15,8 @@
   (message "Loading Emacs...done (%.3fs)"
            (float-time (time-subtract before-user-init-time
                                       before-init-time)))
+  (defvar work-install (string= "csims" user-login-name)
+    "Is this instance of Emacs running on a work laptop?")
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (message "Loading %s..." user-init-file)
   (setq inhibit-startup-buffer-menu t)
@@ -22,7 +24,7 @@
   (setq initial-buffer-choice t)
   (setq initial-scratch-message "")
   (setq ring-bell-function 'ignore)
-  (when (string= "csims" user-login-name)
+  (when work-install
     (setq shell-file-name "/opt/homebrew/bin/fish"))
   (when (fboundp 'scroll-bar-mode)
     (scroll-bar-mode 0))
@@ -165,23 +167,27 @@
   (setq cider-repl-display-help-banner nil
         nrepl-log-messages nil
         ;; Let LSP handle eldoc
-        cider-eldoc-display-for-symbol-at-point nil)
+        cider-eldoc-display-for-symbol-at-point (when (not work-install) t))
   ;; Borrowed from https://manueluberti.eu/2023/03/25/clojure-lsp.html
   (defun mu-cider-disable-eldoc ()
     "Let LSP handle ElDoc instead of CIDER."
-    (remove-hook 'eldoc-documentation-functions #'cider-eldoc t))
+    (when (not work-install)
+      (remove-hook 'eldoc-documentation-functions #'cider-eldoc t)))
 
   (add-hook 'cider-mode-hook #'mu-cider-disable-eldoc)
 
   (defun mu-cider-disable-completion ()
     "Let LSP handle completion instead of CIDER."
-    (remove-hook 'completion-at-point-functions #'cider-complete-at-point t))
+    (when (not work-install)
+      (remove-hook 'completion-at-point-functions #'cider-complete-at-point t)))
 
   (add-hook 'cider-mode-hook #'mu-cider-disable-completion))
 
 (use-package clojure-mode
   :after (paredit)
   :mode (("\\.edn\\'" . clojure-mode))
+  :config (when work-install
+            (setq clojure-indent-style 'always-indent))
   :hook
   (clojure-mode . paredit-mode)
   (clojure-mode . cider-mode))
