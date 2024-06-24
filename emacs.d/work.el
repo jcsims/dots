@@ -6,6 +6,13 @@
 
 (use-package graphql-mode)
 
+(use-package environ)
+(use-package splash
+  :after cider
+  :load-path "/Users/csims/code/work/stonehenge/development/emacs/"
+  :custom
+  (splash-stonehenge-dir "/Users/csims/code/work/stonehenge/"))
+
 (use-package php-mode
   :hook ((php-mode . eglot-ensure))
   :config
