@@ -13,13 +13,14 @@ brew "clojure/tools/clojure"
 
 ## Work-specific tools
 tap "hashicorp/tap"
+brew "hashicorp/tap/terraform"
+
 brew "awscli"
 brew "bazelisk"
-
+brew "composer"
 brew "php"
 brew "postgresql@15"
 brew "python@3.10"
-brew "hashicorp/tap/terraform"
 
 cask "chromium", args: {"no-quarantine": true}
 cask "cljstyle"
@@ -65,6 +66,7 @@ cask "hammerspoon"
 cask "istat-menus"
 cask "jetbrains-toolbox"
 cask "monitorcontrol"
+cask "obsidian"
 cask "plexamp"
 cask "rectangle"
 cask "slack"
