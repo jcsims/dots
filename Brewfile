@@ -35,7 +35,7 @@ brew "jq"
 brew "openjdk" if OS.mac?
 brew "leiningen"
 brew "mas" if OS.mac?
-brew "passage"
+brew "jcsims/formula/passage"
 brew "pkg-config" if OS.mac? # For jinx module build
 brew "ripgrep"
 brew "rustup-init"
