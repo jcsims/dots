@@ -1012,8 +1012,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   ;; Some helpful accessors for commonly-found files.
   (global-set-key (kbd "C-c e e") (lambda () (interactive) (find-file "~/.dotfiles/emacs.d/init.el")))
   (global-set-key (kbd "C-c e f") (lambda () (interactive) (find-file "~/.dotfiles/config/fish/config.fish")))
-  (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.dotfiles/Brewfile")))
-  (global-set-key (kbd "C-c e w") (lambda () (interactive) (find-file "~/.dotfiles/Brewfile-work")))
+  (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.Brewfile")))
 
   ;; Taken from the Emacs Wiki: http://www.emacswiki.org/emacs/InsertDate
   (eval-and-compile
