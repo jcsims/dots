@@ -134,7 +134,7 @@
 
 ;; Borrowed from
 ;; https://skybert.net/emacs/get-clickable-jira-links-in-your-org-files/
-;; This highlights the Linear ticket comments we use in the code.
+;; This highlights the Jira ticket comments we use in the code.
 (use-package bug-reference
   :ensure f
   :config
