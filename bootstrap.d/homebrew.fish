@@ -1,4 +1,4 @@
-if type -q brew; and set -q HOMEBREW_BUNDLE_FILE
+if type -q brew
     if ! brew bundle check -q
         info "Making sure brew packages are installed..."
         brew bundle
