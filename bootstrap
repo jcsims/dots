@@ -70,6 +70,10 @@ if [ (whoami) = csims ]
     maybe-link emacs.d/work.el ~/.emacs.d/work.el
 end
 maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
+maybe-link launch-control/org-roam.sync.plist ~/Library/LaunchAgents/org-roam.sync.plist
+maybe-link launch-control/org.sync.plist ~/Library/LaunchAgents/org.sync.plist
+maybe-link launch-control/check-problems.plist ~/Library/LaunchAgents/check-problems.plist
+maybe-link launch-control/check-for-sync-conflicts.plist ~/Library/LaunchAgents/check-for-sync-conflicts.plist
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf
 

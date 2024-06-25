@@ -8,6 +8,9 @@ info "Set key repeat rate and delay..."
 defaults write -g InitialKeyRepeat -int 15
 defaults write -f KeyRepeat -int 2
 
+info "Setting the proper scroll direction"
+defaults write -g com.apple.swipescrolldirection -boolean NO
+
 if ! test -e $HOME/bin/mkalias
     info "Grabbing mkalias..."
     curl 'https://f000.backblazeb2.com/file/mkalias/mkalias' -o $HOME/bin/mkalias; and chmod +x $HOME/bin/mkalias

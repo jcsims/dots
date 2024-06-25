@@ -59,6 +59,7 @@ brew "watch"
 cask "1password"
 cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
+cask "arc"
 cask "daisydisk"
 cask "dash"
 cask "font-hack-nerd-font"
