@@ -4,7 +4,6 @@ tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
 tap "d12frosted/emacs-plus" if OS.mac?
-tap "jcsims/formula"
 tap "homebrew/bundle"
 
 brew "borkdude/brew/babashka"
@@ -36,7 +35,6 @@ brew "ollama"
 brew "openjdk" if OS.mac?
 brew "leiningen"
 brew "mas" if OS.mac?
-brew "jcsims/formula/passage"
 brew "pkg-config" if OS.mac? # For jinx module build
 brew "ripgrep"
 brew "rustup-init"
@@ -47,6 +45,7 @@ brew "tokei"
 brew "watch"
 
 cask "1password"
+cask "1password-cli"
 cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
 cask "arc"
