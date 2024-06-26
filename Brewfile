@@ -32,6 +32,7 @@ brew "golangci-lint"
 brew "gopls"
 brew "htop"
 brew "jq"
+brew "ollama"
 brew "openjdk" if OS.mac?
 brew "leiningen"
 brew "mas" if OS.mac?
