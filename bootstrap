@@ -21,7 +21,7 @@ end
 # Create some directories we need, in case they don't already exist
 
 mkdir -p ~/bin ~/.emacs.d/lisp ~/.gnupg ~/.hammerspoon ~/Library/LaunchAgents
-mkdir -p ~/.config/alacritty ~/.config/git ~/.config/clojure-lsp ~/.config/fish
+mkdir -p ~/.config/alacritty ~/.config/git ~/.config/clojure-lsp ~/.config/fish ~/.config/zed
 
 # Link all the things
 
@@ -64,6 +64,8 @@ maybe-link config/fish/config.fish ~/.config/fish/config.fish
 maybe-link config/fish/fish_plugins ~/.config/fish/fish_plugins
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
+maybe-link config/zed/settings.json ~/.config/zed/settings.json
+maybe-link config/zed/keymap.json ~/.config/zed/keymap.json
 maybe-link emacs.d/lisp/alejandra-format.el ~/.emacs.d/lisp/alejandra-format.el
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
 if [ (whoami) = csims ]

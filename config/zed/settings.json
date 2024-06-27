@@ -1,0 +1,35 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "features": {
+    // Which inline completion provider to use.
+    "inline_completion_provider": "copilot"
+  },
+  "theme": "Gruvbox Dark Hard",
+  "buffer_font_size": 14,
+  "buffer_font_family": "Hack Nerd Font Mono",
+  "terminal": {
+    "option_as_meta": true,
+    "copy_on_select": true
+  },
+  "tab_size": 2,
+  "assistant": {
+    "version": "1",
+    "provider": {
+      "default_model": {
+        "name": "llama3:latest",
+        "max_tokens": 2048,
+        "keep_alive": -1
+      },
+      "name": "ollama",
+      // Recommended setting to allow for model startup
+      "low_speed_timeout_in_seconds": null
+    }
+  }
+}
