@@ -7,12 +7,16 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  },
   "features": {
-    // Which inline completion provider to use.
     "inline_completion_provider": "copilot"
   },
   "theme": "Gruvbox Dark Hard",
-  "buffer_font_size": 14,
+  "buffer_font_size": 12,
   "buffer_font_family": "Hack Nerd Font Mono",
   "terminal": {
     "option_as_meta": true,
