@@ -51,6 +51,8 @@ if status is-interactive
     abbr --add c pj
     abbr --add co 'pj open'
 
-    # Add completions for 1password-cli
-    op completion fish | source
+    if type -q op
+        # Add completions for 1password-cli
+        op completion fish | source
+    end
 end
