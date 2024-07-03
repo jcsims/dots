@@ -16,7 +16,5 @@ if ! test -e $HOME/bin/mkalias
     curl 'https://f000.backblazeb2.com/file/mkalias/mkalias' -o $HOME/bin/mkalias; and chmod +x $HOME/bin/mkalias
 end
 
-if ! test -e /Applications/Emacs.app
-    info "Creating alias for emacs-plus..."
-    mkalias "$(brew --prefix emacs-plus)/Emacs.app" /Applications/Emacs.app
-end
+info "Creating/updating alias for emacs-plus..."
+mkalias "$(brew --prefix emacs-plus)/Emacs.app" /Applications/Emacs.app
