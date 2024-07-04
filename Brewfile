@@ -3,6 +3,7 @@ tap "babashka/brew"
 tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
+tap "codecrafters-io/tap"
 tap "d12frosted/emacs-plus" if OS.mac?
 tap "homebrew/bundle"
 
@@ -10,6 +11,7 @@ brew "borkdude/brew/babashka"
 brew "babashka/brew/neil"
 brew "clojure-lsp/brew/clojure-lsp-native"
 brew "clojure/tools/clojure"
+brew "codecrafters-io/tap/codecrafters"
 
 brew "age"
 brew "aspell"
