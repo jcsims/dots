@@ -1,7 +1,7 @@
 if type -q brew
     if ! brew bundle check -q
         info "Making sure brew packages are installed..."
-        brew bundle --cleanup
+        brew bundle --cleanup --global
     end
 else
     warn "Homebrew not installed or not yet configured, not attempting package install..."
