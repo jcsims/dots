@@ -1,6 +1,11 @@
+set OS (uname)
+
 fish_add_path -m ~/.cargo/bin
-fish_add_path -m /opt/homebrew/bin
-fish_add_path -m /opt/homebrew/sbin
+if [ "$OS" = Darwin ]
+    fish_add_path -m /opt/homebrew/bin
+    fish_add_path -m /opt/homebrew/sbin
+end
+
 if type -q go
     fish_add_path -m $(go env GOPATH)/bin
 end
