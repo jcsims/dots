@@ -35,7 +35,7 @@ brew "ollama"
 brew "openjdk" if OS.mac?
 brew "leiningen"
 brew "mas" if OS.mac?
-brew "pkg-config" if OS.mac? # For jinx module build
+brew "pkg-config" # For jinx module build
 brew "ripgrep"
 brew "rustup-init"
 brew "shellcheck"
