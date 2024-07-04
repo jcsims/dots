@@ -71,14 +71,14 @@ maybe-link emacs.d/init.el ~/.emacs.d/init.el
 if [ (whoami) = csims ]
     maybe-link emacs.d/work.el ~/.emacs.d/work.el
 end
-maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
-maybe-link launch-control/check-problems.plist ~/Library/LaunchAgents/check-problems.plist
-maybe-link launch-control/check-for-sync-conflicts.plist ~/Library/LaunchAgents/check-for-sync-conflicts.plist
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf
 
 if [ "$OS" = Darwin ]
     source $DOTS/bootstrap.d/homebrew.fish
+    maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
+    maybe-link launch-control/check-problems.plist ~/Library/LaunchAgents/check-problems.plist
+    maybe-link launch-control/check-for-sync-conflicts.plist ~/Library/LaunchAgents/check-for-sync-conflicts.plist
     # mac.fish depends on homebrew being installed
     source $DOTS/bootstrap.d/mac.fish
 end
