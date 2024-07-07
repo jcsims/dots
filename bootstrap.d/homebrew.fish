@@ -1,5 +1,5 @@
 if type -q brew
-    if ! brew bundle check -q
+    if ! brew bundle check --global -q
         info "Making sure brew packages are installed..."
         brew bundle --cleanup --global
     end
