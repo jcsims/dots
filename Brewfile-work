@@ -40,7 +40,6 @@ brew "fzf"
 # For the emacs-plus build
 brew "gcc" if OS.mac?
 brew "gh"
-brew "git"
 brew "htop"
 brew "jq"
 # For the system Java wrappers to find this JDK, symlink it with

@@ -27,7 +27,6 @@ brew "fisher"
 brew "fzf"
 # For the emacs-plus build, native-comp, and the jinx module
 brew "gcc" if OS.mac?
-brew "git"
 brew "go"
 brew "golangci-lint"
 brew "gopls"
