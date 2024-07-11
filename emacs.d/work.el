@@ -1,3 +1,9 @@
+(eval-after-load 'magit
+  (lambda ()
+    ;; I so rarely use tags, and this takes ~500ms in a magit buffer on a work
+    ;; repo!
+    (remove-hook 'magit-status-headers-hook #'magit-insert-tags-header)))
+
 (use-package terraform-mode)
 
 (use-package cljstyle-format
