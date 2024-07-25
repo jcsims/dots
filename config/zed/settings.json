@@ -15,13 +15,16 @@
   "features": {
     "inline_completion_provider": "copilot"
   },
-  "theme": "Ayu Mirage",
+  "theme": "Gruvbox Dark Soft",
   "ui_font_size": 14,
   "buffer_font_size": 12,
   "buffer_font_family": "Hack Nerd Font Mono",
   "terminal": {
     "option_as_meta": true,
-    "copy_on_select": true
+    "copy_on_select": true,
+    "env": {
+      "EDITOR": "zed --wait"
+    }
   },
   "tab_size": 2,
   "assistant": {
@@ -34,7 +37,7 @@
       },
       "name": "ollama",
       // Recommended setting to allow for model startup
-      "low_speed_timeout_in_seconds": null
+      "low_speed_timeout_in_seconds": 0
     }
   }
 }
