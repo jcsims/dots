@@ -19,6 +19,10 @@
   :custom
   (splash-stonehenge-dir "/Users/csims/code/work/stonehenge/"))
 
+(use-package php-cs-fixer-format
+  :load-path "./lisp"
+  :hook (php-mode . php-cs-fixer-format-on-save-mode))
+
 (use-package php-mode
   :hook ((php-mode . eglot-ensure))
   :config
@@ -65,7 +69,7 @@
             (let* ((raw-link (org-element-property :raw-link link))
                    (content (org-element-contents link))
                    (title (substring-no-properties (or (seq-first content) raw-link))))
-              (push (concat title
+	      (push (concat title
                             " | "
                             (propertize raw-link 'face 'whitespace-space))
                     links)))
@@ -117,8 +121,8 @@
          (condition-case nil
              (unwind-protect
                  ,@body
-               (delete-frame frame)
-               (kill-buffer buffer))
+	       (delete-frame frame)
+	       (kill-buffer buffer))
            (quit (delete-frame frame)
                  (kill-buffer buffer))))))
 

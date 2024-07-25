@@ -1,4 +1,3 @@
-;; -*- mode: emacs-lisp;-*-
 ;;; init.el --- user-init-file                    -*- lexical-binding: t -*-
 ;;; Early birds
 
@@ -12,12 +11,14 @@
 (eval-and-compile ;;     startup
   (defvar before-user-init-time (current-time)
     "Value of `current-time' when Emacs begins loading `user-init-file'.")
+
   (message "Loading Emacs...done (%.3fs)"
            (float-time (time-subtract before-user-init-time
                                       before-init-time)))
+
   (defvar work-install (string= "csims" user-login-name)
     "Is this instance of Emacs running on a work laptop?")
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
   (message "Loading %s..." user-init-file)
   (setq inhibit-startup-buffer-menu t)
   (setq inhibit-startup-screen t)
@@ -31,6 +32,7 @@
   (when (fboundp 'tool-bar-mode)
     (tool-bar-mode 0))
   (menu-bar-mode 0)
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (when (file-exists-p custom-file)
     (load custom-file)))
 
@@ -64,7 +66,7 @@
     (set-frame-font "Hack Nerd Font 9")
   (set-frame-font "Hack Nerd Font 12"))
 
-(eval-and-compile                                  ;theme
+(eval-and-compile                       ;theme
   (defvar jcs-active-theme)
   (defvar jcs-dark-theme)
   (defvar jcs-light-theme)
@@ -101,12 +103,6 @@
 
 ;;; Long tail
 
-(use-package age
-  :custom
-  (age-default-recipient "age1w3cld0g47deea2anr6ckhgrnnxrjfjzksx6hljt4hedth2cufqhsr4u2y3")
-  (age-default-identity (expand-file-name "~/.ssh/encrypt.age"))
-  :config (age-file-enable))
-
 (use-package alejandra-format
   :load-path "lisp/"
   :hook (nix-mode . alejandra-format-on-save-mode))
@@ -117,10 +113,6 @@
   (setq atomic-chrome-url-major-mode-alist
         '(("github\\.com" . gfm-mode)))
   (atomic-chrome-start-server))
-
-(use-package auth-source
-  :ensure f
-  :custom (auth-sources '("~/.authinfo.age")))
 
 (use-package autorevert
   :ensure f
@@ -138,7 +130,7 @@
 (use-package bug-reference
   :ensure f
   :config
-  (setq bug-reference-bug-regexp "\\(\\(RATE-[0-9]+\\)\\)"
+  (setq bug-reference-bug-regexp "\\(\\(RATE-[0-9]+\\|AR-[0-9]+\\)\\)"
         bug-reference-url-format "https://splashfinancial.atlassian.net/browse/%s")
   :hook (prog-mode . bug-reference-prog-mode))
 
@@ -167,21 +159,23 @@
   (setq cider-repl-display-help-banner nil
         nrepl-log-messages nil
         ;; Let LSP handle eldoc
-        cider-eldoc-display-for-symbol-at-point (when (not work-install) t))
+        ;;cider-eldoc-display-for-symbol-at-point (when (not work-install) t)
+        )
   ;; Borrowed from https://manueluberti.eu/2023/03/25/clojure-lsp.html
   (defun mu-cider-disable-eldoc ()
     "Let LSP handle ElDoc instead of CIDER."
     (when (not work-install)
       (remove-hook 'eldoc-documentation-functions #'cider-eldoc t)))
 
-  (add-hook 'cider-mode-hook #'mu-cider-disable-eldoc)
+  ;;(add-hook 'cider-mode-hook #'mu-cider-disable-eldoc)
 
   (defun mu-cider-disable-completion ()
     "Let LSP handle completion instead of CIDER."
     (when (not work-install)
       (remove-hook 'completion-at-point-functions #'cider-complete-at-point t)))
 
-  (add-hook 'cider-mode-hook #'mu-cider-disable-completion))
+  ;;(add-hook 'cider-mode-hook #'mu-cider-disable-completion)
+  )
 
 (use-package clojure-mode
   :after (paredit)
@@ -200,6 +194,9 @@
 
 (use-package company-quickhelp
   :config (company-quickhelp-mode))
+
+(use-package consult
+  :bind (("C-x b" . consult-buffer)))
 
 ;; TODO: Pull out this one function and its dependencies.
 (use-package crux
@@ -225,8 +222,8 @@
 (use-package dired
   :ensure f
   :defer t
-  :custom (dired-vc-rename-file t)
-  :config (setq dired-listing-switches "-alh"))
+  :config (setq dired-listing-switches "-alh")
+  :custom (dired-vc-rename-file t))
 
 (use-package display-line-numbers
   :ensure f
@@ -254,13 +251,14 @@
   :hook
   ((clojure-mode
     go-ts-mode
+    nix-mode
     python-mode
     rust-ts-mode
     sh-mode)
    . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :config (setq eglot-autoshutdown t
-                eglot-confirm-server-initiated-edits nil
+                eglot-confirm-server-edits nil
                 read-process-output-max (* 1024 1024)
                 eglot-extend-to-xref t
                 ;; Don't block on connecting to the lsp server at all
@@ -960,7 +958,11 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
 
 (use-package xref
   :ensure f
-  :custom (xref-search-program 'ripgrep))
+  :after consult
+  :custom
+  (xref-search-program 'ripgrep)
+  (xref-show-xrefs-function 'consult-xref)
+  (xref-show-definitions-function 'consult-xref))
 
 (use-package yaml-ts-mode :ensure f)
 
@@ -1178,9 +1180,10 @@ format. With PREFIX, copy to kill ring."
       (load file)))
 
   ;; Work config
-  (let ((file (expand-file-name "work.el"
+  (let ((file (expand-file-name "lisp/work.el"
                                 user-emacs-directory)))
-    (when (file-exists-p file)
+    (when (and work-install
+               (file-exists-p file))
       (load file))))
 
 ;; Local Variables:
