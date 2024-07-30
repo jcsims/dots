@@ -4,10 +4,4 @@
 # limited shell (meaning e.g. Homebrew-installed software is not available on
 # the PATH, like fish).
 
-client=emacsclient
-
-if [[ $(uname) = "Darwin" ]]; then
-    client=/opt/homebrew/bin/emacsclient
-fi
-
-$client -ne "(present-open-bookmark-frame)"
+/opt/homebrew/bin/emacsclient -ne "(present-open-bookmark-frame)"

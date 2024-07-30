@@ -38,7 +38,7 @@ brew "leiningen"
 brew "mas"
 brew "pkg-config" # For jinx module build
 brew "ripgrep"
-brew "rustup-init"
+brew "rustup"
 brew "shellcheck"
 brew "terminal-notifier"
 brew "tmux"

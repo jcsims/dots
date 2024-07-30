@@ -34,14 +34,18 @@ set -U --append __done_exclude '^emacsclient'
 
 if status is-interactive
     abbr --add ga 'git add'
+    abbr --add gi 'git add -i'
     abbr --add gc 'git commit'
     abbr --add gco 'git checkout'
     abbr --add gd 'git diff'
     abbr --add gdc 'git diff --cached'
+    abbr --add gf 'git fetch --all'
     abbr --add gl 'git log --graph --abbrev-commit --date=relative --pretty=format:'\''%C(bold blue)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'''
     abbr --add gp 'git push origin HEAD'
     abbr --add gpl 'git pull --rebase --prune'
     abbr --add gs 'git status -sb'
+
+    abbr --add todos 'git diff origin/master | grep --color=always -C 10 TODO | bat'
 
     abbr --add cat bat
 

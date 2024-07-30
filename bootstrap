@@ -52,6 +52,7 @@ maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
+maybe-link bin/sync-org-roam ~/bin/sync-org-roam
 if [ (whoami) = csims ]
     maybe-link Brewfile-work ~/.Brewfile
 else
@@ -79,6 +80,7 @@ if [ "$OS" = Darwin ]
     maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
     maybe-link launch-control/check-problems.plist ~/Library/LaunchAgents/check-problems.plist
     maybe-link launch-control/check-for-sync-conflicts.plist ~/Library/LaunchAgents/check-for-sync-conflicts.plist
+    maybe-link launch-control/org-roam-sync.plist ~/Library/LaunchAgents/org-roam-sync.plist
     # mac.fish depends on homebrew being installed
     source $DOTS/bootstrap.d/mac.fish
 end
