@@ -11,6 +11,9 @@ defaults write -f KeyRepeat -int 2
 info "Setting the proper scroll direction"
 defaults write -g com.apple.swipescrolldirection -boolean NO
 
+info "Turning off strange bold fonts in Alacritty"
+defaults write org.alacritty AppleFontSmoothing -int 0
+
 if ! test -e $HOME/bin/mkalias
     info "Grabbing mkalias..."
     curl 'https://f000.backblazeb2.com/file/mkalias/mkalias' -o $HOME/bin/mkalias; and chmod +x $HOME/bin/mkalias

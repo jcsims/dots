@@ -363,6 +363,8 @@
               ("C-." . jinx-correct))
   :config (global-jinx-mode))
 
+(use-package just-mode)
+
 (use-package lisp-mode
   :ensure f
   :config
@@ -379,6 +381,11 @@
   :custom
   (magit-branch-prefer-remote-upstream t)
   (magit-save-repository-buffers 'dontask))
+
+(use-package magit-todos
+  :after magit
+  :config (magit-todos-mode 1)
+  :custom ((magit-todos-exclude-globs  '("*.map"))))
 
 (use-package man
   :ensure f
@@ -958,11 +965,8 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
 
 (use-package xref
   :ensure f
-  :after consult
   :custom
-  (xref-search-program 'ripgrep)
-  (xref-show-xrefs-function 'consult-xref)
-  (xref-show-definitions-function 'consult-xref))
+  (xref-search-program 'ripgrep))
 
 (use-package yaml-ts-mode :ensure f)
 
@@ -1016,7 +1020,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (global-set-key (kbd "C-c e e") (lambda () (interactive) (find-file "~/.emacs.d/init.el")))
   (global-set-key (kbd "C-c e f") (lambda () (interactive) (find-file "~/.config/fish/config.fish")))
   (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.Brewfile")))
-  (global-set-key (kbd "C-c e w") (lambda () (interactive) (find-file "~/.emacs.d/work.el")))
+  (global-set-key (kbd "C-c e w") (lambda () (interactive) (find-file "~/.emacs.d/lisp/work.el")))
 
   ;; Taken from the Emacs Wiki: http://www.emacswiki.org/emacs/InsertDate
   (eval-and-compile

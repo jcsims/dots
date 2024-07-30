@@ -18,7 +18,8 @@ brew "hashicorp/tap/terraform"
 brew "awscli"
 brew "bazelisk"
 brew "composer"
-brew "php"
+brew "php@8.2"
+brew "php-cs-fixer"
 brew "postgresql@15"
 brew "python@3.10"
 
@@ -30,27 +31,27 @@ brew "age"
 brew "aspell"
 brew "bash-language-server"
 brew "bat"
-brew "emacs-plus", args: ["with-native-comp"] if OS.mac?
-brew "enchant" if OS.mac? # For jinx module build
+brew "emacs-plus", args: ["with-native-comp"]
+brew "enchant" # For jinx module build
 brew "eza"
 brew "fd"
 brew "fish"
 brew "fisher"
 brew "fzf"
 # For the emacs-plus build
-brew "gcc" if OS.mac?
+brew "gcc"
 brew "gh"
 brew "htop"
 brew "jq"
 # For the system Java wrappers to find this JDK, symlink it with
 #   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
-brew "openjdk" if OS.mac?
+brew "openjdk"
 brew "leiningen"
-brew "mas" if OS.mac?
-brew "pkg-config" if OS.mac? # For jinx module build
+brew "mas"
+brew "pkg-config" # For jinx module build
 brew "ripgrep"
 brew "shellcheck"
-brew "terminal-notifier" if OS.mac?
+brew "terminal-notifier"
 brew "tmux"
 brew "tokei"
 brew "watch"
@@ -72,6 +73,5 @@ cask "rectangle"
 cask "slack"
 cask "spotify"
 cask "sublime-merge"
-cask "zed"
 
 mas "Things", id: 904280696

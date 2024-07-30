@@ -4,7 +4,8 @@
     ;; repo!
     (remove-hook 'magit-status-headers-hook #'magit-insert-tags-header)))
 
-(use-package terraform-mode)
+(use-package terraform-mode
+  :custom (terraform-format-on-save t))
 
 (use-package cljstyle-format
   :after (clojure-mode)
@@ -52,6 +53,10 @@
                                      'literal)))
       (compile (concat "docker exec -t app php artisan test " class-path " --filter " filter "@'" escaped-case "'")))))
 
+(use-package ob-php
+  :after ob
+  :config (org-babel-do-load-languages 'org-babel-load-languages
+				       '((php . t))))
 
 (eval-and-compile ;; Borrowed from https://xenodium.com/building-your-own-bookmark-launcher/
   (require 'org-roam-id)

@@ -4,7 +4,7 @@ tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
 tap "codecrafters-io/tap"
-tap "d12frosted/emacs-plus" if OS.mac?
+tap "d12frosted/emacs-plus"
 tap "homebrew/bundle"
 
 brew "borkdude/brew/babashka"
@@ -13,34 +13,34 @@ brew "clojure-lsp/brew/clojure-lsp-native"
 brew "clojure/tools/clojure"
 brew "codecrafters-io/tap/codecrafters"
 
-brew "age"
 brew "aspell"
 brew "bash-language-server"
 brew "bat"
-brew "d12frosted/emacs-plus/emacs-plus", args: ["with-native-comp"] if OS.mac?
+brew "d12frosted/emacs-plus/emacs-plus", args: ["with-native-comp"]
 brew "enchant" # For jinx module build
 brew "exercism"
 brew "eza"
 brew "fd"
-brew "fish" if OS.mac?
+brew "fish"
 brew "fisher"
 brew "fzf"
 # For the emacs-plus build, native-comp, and the jinx module
-brew "gcc" if OS.mac?
+brew "gcc"
 brew "go"
 brew "golangci-lint"
 brew "gopls"
 brew "htop"
 brew "jq"
+brew "just"
 brew "ollama"
-brew "openjdk" if OS.mac?
+brew "openjdk"
 brew "leiningen"
-brew "mas" if OS.mac?
+brew "mas"
 brew "pkg-config" # For jinx module build
 brew "ripgrep"
 brew "rustup-init"
 brew "shellcheck"
-brew "terminal-notifier" if OS.mac?
+brew "terminal-notifier"
 brew "tmux"
 brew "tokei"
 brew "watch"
