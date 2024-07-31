@@ -4,9 +4,6 @@
 [credential]
 	helper = "osxkeychain"
 
-[diff "gpg"]
-	textconv = "gpg --no-tty --decrypt"
-
 [fetch]
 	prune = true
 
