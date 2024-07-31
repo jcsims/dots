@@ -20,13 +20,17 @@ end
 
 # Create some directories we need, in case they don't already exist
 
-mkdir -p ~/bin ~/.emacs.d/lisp ~/.gnupg ~/.hammerspoon ~/Library/LaunchAgents
+mkdir -p ~/bin ~/.emacs.d/lisp ~/.hammerspoon ~/Library/LaunchAgents
 mkdir -p ~/.config/alacritty ~/.config/git ~/.config/clojure-lsp ~/.config/fish ~/.config/zed
 
 # Link all the things
 
 set DOTS (dirname (realpath (status filename)))
 set OS (uname)
+
+function work-install
+    [ (whoami) = csims ]
+end
 
 function maybe-link
     set -l source "$DOTS/$argv[1]"
@@ -52,8 +56,9 @@ maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
+maybe-link bin/set-meeting-light ~/bin/set-meeting-light
 maybe-link bin/sync-org-roam ~/bin/sync-org-roam
-if [ (whoami) = csims ]
+if work-install
     maybe-link Brewfile-work ~/.Brewfile
 else
     maybe-link Brewfile ~/.Brewfile
@@ -67,8 +72,8 @@ maybe-link config/git/ignore ~/.config/git/ignore
 maybe-link config/zed/settings.json ~/.config/zed/settings.json
 maybe-link config/zed/keymap.json ~/.config/zed/keymap.json
 maybe-link emacs.d/lisp/alejandra-format.el ~/.emacs.d/lisp/alejandra-format.el
-maybe-link emacs.d/lisp/php-cs-fixer-format.el ~/.emacs.d/lisp/php-cs-fixer-format.el
-if [ (whoami) = csims ]
+if work-install
+    maybe-link emacs.d/lisp/php-cs-fixer-format.el ~/.emacs.d/lisp/php-cs-fixer-format.el
     maybe-link emacs.d/lisp/work.el ~/.emacs.d/lisp/work.el
 end
 maybe-link emacs.d/init.el ~/.emacs.d/init.el

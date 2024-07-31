@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if timeout 5 hue list > /dev/null; then
+    if osascript -e 'tell application "System Events" to get name of (processes where background only is false)' | grep 'zoom.us' > /dev/null 2>&1 ; then
+        hue '#7'=red,20%
+    else
+        hue '#7'=off
+    fi
+fi

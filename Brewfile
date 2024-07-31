@@ -17,6 +17,7 @@ brew "aspell"
 brew "bash-language-server"
 brew "bat"
 brew "d12frosted/emacs-plus/emacs-plus", args: ["with-native-comp"]
+brew "coreutils" # timeout
 brew "enchant" # For jinx module build
 brew "exercism"
 brew "eza"
