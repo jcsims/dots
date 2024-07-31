@@ -27,7 +27,6 @@ cask "chromium", args: {"no-quarantine": true}
 cask "cljstyle"
 
 ## Common tools
-brew "age"
 brew "aspell"
 brew "bash-language-server"
 brew "bat"
@@ -73,6 +72,5 @@ cask "plexamp"
 cask "rectangle"
 cask "slack"
 cask "spotify"
-cask "sublime-merge"
 
 mas "Things", id: 904280696
