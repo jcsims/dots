@@ -7,6 +7,11 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "language_models": {
+    "ollama": {
+      "low_speed_timeout_in_seconds": 0
+    }
+  },
   "autosave": {
     "after_delay": {
       "milliseconds": 1000
@@ -28,16 +33,11 @@
   },
   "tab_size": 2,
   "assistant": {
-    "version": "1",
-    "provider": {
-      "default_model": {
-        "name": "llama3:latest",
-        "max_tokens": 2048,
-        "keep_alive": -1
-      },
-      "name": "ollama",
-      // Recommended setting to allow for model startup
-      "low_speed_timeout_in_seconds": 0
-    }
+    "default_model": {
+      "provider": "ollama",
+      "model": "llama3:latest"
+    },
+    "version": "2",
+    "provider": null
   }
 }
