@@ -56,6 +56,8 @@ maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
+maybe-link bin/check-for-sync-conflicts ~/bin/check-for-sync-conflicts
+maybe-link bin/check-problems ~/bin/check-problems
 maybe-link bin/set-meeting-light ~/bin/set-meeting-light
 maybe-link bin/sync-org-roam ~/bin/sync-org-roam
 if work-install

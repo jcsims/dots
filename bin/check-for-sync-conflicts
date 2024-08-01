@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+check_for_sync_conflicts() {
+
+    status=0
+    sync_paths=(
+        "$HOME/Downloads"
+        "$HOME/books"
+        "$HOME/synced-config"
+        "$HOME/synced-docs"
+        "$HOME/wallpapers"
+        "$HOME/work-docs"
+    )
+
+    for path in "${sync_paths[@]}"; do
+        if [[ -d $path ]]; then
+
+            conflicts=$(/opt/homebrew/bin/fd -I -H --exclude .stversions .sync-conflict- "$path")
+
+            if [[ $conflicts ]] ; then
+                echo "there are conflicts in $path:" >> ~/problems
+                echo "$conflicts" >> ~/problems
+            else
+                # do nothing, things are good
+                status=$((status + 1))
+            fi
+        fi
+    done
+}
+
+
+check_for_sync_conflicts
