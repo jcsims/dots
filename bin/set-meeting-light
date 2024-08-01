@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env fish
 
-if timeout 5 hue list > /dev/null; then
-    if osascript -e 'tell application "System Events" to get name of (processes where background only is false)' | grep 'zoom.us' > /dev/null 2>&1 ; then
-        hue '#7'=red,20%
+if timeout 5 openhue get light >/dev/null
+    if osascript -e 'tell application "System Events" to get name of (processes where background only is false)' | grep 'zoom.us' >/dev/null 2>&1
+        openhue set light 7a50ab2b-b809-4d6f-a419-5346b30befae --on --color red --brightness 20
     else
-        hue '#7'=off
-    fi
-fi
+        openhue set light 7a50ab2b-b809-4d6f-a419-5346b30befae --off
+    end
+end
