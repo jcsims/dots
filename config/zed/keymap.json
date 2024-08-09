@@ -1,5 +1,6 @@
 [
   {
+    // TODO: Bind next/prev tab to cmd-left, cmd-right
     "context": "Editor",
     "bindings": {
       "ctrl-x ctrl-f": "file_finder::Toggle",
@@ -81,11 +82,11 @@
         }
       ],
       // xref
-      "cmd-.": "editor::GoToDefinition",
-      "ctrl-\\": "editor::ShowInlineCompletion",
+      "alt-.": "editor::GoToDefinition",
+      "alt-\\": "editor::ShowInlineCompletion",
       "cmd-shift-.": "editor::GoToDefinitionSplit",
-      "cmd-?": "editor::FindAllReferences",
-      "cmd-,": "pane::GoBack",
+      "atl-?": "editor::FindAllReferences",
+      "alt-,": "pane::GoBack",
       "ctrl-c ctrl-a": "editor::ToggleCodeActions",
       "ctrl-=": "editor::SelectLargerSyntaxNode",
       "ctrl-shift-=": "editor::SelectSmallerSyntaxNode",

@@ -18,7 +18,7 @@
     }
   },
   "features": {
-    "inline_completion_provider": "copilot"
+    "inline_completion_provider": "none"
   },
   "theme": "Gruvbox Dark Soft",
   "ui_font_size": 14,
