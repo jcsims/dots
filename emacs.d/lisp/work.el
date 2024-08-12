@@ -20,10 +20,6 @@
   :custom
   (splash-stonehenge-dir "/Users/csims/code/work/stonehenge/"))
 
-(use-package php-cs-fixer-format
-  :load-path "./lisp"
-  :hook (php-mode . php-cs-fixer-format-on-save-mode))
-
 (use-package php-mode
   :hook ((php-mode . eglot-ensure))
   :config
