@@ -51,6 +51,7 @@
         use-package-always-ensure t))
 
 (use-package gcmh
+  :custom (gcmh-verbose 't)
   :config (gcmh-mode))
 
 (use-package dash
