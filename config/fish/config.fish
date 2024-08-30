@@ -58,6 +58,8 @@ if status is-interactive
     abbr --add c pj
     abbr --add co 'pj open'
 
+    abbr --add wtests 'docker compose exec -T -u root app vendor/bin/paratest --testsuite'
+
     if type -q op
         # Add completions for 1password-cli
         op completion fish | source
