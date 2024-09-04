@@ -73,7 +73,6 @@ maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
 maybe-link config/zed/settings.json ~/.config/zed/settings.json
 maybe-link config/zed/keymap.json ~/.config/zed/keymap.json
-maybe-link emacs.d/lisp/alejandra-format.el ~/.emacs.d/lisp/alejandra-format.el
 if work-install
     maybe-link emacs.d/lisp/work.el ~/.emacs.d/lisp/work.el
 end
