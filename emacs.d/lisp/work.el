@@ -1,3 +1,9 @@
+;;; package --- Summary
+
+;;; Commentary:
+;; Code I use for work.
+
+;;; Code:
 (eval-after-load 'magit
   (lambda ()
     ;; I so rarely use tags, and this takes ~500ms in a magit buffer on a work
@@ -129,3 +135,6 @@
 
   (defun present-open-bookmark-frame ()
     (present (open-bookmark))))
+
+(provide 'work)
+;;; work.el ends here
