@@ -32,7 +32,7 @@ brew "aspell"
 brew "bash-language-server"
 brew "bat"
 brew "coreutils" # timeout
-brew "emacs-plus", args: ["with-native-comp"]
+brew "d12frosted/emacs-plus/emacs-plus", args: ["with-native-comp"]
 brew "enchant" # For jinx module build
 brew "eza"
 brew "fd"
@@ -44,7 +44,7 @@ brew "gcc"
 brew "gh"
 brew "htop"
 brew "jq"
-brew "openhue-cli"
+brew "openhue/cli/openhue-cli"
 # For the system Java wrappers to find this JDK, symlink it with
 #   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 brew "openjdk"
