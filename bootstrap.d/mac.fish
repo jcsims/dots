@@ -22,8 +22,6 @@ defaults write com.apple.dock tilesize -int 40
 defaults write com.apple.dock show-recents -bool false
 # This only shows open applications, which is awesome
 defaults write com.apple.dock static-only -bool true
-# This makes hidden apps slightly darker
-defaults write com.apple.dock showhidden -bool true
 killall Dock
 
 info "Configuring Finder"
