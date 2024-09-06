@@ -43,6 +43,7 @@ if status is-interactive
     abbr --add gp 'git push origin HEAD'
     abbr --add gpl 'git pull --rebase --prune'
     abbr --add gs 'git status -sb'
+    abbr --add gdob 'git branch | grep -v \'^*\' | xargs git branch -D'
 
     abbr --add todos 'git diff origin/master | grep --color=always -C 10 TODO | bat'
 
