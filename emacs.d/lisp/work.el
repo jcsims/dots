@@ -26,16 +26,14 @@
   :custom
   (splash-stonehenge-dir "/Users/csims/code/work/stonehenge/"))
 
+(use-package php-cs-fixer-format
+  :load-path "./lisp"
+  :hook (php-mode . php-cs-fixer-format-on-save-mode))
+
 (use-package php-mode
-  :hook ((php-mode . eglot-ensure)
-	 (after-save . jcs/php-format))
+  :hook ((php-mode . eglot-ensure))
   :config
   (setq website-dir (expand-file-name "~/code/work/Website"))
-
-  (defun jcs/php-format ()
-    (when (eq major-mode 'php-mode)
-      (eglot-format)
-      (save-buffer)))
 
   (defun website-test-class ()
     (interactive)

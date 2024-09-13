@@ -74,6 +74,7 @@ maybe-link config/git/ignore ~/.config/git/ignore
 maybe-link config/zed/settings.json ~/.config/zed/settings.json
 maybe-link config/zed/keymap.json ~/.config/zed/keymap.json
 if work-install
+    maybe-link emacs.d/lisp/php-cs-fixer-format.el ~/.emacs.d/lisp/php-cs-fixer-format.el
     maybe-link emacs.d/lisp/work.el ~/.emacs.d/lisp/work.el
 end
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
