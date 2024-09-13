@@ -131,6 +131,9 @@
         bug-reference-url-format "https://splashfinancial.atlassian.net/browse/%s")
   :hook (prog-mode . bug-reference-prog-mode))
 
+(use-package breadcrumb
+  :config (breadcrumb-mode))
+
 (use-package cider
   :after (clojure-mode paredit)
   :commands (cider-mode)

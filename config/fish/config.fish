@@ -13,7 +13,7 @@ fish_add_path -m ~/bin
 
 set -gx CLICOLOR 1
 set -gx EDITOR $HOME/bin/e
-set -gx VISUAL $HOME/bin/ec
+set -gx VISUAL $HOME/bin/e
 set -gx BAT_THEME 'Monokai Extended'
 set -gx PROJECT_PATHS $HOME/code $HOME/code/work
 
@@ -43,7 +43,10 @@ if status is-interactive
     abbr --add gp 'git push origin HEAD'
     abbr --add gpl 'git pull --rebase --prune'
     abbr --add gs 'git status -sb'
+    # Delete Other Branches
     abbr --add gdob 'git branch | grep -v \'^*\' | xargs git branch -D'
+    # Set Upstream
+    abbr --add gsu 'git branch --set-upstream-to=origin/master (git branch --show-current)'
 
     abbr --add todos 'git diff origin/master | grep --color=always -C 10 TODO | bat'
 
