@@ -23,6 +23,8 @@ brew "php@8.2"
 brew "php-cs-fixer"
 brew "postgresql@15"
 brew "python@3.10"
+brew "typescript-language-server"
+brew "yarn"
 
 cask "chromium", args: {"no-quarantine": true}
 cask "cljstyle"

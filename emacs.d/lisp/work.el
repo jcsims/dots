@@ -64,6 +64,10 @@
   :config (org-babel-do-load-languages 'org-babel-load-languages
 				       '((php . t))))
 
+(use-package typescript-ts-mode
+  :ensure f
+  :hook ((typescript-ts-mode . eglot-ensure)))
+
 (eval-and-compile ;; Borrowed from https://xenodium.com/building-your-own-bookmark-launcher/
   (require 'org-roam-id)
   (require 'org-element)
