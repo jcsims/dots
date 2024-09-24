@@ -64,6 +64,17 @@
   :config (org-babel-do-load-languages 'org-babel-load-languages
 				       '((php . t))))
 
+(use-package web-mode
+  :mode
+  (("\\.phtml\\'" . web-mode)
+   ("\\.php\\'" . web-mode)
+   ("\\.tpl\\'" . web-mode)
+   ("\\.[agj]sp\\'" . web-mode)
+   ("\\.as[cp]x\\'" . web-mode)
+   ("\\.erb\\'" . web-mode)
+   ("\\.mustache\\'" . web-mode)
+   ("\\.djhtml\\'" . web-mode)))
+
 (use-package typescript-ts-mode
   :ensure f
   :hook ((typescript-ts-mode . eglot-ensure)))
