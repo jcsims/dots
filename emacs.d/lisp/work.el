@@ -67,7 +67,7 @@
 (use-package web-mode
   :mode
   (("\\.phtml\\'" . web-mode)
-   ("\\.php\\'" . web-mode)
+   ("\\.blade\\.php\\'" . web-mode)
    ("\\.tpl\\'" . web-mode)
    ("\\.[agj]sp\\'" . web-mode)
    ("\\.as[cp]x\\'" . web-mode)
