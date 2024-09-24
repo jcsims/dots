@@ -79,6 +79,11 @@
   :ensure f
   :hook ((typescript-ts-mode . eglot-ensure)))
 
+(use-package ansi-color
+  :ensure f
+  ;; Interpret ANSI color codes in compilation buffer
+  :hook (compilation-filter . ansi-color-compilation-filter))
+
 (eval-and-compile ;; Borrowed from https://xenodium.com/building-your-own-bookmark-launcher/
   (require 'org-roam-id)
   (require 'org-element)
