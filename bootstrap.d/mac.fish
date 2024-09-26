@@ -26,11 +26,3 @@ killall Dock
 
 info "Configuring Finder"
 defaults write com.apple.finder ShowPathbar -bool true
-
-if ! test -e $HOME/bin/mkalias
-    info "Grabbing mkalias..."
-    curl 'https://f000.backblazeb2.com/file/mkalias/mkalias' -o $HOME/bin/mkalias; and chmod +x $HOME/bin/mkalias
-end
-
-info "Creating/updating alias for emacs-plus..."
-mkalias "$(brew --prefix emacs-plus)/Emacs.app" /Applications/Emacs.app

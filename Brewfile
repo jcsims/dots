@@ -4,7 +4,6 @@ tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
 tap "codecrafters-io/tap"
-tap "d12frosted/emacs-plus"
 tap "homebrew/bundle"
 tap "nextjournal/brew"
 
@@ -17,7 +16,6 @@ brew "codecrafters-io/tap/codecrafters"
 brew "aspell"
 brew "bash-language-server"
 brew "bat"
-brew "d12frosted/emacs-plus/emacs-plus", args: ["with-native-comp"]
 brew "coreutils" # timeout
 brew "enchant" # For jinx module build
 brew "exercism"
@@ -59,6 +57,7 @@ cask "calibre"
 cask "daisydisk"
 cask "dash"
 cask "discord"
+cask "emacs@pretest"
 cask "font-hack-nerd-font"
 cask "hammerspoon"
 cask "istat-menus"
