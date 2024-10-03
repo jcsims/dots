@@ -873,7 +873,7 @@ canceled tasks."
     (interactive)
     (dolist (grammar
              '((bash . ("https://github.com/tree-sitter/tree-sitter-bash" "v0.21.0"))
-               (clojure . ("https://github.com/sogaiu/tree-sitter-clojure" "v0.0.12"))
+               (clojure . ("https://github.com/sogaiu/tree-sitter-clojure" "v0.0.13"))
                (css . ("https://github.com/tree-sitter/tree-sitter-css" "v0.20.0"))
                (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile" "v0.2.0"))
                (go . ("https://github.com/tree-sitter/tree-sitter-go" "v0.21.0"))
