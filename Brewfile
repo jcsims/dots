@@ -72,6 +72,7 @@ cask "spotify"
 cask "steam"
 cask "sublime-merge"
 cask "syncthing"
+cask "tailscale"
 cask "transmission"
 cask "transmit"
 
