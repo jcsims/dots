@@ -301,6 +301,7 @@
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
 
 (use-package flycheck
+  :disabled
   :config (global-flycheck-mode)
   :bind (:map flycheck-mode-map
               ("M-n" . flycheck-next-error)
@@ -313,14 +314,6 @@
   :bind (:map flymake-mode-map
               ("M-n" . flymake-goto-next-error)
               ("M-p" . flymake-goto-prev-error)))
-
-(use-package flyspell
-  :disabled
-  :ensure f
-  :config
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-  (setq ispell-program-name "aspell"))
 
 (use-package git-link)
 
