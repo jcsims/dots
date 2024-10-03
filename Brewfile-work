@@ -39,8 +39,6 @@ brew "fd"
 brew "fish"
 brew "fisher"
 brew "fzf"
-# For the emacs-plus build
-brew "gcc"
 brew "gh"
 brew "htop"
 brew "jq"
@@ -60,7 +58,6 @@ brew "watch"
 
 cask "1password"
 cask "1password-cli"
-cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
 cask "arc"
 cask "daisydisk"
