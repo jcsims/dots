@@ -26,17 +26,19 @@
   :custom
   (splash-stonehenge-dir "/Users/csims/code/work/stonehenge/"))
 
+(use-package php-cs-fixer-format
+  :load-path "./lisp"
+  :custom (php-cs-fixer-format-arguments '("--config=/Users/csims/code/work/Website/.php-cs-fixer.php"))
+  :hook (php-mode . php-cs-fixer-format-on-save-mode))
 
 (use-package php-mode
-  :hook ((php-mode . eglot-ensure)
-	 (after-save . jcs/php-format))
+  :hook ((php-mode . eglot-ensure))
   :config
   (setq website-dir (expand-file-name "~/code/work/Website"))
 
-  (defun jcs/php-format ()
-    (when (eq major-mode 'php-mode)
-      (eglot-format)
-      (save-buffer)))
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                     '((php-mode web-mode) . ("intelephense" "--stdio"))))
 
   (defun website-test-class ()
     (interactive)
@@ -66,17 +68,6 @@
   :after ob
   :config (org-babel-do-load-languages 'org-babel-load-languages
 				       '((php . t))))
-
-(use-package web-mode
-  :mode
-  (("\\.phtml\\'" . web-mode)
-   ("\\.blade\\.php\\'" . web-mode)
-   ("\\.tpl\\'" . web-mode)
-   ("\\.[agj]sp\\'" . web-mode)
-   ("\\.as[cp]x\\'" . web-mode)
-   ("\\.erb\\'" . web-mode)
-   ("\\.mustache\\'" . web-mode)
-   ("\\.djhtml\\'" . web-mode)))
 
 (use-package typescript-ts-mode
   :ensure f

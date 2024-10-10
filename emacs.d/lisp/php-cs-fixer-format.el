@@ -43,7 +43,7 @@
   :type 'string)
 
 (defcustom php-cs-fixer-format-arguments
-  '("-q" "--" "-")
+  nil
   "Arguments to pass to php-cs-fixer."
   :group 'php-cs-fixer-format
   :type '(repeat string))
@@ -54,10 +54,10 @@
 (reformatter-define
   php-cs-fixer-format
   :program php-cs-fixer-format-command
-  :args (list "fix" "-q" input-file)
-  :lighter " php-cs-fixer"
   :stdin nil
   :stdout nil
+  :args (append '("fix" "-q") php-cs-fixer-format-arguments (list input-file))
+  :lighter " php-cs-fixer"
   :group 'php-cs-fixer-format)
 
 (provide 'php-cs-fixer-format)
