@@ -384,11 +384,6 @@
   (magit-branch-prefer-remote-upstream t)
   (magit-save-repository-buffers 'dontask))
 
-(use-package magit-todos
-  :after magit
-  :config (magit-todos-mode 1)
-  :custom ((magit-todos-exclude-globs  '("*.map"))))
-
 (use-package man
   :ensure f
   :defer t
