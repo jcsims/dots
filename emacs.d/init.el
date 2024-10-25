@@ -65,7 +65,7 @@
 ;; Font
 (if (eq system-type 'gnu/linux)
     (set-frame-font "Berkeley Mono 9")
-  (set-frame-font "Berkeley Mono 13"))
+  (set-frame-font "Berkeley Mono 12"))
 
 (eval-and-compile                       ;theme
   (defvar jcs-active-theme)
