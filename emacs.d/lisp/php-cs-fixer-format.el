@@ -34,7 +34,7 @@
 
 (defgroup php-cs-fixer-format nil
   "PHP file formatting using php-cs-fixer."
-  :group 'nix)
+  :group 'php)
 
 (defcustom php-cs-fixer-format-command
   "php-cs-fixer"

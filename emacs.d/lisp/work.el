@@ -38,7 +38,7 @@
 
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs
-                     '((php-mode web-mode) . ("intelephense" "--stdio"))))
+                     '((php-mode) . ("intelephense" "--stdio"))))
 
   (defun website-test-class ()
     (interactive)
