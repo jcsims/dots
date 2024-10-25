@@ -199,7 +199,10 @@
 
 (use-package completion-preview
   :ensure f
-  :config (global-completion-preview-mode))
+  :init (global-completion-preview-mode)
+  :bind (:map completion-preview-active-mode-map
+              ("M-n" . completion-preview-next-candidate)
+              ("M-p" . completion-preview-prev-candidate)))
 
 (use-package consult
   :bind (("C-x b" . consult-buffer)))
