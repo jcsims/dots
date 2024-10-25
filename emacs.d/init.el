@@ -64,8 +64,8 @@
 
 ;; Font
 (if (eq system-type 'gnu/linux)
-    (set-frame-font "Hack Nerd Font 9")
-  (set-frame-font "Hack Nerd Font 12"))
+    (set-frame-font "Berkeley Mono 9")
+  (set-frame-font "Berkeley Mono 13"))
 
 (eval-and-compile                       ;theme
   (defvar jcs-active-theme)
