@@ -1,6 +1,6 @@
 # Be explicit about the shell, since it doesn't seem to work as expected
 # sometimes (looking at you, work laptop...).
-[shell]
+[terminal.shell]
 program = "/opt/homebrew/bin/fish"
 args = ["--login"]
 
