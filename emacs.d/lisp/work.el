@@ -79,40 +79,28 @@
   :hook (compilation-filter . ansi-color-compilation-filter))
 
 (eval-and-compile ;; Borrowed from https://xenodium.com/building-your-own-bookmark-launcher/
-  (require 'org-roam-id)
-  (require 'org-element)
   (require 'seq)
+  (require 'work-bookmarks)
 
-  (defun browser-bookmarks (org-file)
-    "Return all links from ORG-FILE."
-    (with-temp-buffer
-      (let (links)
-        (insert-file-contents org-file)
-        (org-mode)
-        (org-element-map (org-element-parse-buffer) 'link
-          (lambda (link)
-            (let* ((raw-link (org-element-property :raw-link link))
-                   (content (org-element-contents link))
-                   (title (substring-no-properties (or (seq-first content) raw-link))))
-	      (push (concat title
-                            " | "
-                            (propertize raw-link 'face 'whitespace-space))
-                    links)))
-          nil nil 'link)
-        (seq-sort 'string-greaterp links))))
+  (defun browser-bookmarks (bookmarks-var)
+    "Return all bookmarks defined in BOOKMARKS-VAR"
+    (let (links)
+      (-map (lambda (link-cons)
+	      (push (concat (car link-cons) " | " (cdr link-cons))
+		    links))
+	    bookmarks-var)
+      (seq-sort 'string-greaterp links)))
 
   (comment
    (benchmark-run 1
-     (browser-bookmarks
-      (car (org-roam-id-find "DECD703F-028C-4414-ADAD-0910F8283CD8")))))
+     (browser-bookmarks2 work-bookmarks)))
 
   (defun open-bookmark ()
     (interactive)
     (browse-url (seq-elt
                  (split-string
                   (completing-read "Open: "
-                                   (browser-bookmarks
-                                    (car (org-roam-id-find "DECD703F-028C-4414-ADAD-0910F8283CD8"))))
+                                   (browser-bookmarks work-bookmarks))
                   " | ")
                  1)))
 
@@ -137,9 +125,6 @@
                                  (undecorated . t)
                                  (unsplittable . t)
                                  (vertical-scroll-bars . nil)))))
-       ;; (set-face-attribute 'ivy-current-match frame
-       ;;                     :background "#2a2a2a"
-       ;;                     :foreground 'unspecified)
        (select-frame frame)
        (select-frame-set-input-focus frame)
        (with-current-buffer buffer

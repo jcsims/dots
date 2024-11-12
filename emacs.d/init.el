@@ -1022,6 +1022,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (global-set-key (kbd "C-c e f") (lambda () (interactive) (find-file "~/.config/fish/config.fish")))
   (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.Brewfile")))
   (global-set-key (kbd "C-c e w") (lambda () (interactive) (find-file "~/.emacs.d/lisp/work.el")))
+  (global-set-key (kbd "C-c e b") (lambda () (interactive) (find-file "~/.emacs.d/lisp/work-bookmarks.el")))
 
   ;; Taken from the Emacs Wiki: http://www.emacswiki.org/emacs/InsertDate
   (eval-and-compile
@@ -1186,6 +1187,11 @@ format. With PREFIX, copy to kill ring."
 
   ;; Work config
   (let ((file (expand-file-name "lisp/work.el"
+                                user-emacs-directory)))
+    (when (and work-install
+               (file-exists-p file))
+      (load file)))
+  (let ((file (expand-file-name "lisp/work-bookmarks.el"
                                 user-emacs-directory)))
     (when (and work-install
                (file-exists-p file))
