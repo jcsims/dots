@@ -8,16 +8,16 @@ args = ["--login"]
 size = 12.0
 
 [font.bold]
-family = "BerkeleyMono Nerd Font"
+family = "Hack Nerd Font"
 
 [font.bold_italic]
-family = "BerkeleyMono Nerd Font"
+family = "Hack Nerd Font"
 
 [font.italic]
-family = "BerkeleyMono Nerd Font"
+family = "Hack Nerd Font"
 
 [font.normal]
-family = "BerkeleyMono Nerd Font"
+family = "Hack Nerd Font"
 
 [selection]
 save_to_clipboard = true
