@@ -20,7 +20,7 @@ end
 
 # Create some directories we need, in case they don't already exist
 
-mkdir -p ~/bin ~/.emacs.d/lisp ~/.hammerspoon ~/Library/LaunchAgents ~/Library/KeyBindings
+mkdir -p ~/bin ~/.emacs.d/lisp ~/Library/LaunchAgents ~/Library/KeyBindings
 mkdir -p ~/.config/alacritty ~/.config/git ~/.config/clojure-lsp ~/.config/fish ~/.config/zed
 
 # Link all the things
@@ -85,7 +85,6 @@ maybe-link tmux.conf ~/.tmux.conf
 if [ "$OS" = Darwin ]
     source $DOTS/bootstrap.d/homebrew.fish
     maybe-link DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
-    maybe-link hammerspoon/init.lua ~/.hammerspoon/init.lua
     maybe-link launch-control/check-problems.plist ~/Library/LaunchAgents/check-problems.plist
     maybe-link launch-control/check-for-sync-conflicts.plist ~/Library/LaunchAgents/check-for-sync-conflicts.plist
     maybe-link launch-control/org-roam-sync.plist ~/Library/LaunchAgents/org-roam-sync.plist
