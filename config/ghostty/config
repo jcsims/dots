@@ -1,0 +1,8 @@
+theme = Snazzy
+
+font-family = Hack Nerd Font Mono
+
+keybind = super+left=previous_tab
+keybind = super+right=next_tab
+
+copy-on-select = true

@@ -21,7 +21,7 @@ end
 # Create some directories we need, in case they don't already exist
 
 mkdir -p ~/bin ~/.emacs.d/lisp ~/Library/LaunchAgents ~/Library/KeyBindings
-mkdir -p ~/.config/alacritty ~/.config/git ~/.config/clojure-lsp ~/.config/fish
+mkdir -p ~/.config/clojure-lsp ~/.config/ghostty ~/.config/git ~/.config/fish
 
 # Link all the things
 
@@ -65,10 +65,10 @@ if work-install
 else
     maybe-link Brewfile ~/.Brewfile
 end
-maybe-link config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
 maybe-link config/clojure-lsp/config.edn ~/.config/clojure-lsp/config.edn
 maybe-link config/fish/config.fish ~/.config/fish/config.fish
 maybe-link config/fish/fish_plugins ~/.config/fish/fish_plugins
+maybe-link config/ghostty/config ~/.config/ghostty/config
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
 if work-install
