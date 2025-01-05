@@ -990,7 +990,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
             t))
 
 
-(eval-and-compile                                  ; personalize
+(eval-and-compile                       ; personalize
 
   (setq sentence-end-double-space nil   ; Sentences can end with a single space.
         select-enable-primary t         ; Use the clipboard for yank and kill
@@ -1179,22 +1179,22 @@ format. With PREFIX, copy to kill ring."
       (package-reinstall pkg)
       (require pkg)))
 
-  (let ((file (expand-file-name (concat (user-real-login-name) ".el")
-                                user-emacs-directory)))
-    (when (file-exists-p file)
-      (load file)))
+  (defun load-file-if-present (path)
+    (let ((file (expand-file-name path user-emacs-directory)))
+      (when (file-exists-p file)
+        (load file))))
+
+  (load-file-if-present (concat (user-real-login-name) ".el"))
+  (load-file-if-present "lisp/chatgpt-shell.el")
+
+  ;; Bookmark helper
+  (load-file-if-present "lisp/work-bookmarks.el")
+  (load-file-if-present "lisp/personal-bookmarks.el")
+  (load-file-if-present "lisp/bookmark.el")
 
   ;; Work config
-  (let ((file (expand-file-name "lisp/work.el"
-                                user-emacs-directory)))
-    (when (and work-install
-               (file-exists-p file))
-      (load file)))
-  (let ((file (expand-file-name "lisp/work-bookmarks.el"
-                                user-emacs-directory)))
-    (when (and work-install
-               (file-exists-p file))
-      (load file))))
+  (when work-install
+    (load-file-if-present "lisp/work.el")))
 
 ;; Local Variables:
 ;; indent-tabs-mode: nil

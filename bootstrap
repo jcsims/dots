@@ -74,8 +74,10 @@ maybe-link config/git/ignore ~/.config/git/ignore
 if work-install
     maybe-link emacs.d/lisp/php-cs-fixer-format.el ~/.emacs.d/lisp/php-cs-fixer-format.el
     maybe-link emacs.d/lisp/work.el ~/.emacs.d/lisp/work.el
-    maybe-link emacs.d/lisp/work-bookmarks.el ~/.emacs.d/lisp/work-bookmarks.el
 end
+maybe-link emacs.d/lisp/work-bookmarks.el ~/.emacs.d/lisp/work-bookmarks.el
+maybe-link emacs.d/lisp/personal-bookmarks.el ~/.emacs.d/lisp/personal-bookmarks.el
+maybe-link emacs.d/lisp/bookmark.el ~/.emacs.d/lisp/bookmark.el
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf
