@@ -1,6 +1,7 @@
 theme = Snazzy
 
 font-family = Hack Nerd Font Mono
+font-size = 12
 
 keybind = super+left=previous_tab
 keybind = super+right=next_tab
