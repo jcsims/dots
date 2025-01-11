@@ -77,6 +77,7 @@ cask "syncthing"
 cask "tailscale"
 cask "transmission"
 cask "transmit"
+cask "zed"
 
 mas "Ivory", id: 6444602274
 mas "Parcel", id: 639968404
