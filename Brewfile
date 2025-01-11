@@ -49,6 +49,7 @@ brew "zig"
 
 cask "1password"
 cask "1password-cli"
+cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
 cask "arc"
 cask "arq"
