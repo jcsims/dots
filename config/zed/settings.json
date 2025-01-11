@@ -12,7 +12,7 @@
   "buffer_font_size": 12,
   "buffer_line_height": "standard",
   "buffer_font_family": "Hack Nerd Font Mono",
-  "theme": "Tomorrow Night Out",
+  "theme": "Gruvbox Dark",
   "terminal": {
     "option_as_meta": true,
     "copy_on_select": true,
