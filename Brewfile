@@ -80,5 +80,6 @@ cask "transmit"
 cask "zed"
 
 mas "Ivory", id: 6444602274
+mas "Kiwix", id: 997079563
 mas "Parcel", id: 639968404
 mas "Things", id: 904280696
