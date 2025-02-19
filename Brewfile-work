@@ -23,6 +23,7 @@ brew "php@8.2"
 brew "php-cs-fixer"
 brew "postgresql@15", link: true
 brew "python@3.10"
+brew "python-lsp-server"
 brew "typescript-language-server"
 brew "yarn"
 
