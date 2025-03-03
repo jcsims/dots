@@ -47,6 +47,7 @@
   ;; set before requiring use-package.
   (setq use-package-enable-imenu-support t)
   (require 'use-package)
+  (require 'bind-key)
   (setq use-package-verbose t
         use-package-always-ensure t))
 
