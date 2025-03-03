@@ -21,10 +21,10 @@
 
 (use-package environ)
 (use-package splash
-  :after cider
   :load-path "/Users/csims/code/work/stonehenge/development/emacs/"
   :custom
-  (splash-stonehenge-dir "/Users/csims/code/work/stonehenge/"))
+  (splash-stonehenge-dir "/Users/csims/code/work/stonehenge/")
+  (splash-website-dir "/Users/csims/code/work/Website/"))
 
 (use-package php-cs-fixer-format
   :load-path "./lisp"
@@ -38,31 +38,7 @@
 
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs
-                     '((php-mode) . ("intelephense" "--stdio"))))
-
-  (defun website-test-class ()
-    (interactive)
-    (let ((class-path (file-relative-name (buffer-file-name) website-dir)))
-      (compile (concat "docker exec -t app php artisan test " class-path))))
-
-  (defun website-test-method ()
-    (interactive)
-    (let ((class-path (file-relative-name (buffer-file-name) website-dir))
-          (filter (thing-at-point 'symbol)))
-      (compile (concat "docker exec -t app php artisan test " class-path " --filter " filter))))
-
-  (defun website-test-case (case)
-    (interactive
-     (list
-      (let* ((prompt "Run case: ")
-             (input (read-from-minibuffer prompt nil nil nil nil)))
-        input)))
-    (let ((class-path (file-relative-name (buffer-file-name) website-dir))
-          (filter (thing-at-point 'symbol))
-          (escaped-case
-           (replace-regexp-in-string (regexp-quote "$") "\\$" case nil
-                                     'literal)))
-      (compile (concat "docker exec -t app php artisan test " class-path " --filter " filter "@'" escaped-case "'")))))
+                     '((php-mode) . ("intelephense" "--stdio")))))
 
 (use-package ob-php
   :after ob
@@ -80,8 +56,8 @@
 
 (use-package obsidian
   :demand t
+  :custom (obsidian-directory "~/notes/notes")
   :config
-  (obsidian-specify-path "~/notes/notes")
   (global-obsidian-mode)
 
   (require 'dash)
