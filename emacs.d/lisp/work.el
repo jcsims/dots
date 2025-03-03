@@ -13,9 +13,8 @@
 (use-package terraform-mode
   :custom (terraform-format-on-save t))
 
-(use-package cljstyle-format
-  :after (clojure-mode)
-  :hook (clojure-mode . cljstyle-format-on-save-mode))
+(use-package apheleia
+  :hook clojure-mode)
 
 (use-package graphql-mode)
 
