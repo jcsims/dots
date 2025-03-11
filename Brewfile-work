@@ -17,6 +17,7 @@ brew "hashicorp/tap/terraform"
 
 brew "awscli"
 brew "bazelisk"
+brew "clj-kondo"
 brew "composer"
 brew "ibazel" # Bazel builds on file changes
 brew "php@8.2"
