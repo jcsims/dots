@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-if /opt/homebrew/bin/timeout 5 /opt/homebrew/bin/openhue get light >/dev/null; then
-    if osascript -e 'tell application "System Events" to get name of (processes where background only is false)' | grep 'zoom.us' >/dev/null 2>&1; then
-        /opt/homebrew/bin/openhue set light 7a50ab2b-b809-4d6f-a419-5346b30befae --on --color red --brightness 20
-    else
-        /opt/homebrew/bin/openhue set light 7a50ab2b-b809-4d6f-a419-5346b30befae --off
-    fi
-fi
