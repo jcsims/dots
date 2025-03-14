@@ -4,7 +4,6 @@ tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
 tap "homebrew/bundle"
-tap "openhue/cli"
 
 brew "borkdude/brew/babashka"
 brew "babashka/brew/neil"
