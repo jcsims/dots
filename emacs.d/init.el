@@ -31,6 +31,8 @@
     (scroll-bar-mode 0))
   (when (fboundp 'tool-bar-mode)
     (tool-bar-mode 0))
+  (when (fboundp 'tooltip-mode)
+    (tooltip-mode 0))
   (menu-bar-mode 0)
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (when (file-exists-p custom-file)
