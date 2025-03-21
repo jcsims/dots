@@ -189,7 +189,6 @@
   (clojure-mode . cider-mode))
 
 (use-package company
-  :disabled
   :config
   (setq company-idle-delay .3) ; decrease delay before autocompletion popup shows
   (setq company-echo-delay 0)  ; remove annoying blinking
@@ -200,6 +199,7 @@
   :config (company-quickhelp-mode))
 
 (use-package completion-preview
+  :disabled
   :ensure f
   :init (global-completion-preview-mode)
   :bind (:map completion-preview-active-mode-map
