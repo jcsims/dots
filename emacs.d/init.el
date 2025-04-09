@@ -264,7 +264,6 @@
     go-ts-mode
     nix-mode
     python-mode
-    rust-ts-mode
     sh-mode)
    . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
@@ -286,6 +285,20 @@
   :ensure f
   :when (version< "25" emacs-version)
   :config (global-eldoc-mode))
+
+(use-package emacs
+  :ensure f
+  :custom
+  ;; Enable indentation+completion using the TAB key.
+  ;; `completion-at-point' is often bound to M-TAB.
+  (tab-always-indent 'complete)
+  ;; Emacs 30 and newer: Disable Ispell completion function.
+  ;; Try `cape-dict' as an alternative.
+  (text-mode-ispell-word-completion nil)
+  ;; Hide commands in M-x which do not apply to the current mode.  Corfu
+  ;; commands are hidden, since they are not used via M-x. This setting is
+  ;; useful beyond Corfu.
+  (read-extended-command-predicate #'command-completion-default-include-p))
 
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns x))
@@ -377,8 +390,6 @@
   (defun indent-spaces-mode ()
     (setq indent-tabs-mode nil))
   (add-hook 'lisp-interaction-mode-hook 'indent-spaces-mode))
-
-(use-package lua-mode)
 
 (use-package magit
   :bind (("C-c g"   . magit-status))
@@ -672,11 +683,6 @@ same directory as the org-buffer and insert a link to this file."
 
 (use-package org-mac-link)
 
-(use-package org-modern
-  :disabled
-  :after org
-  :config (global-org-modern-mode))
-
 (use-package org-roam
   :after (org vulpea)
   :custom (org-roam-directory jcs/org-roam-dir)
@@ -790,8 +796,6 @@ canceled tasks."
                         ".lsp/.cache"))
   :config (add-to-list 'project-switch-commands '(magit-project-status "Magit" ?m) t))
 
-(use-package protobuf-mode)
-
 (use-package recentf
   :ensure f
   :config
@@ -799,9 +803,12 @@ canceled tasks."
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?x?:")
   (recentf-mode))
 
-(use-package rust-ts-mode
-  :ensure f
-  :mode (("\\.rs\\'" . rust-ts-mode)))
+(use-package rustic
+  :config
+  (setq rustic-format-on-save nil
+        rustic-lsp-client 'eglot)
+  :custom
+  (rustic-cargo-use-last-stored-arguments t))
 
 (use-package savehist
   :ensure f
