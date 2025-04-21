@@ -28,10 +28,11 @@ set -g hydro_color_duration yellow
 # Increase the count of open files allowed (default is 256 on macOS)
 ulimit -Sn 4096
 
-# For done notifications, don't notify when it's running emacs from the shell
-set -U --append __done_exclude '^emacsclient'
-
 if status is-interactive
+
+    # For done notifications, don't notify when it's running emacs from the shell
+    set -U __done_exclude '^emacsclient'
+
     abbr --add ga 'git add'
     abbr --add gi 'git add -i'
     abbr --add gc 'git commit'
