@@ -1027,6 +1027,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.Brewfile")))
   (global-set-key (kbd "C-c e w") (lambda () (interactive) (find-file "~/.emacs.d/lisp/work.el")))
   (global-set-key (kbd "C-c e b") (lambda () (interactive) (find-file "~/.emacs.d/lisp/work-bookmarks.el")))
+  (global-set-key (kbd "C-c e j") (lambda () (interactive) (find-file "~/Library/Mobile Documents/iCloud~com~xenodium~Journelly/Documents/Journelly.org")))
 
   ;; Taken from the Emacs Wiki: http://www.emacswiki.org/emacs/InsertDate
   (eval-and-compile
