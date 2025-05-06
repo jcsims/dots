@@ -16,6 +16,14 @@
 (use-package apheleia
   :hook clojure-mode)
 
+(use-package bazel
+  :custom
+  (bazel-buildifier-before-save t)
+  :config
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                     '((bazel-mode bazel-build-mode bazel-workspace-mode) . ("bazel-lsp" )))))
+
 (use-package graphql-mode)
 
 (use-package environ)

@@ -121,8 +121,6 @@
   ;; Auto-refresh buffers
   (global-auto-revert-mode))
 
-(use-package bazel)
-
 ;; Borrowed from
 ;; https://skybert.net/emacs/get-clickable-jira-links-in-your-org-files/
 ;; This highlights the Jira ticket comments we use in the code.
