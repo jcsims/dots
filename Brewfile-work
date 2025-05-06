@@ -16,6 +16,7 @@ brew "hashicorp/tap/terraform"
 
 brew "awscli"
 brew "bazelisk"
+brew "buildifier"
 brew "clj-kondo"
 brew "composer"
 brew "ibazel" # Bazel builds on file changes
