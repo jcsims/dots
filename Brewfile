@@ -4,7 +4,6 @@ tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
 tap "codecrafters-io/tap"
-tap "homebrew/bundle"
 tap "nextjournal/brew"
 
 brew "borkdude/brew/babashka"

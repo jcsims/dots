@@ -3,7 +3,6 @@ tap "babashka/brew"
 tap "borkdude/brew"
 tap "clojure-lsp/brew"
 tap "clojure/tools"
-tap "homebrew/bundle"
 
 brew "borkdude/brew/babashka"
 brew "babashka/brew/neil"
