@@ -22,6 +22,8 @@ defaults write com.apple.dock tilesize -int 40
 defaults write com.apple.dock show-recents -bool false
 # This only shows open applications, which is awesome
 defaults write com.apple.dock static-only -bool true
+# Don't show the active indicator dot by each application
+defaults write com.apple.dock show-process-indicators -bool false
 killall Dock
 
 info "Configuring Finder"
