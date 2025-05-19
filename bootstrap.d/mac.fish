@@ -5,9 +5,10 @@ if ! test -e $target_jdk_path; or ! test /opt/homebrew/opt/openjdk/libexec/openj
 end
 
 info "Configuring keyboard"
+# `-g` is short for the global namespace, aka the "Apple Global Domain"
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 defaults write -g InitialKeyRepeat -int 15
-defaults write -f KeyRepeat -int 2
+defaults write -g KeyRepeat -int 2
 
 info "Setting the proper scroll direction"
 defaults write -g com.apple.swipescrolldirection -boolean NO
