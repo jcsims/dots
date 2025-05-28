@@ -30,6 +30,18 @@ ulimit -Sn 4096
 
 if status is-interactive
 
+    # Small helper function to take key-value pairs of env variables and export them
+    function env2fish
+        if not isatty
+            while read line
+                set --append argv $line
+            end
+        end
+        string replace -- = ' ' $argv |
+            string replace -r -- '^export' --export |
+            string replace -r '^(.)' 'set -gx $1'
+    end
+
     # For done notifications, don't notify when it's running emacs from the shell
     set -U __done_exclude '^emacsclient'
 
