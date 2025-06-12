@@ -61,5 +61,13 @@
   ;; Interpret ANSI color codes in compilation buffer
   :hook (compilation-filter . ansi-color-compilation-filter))
 
+(use-package gptel
+  :config
+  (gptel-make-ollama "Ollama"
+    :host "localhost:11434"
+    :stream t
+    :models '(devstral:latest))
+  (setq gptel-model 'devstral:latest))
+
 (provide 'work)
 ;;; work.el ends here
