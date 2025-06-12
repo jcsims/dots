@@ -74,6 +74,7 @@ cask "transmission"
 cask "transmit"
 cask "zed"
 
+mas "GoodLinks", id: 1474335294
 mas "Ivory", id: 6444602274
 mas "Kiwix", id: 997079563
 mas "Parcel", id: 639968404

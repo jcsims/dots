@@ -79,4 +79,5 @@ cask "slack"
 cask "spotify"
 cask "zed"
 
+mas "GoodLinks", id: 1474335294
 mas "Things", id: 904280696
