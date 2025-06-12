@@ -69,6 +69,14 @@
     (set-frame-font "Hack Nerd Font 9")
   (set-frame-font "Hack Nerd Font 12"))
 
+(defun jcs/set-laptop-font ()
+  (interactive)
+  (set-frame-font "Hack Nerd Font 14"))
+
+(defun jcs/set-docked-font ()
+  (interactive)
+  (set-frame-font "Hack Nerd Font 12"))
+
 (eval-and-compile                       ;theme
   (defvar jcs-active-theme)
   (defvar jcs-dark-theme)
@@ -212,6 +220,19 @@
   :bind (("C-a" . crux-move-beginning-of-line)))
 
 (use-package deadgrep)
+
+(use-package default-text-scale
+  :config (default-text-scale-mode)
+  (defun jcs/default-scale-all ()
+    (interactive)
+    (default-text-scale-reset)
+    (text-scale-adjust 0))
+  :bind (("C-x =" . default-text-scale-increase)
+         ("C-x C-=" . default-text-scale-increase)
+         ("C-x -" . default-text-scale-decrease)
+         ("C-x C--" . default-text-scale-decrease)
+         ("C-x 0" . jcs/default-scale-all)
+         ("C-x C-0" . jcs/default-scale-all)))
 
 (use-package diff-hl
   :config
