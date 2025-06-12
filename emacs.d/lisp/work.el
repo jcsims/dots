@@ -22,7 +22,7 @@
   :config
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs
-                     '((bazel-mode bazel-build-mode bazel-workspace-mode) . ("bazel-lsp" )))))
+                 '((bazel-mode bazel-build-mode bazel-workspace-mode) . ("bazel-lsp" )))))
 
 (use-package graphql-mode)
 
@@ -45,12 +45,12 @@
 
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs
-                     '((php-mode) . ("intelephense" "--stdio")))))
+                 '((php-mode) . ("intelephense" "--stdio")))))
 
 (use-package ob-php
   :after ob
   :config (org-babel-do-load-languages 'org-babel-load-languages
-				       '((php . t))))
+                                       '((php . t))))
 
 (use-package typescript-ts-mode
   :ensure f
