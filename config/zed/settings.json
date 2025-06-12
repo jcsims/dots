@@ -16,6 +16,11 @@
   "buffer_font_size": 12,
   "buffer_line_height": "standard",
   "buffer_font_family": "Hack Nerd Font Mono",
+  "languages": {
+    "PHP": {
+      "language_servers": ["intelephense", "!phpactor"]
+    }
+  },
   "theme": "Gruvbox Dark",
   "terminal": {
     "option_as_meta": true,
