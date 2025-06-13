@@ -72,7 +72,7 @@
 
 (use-package obsidian
   :demand t
-  :custom (obsidian-directory "~/notes/notes")
+  :custom (obsidian-directory "~/notes/splash")
   :config
   (global-obsidian-mode)
 
@@ -92,7 +92,6 @@
           (obsidian-find-file (expand-file-name (completing-read "Select file: " choices)
                                                 meeting-dir))
         (message "No meeting files for today.")))))
-
 
 (provide 'work)
 ;;; work.el ends here
