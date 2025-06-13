@@ -7,7 +7,7 @@
 	<key>Label</key>
 	<string>check-for-sync-conflicts</string>
 	<key>Program</key>
-	<string>/Users/jcsims/bin/check-for-sync-conflicts</string>
+	<string>/usr/local/bin/check-for-sync-conflicts</string>
 	<key>StandardErrorPath</key>
 	<string>/tmp/check-for-sync-conflicts.stderr</string>
 	<key>StandardOutPath</key>

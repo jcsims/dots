@@ -23,6 +23,8 @@ end
 mkdir -p ~/bin ~/.emacs.d/lisp ~/Library/LaunchAgents ~/Library/KeyBindings
 mkdir -p ~/.config/alacritty ~/.config/clojure-lsp ~/.config/fish ~/.config/ghostty ~/.config/git ~/.config/zed
 
+test -e /usr/local/bin || sudo mkdir -p /usr/local/bin
+
 # Link all the things
 
 set DOTS (dirname (realpath (status filename)))
@@ -35,6 +37,7 @@ end
 function maybe-link
     set -l source "$DOTS/$argv[1]"
     set -l target $argv[2]
+    set -l use_sudo $argv[3]
 
     if test -e $target
         if test -L $target
@@ -48,7 +51,12 @@ function maybe-link
             error "Real file $target is in the way of symlinking!"
         end
     else
-        ln -s $DOTS/$argv[1] $argv[2]
+        set -l cmd ln -s $DOTS/$argv[1] $argv[2]
+        if set --query $use_sudo
+            sudo $cmd
+        else
+            $cmd
+        end
     end
 end
 
@@ -56,9 +64,9 @@ maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
-maybe-link bin/check-for-sync-conflicts ~/bin/check-for-sync-conflicts
-maybe-link bin/check-problems ~/bin/check-problems
-maybe-link bin/sync-org-roam ~/bin/sync-org-roam
+maybe-link bin/check-for-sync-conflicts /usr/local/bin/check-for-sync-conflicts true
+maybe-link bin/check-problems /usr/local/bin/check-problems true
+maybe-link bin/sync-org-roam /usr/local/bin/sync-org-roam true
 if work-install
     maybe-link Brewfile-work ~/.Brewfile
 else
