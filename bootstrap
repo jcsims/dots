@@ -52,7 +52,7 @@ function maybe-link
         end
     else
         set -l cmd ln -s $DOTS/$argv[1] $argv[2]
-        if set --query $use_sudo
+        if set --query use_sudo
             sudo $cmd
         else
             $cmd
