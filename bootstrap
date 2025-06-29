@@ -34,24 +34,22 @@ function work-install
     [ (whoami) = csims ]
 end
 
-function maybe-link
-    set -l source "$DOTS/$argv[1]"
-    set -l target $argv[2]
-    set -l use_sudo $argv[3]
+function maybe-link -a source_path target_path use_sudo
+    set -l source "$DOTS/$source_path"
 
-    if test -e $target
-        if test -L $target
-            set -l target_real (realpath $target)
+    if test -e $target_path
+        if test -L $target_path
+            set -l target_real (realpath $target_path)
             if [ $target_real = $source ]
                 #echo "$source is already linked"
             else
-                warn "$target is linked to something else: $target_real"
+                warn "$target_path is linked to something else: $target_real"
             end
         else
-            error "Real file $target is in the way of symlinking!"
+            error "Real file $target_path is in the way of symlinking!"
         end
     else
-        set -l cmd ln -s $DOTS/$argv[1] $argv[2]
+        set -l cmd ln -s $DOTS/$source_path $target_path
         if set --query use_sudo
             sudo $cmd
         else
