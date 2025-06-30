@@ -236,7 +236,6 @@
          ("C-x C-=" . default-text-scale-increase)
          ("C-x -" . default-text-scale-decrease)
          ("C-x C--" . default-text-scale-decrease)
-         ("C-x 0" . jcs/default-scale-all)
          ("C-x C-0" . jcs/default-scale-all)))
 
 (use-package diff-hl
