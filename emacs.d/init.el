@@ -312,6 +312,10 @@
 
 (use-package emacs
   :ensure f
+  :config
+  ;; Unbind the key that minimizes Emacs. I never want this, and accidentally
+  ;; hit it way too often.
+  (global-unset-key (kbd "C-z"))
   :custom
   ;; Emacs 30 and newer: Disable Ispell completion function.
   ;; Try `cape-dict' as an alternative.
@@ -908,6 +912,7 @@ canceled tasks."
                (gomod . ("https://github.com/camdencheek/tree-sitter-go-mod" "v1.0.2"))
                (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.20.1"))
                (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.20.1" "src"))
+               (jsdoc . ("https://github.com/tree-sitter/tree-sitter-jsdoc" "v0.23.2"))
                (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.20.2"))
                (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.20.4"))
                (php . ("https://github.com/tree-sitter/tree-sitter-php" "v0.23.2" "php/src"))
@@ -940,8 +945,7 @@ canceled tasks."
              (css-mode . css-ts-mode)
              (json-mode . json-ts-mode)
              (js-json-mode . json-ts-mode)
-             ;;(php-mode . php-ts-mode)
-             ))
+             (php-mode . php-ts-mode)))
     (add-to-list 'major-mode-remap-alist mapping))
   :config
   (jcs/setup-install-grammars))

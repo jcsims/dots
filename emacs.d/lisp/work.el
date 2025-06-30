@@ -41,8 +41,6 @@
 (use-package php-mode
   :hook ((php-mode . eglot-ensure))
   :config
-  (setq website-dir (expand-file-name "~/code/work/Website"))
-
   (with-eval-after-load 'eglot
     (add-to-list 'eglot-server-programs
                  '((php-mode) . ("intelephense" "--stdio")))))

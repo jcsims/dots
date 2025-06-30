@@ -1,7 +1,7 @@
 set target_jdk_path /Library/Java/JavaVirtualMachines/openjdk.jdk
-if ! test -e $target_jdk_path; or ! test /opt/homebrew/opt/openjdk/libexec/openjdk.jdk -ef $target_jdk_path
+if ! test -e $target_jdk_path; or ! test /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk -ef $target_jdk_path
     info "Linking Homebrew JDK..."
-    sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk $target_jdk_path
+    sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk $target_jdk_path
 end
 
 info "Configuring keyboard"
