@@ -23,6 +23,7 @@ brew "fd"
 brew "fish"
 brew "fisher"
 brew "fzf"
+brew "git"
 brew "nextjournal/brew/garden"
 # For the emacs-plus build, native-comp, and the jinx module
 brew "gcc"

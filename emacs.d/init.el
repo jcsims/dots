@@ -418,6 +418,7 @@
 (use-package magit
   :bind (("C-c g"   . magit-status))
   :custom
+  (magit-git-executable "/opt/homebrew/bin/git")
   (magit-branch-prefer-remote-upstream t)
   (magit-save-repository-buffers 'dontask))
 
