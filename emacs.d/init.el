@@ -185,11 +185,6 @@
   ;;(add-hook 'cider-mode-hook #'mu-cider-disable-completion)
   )
 
-(use-package claude-code
-  :vc (:url "https://github.com/stevemolitor/claude-code.el" :rev :newest)
-  :config (claude-code-mode)
-  :bind-keymap ("C-c c" . claude-code-command-map))
-
 (use-package clojure-mode
   :after (paredit)
   :mode (("\\.edn\\'" . clojure-mode))
@@ -1226,7 +1221,7 @@ format. With PREFIX, copy to kill ring."
   ;; Bookmark helper
   (load-file-if-present "lisp/work-bookmarks.el")
   (load-file-if-present "lisp/personal-bookmarks.el")
-  (load-file-if-present "lisp/bookmark.el")
+  (load-file-if-present "lisp/bookmark-frame.el")
 
   ;; Work config
   (when work-install

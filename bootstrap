@@ -85,7 +85,7 @@ if work-install
 end
 maybe-link emacs.d/lisp/work-bookmarks.el ~/.emacs.d/lisp/work-bookmarks.el
 maybe-link emacs.d/lisp/personal-bookmarks.el ~/.emacs.d/lisp/personal-bookmarks.el
-maybe-link emacs.d/lisp/bookmark.el ~/.emacs.d/lisp/bookmark.el
+maybe-link emacs.d/lisp/bookmark-frame.el ~/.emacs.d/lisp/bookmark-frame.el
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf

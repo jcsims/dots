@@ -68,5 +68,5 @@
   (defun present-open-bookmark-frame ()
     (present (open-bookmark))))
 
-(provide 'bookmark)
-;;; bookmark.el ends here
+(provide 'bookmark-frame)
+;;; bookmark-frame.el ends here
