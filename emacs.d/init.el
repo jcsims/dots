@@ -436,8 +436,7 @@
   :config
   (setq minions-prominent-modes '(eglot-mode
                                   flycheck-mode
-                                  flymake-mode
-                                  lsp-mode))
+                                  flymake-mode))
   (minions-mode))
 
 (use-package multiple-cursors
