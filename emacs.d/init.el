@@ -101,14 +101,7 @@
     ;;(sml/apply-theme 'automatic)
     ))
 
-(use-package moody
-  :config
-  (moody-replace-mode-line-front-space)
-  (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode))
-
 (use-package smart-mode-line
-  :disabled
   :custom (sml/theme 'automatic)
   :config
   (add-to-list 'sml/replacer-regexp-list '("^~/code/work" ":work:") t)
