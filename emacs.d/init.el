@@ -98,8 +98,7 @@
         (setq jcs-active-theme jcs-dark-theme)
       (setq jcs-active-theme jcs-light-theme))
     (load-theme jcs-active-theme t)
-    ;;(sml/apply-theme 'automatic)
-    ))
+    (sml/apply-theme 'automatic)))
 
 (use-package smart-mode-line
   :custom (sml/theme 'automatic)
