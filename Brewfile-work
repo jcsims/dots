@@ -19,6 +19,7 @@ brew "buildifier"
 brew "clj-kondo"
 brew "composer"
 brew "ibazel" # Bazel builds on file changes
+brew "llm"
 brew "php@8.2"
 brew "php-cs-fixer"
 brew "postgresql@15", link: true
@@ -33,6 +34,7 @@ cask "cljstyle"
 
 ## Common tools
 brew "aspell"
+brew "bash"
 brew "bash-language-server"
 brew "bat"
 brew "coreutils" # timeout

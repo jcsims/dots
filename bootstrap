@@ -65,6 +65,7 @@ maybe-link bin/ec ~/bin/ec
 maybe-link bin/check-for-sync-conflicts /usr/local/bin/check-for-sync-conflicts true
 maybe-link bin/check-problems /usr/local/bin/check-problems true
 maybe-link bin/sync-org-roam /usr/local/bin/sync-org-roam true
+maybe-link bin/review ~/bin/review
 if work-install
     maybe-link Brewfile-work ~/.Brewfile
 else
