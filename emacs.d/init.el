@@ -417,6 +417,11 @@
   (magit-branch-prefer-remote-upstream t)
   (magit-save-repository-buffers 'dontask))
 
+;; Attempt to speed up some magit operations
+(use-package magit-prime
+  :config
+  (add-hook 'magit-pre-refresh-hook 'magit-prime-refresh-cache))
+
 (use-package man
   :ensure f
   :defer t
