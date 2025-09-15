@@ -910,6 +910,9 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
 
 (use-package yaml-ts-mode :ensure f)
 
+(use-package zig-mode
+  :custom (zig-indent-offset 2))
+
 ;; This needs to come late, so that it's the first hook that gets executed -
 ;; hooks prepend as they get added.
 (use-package envrc

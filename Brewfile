@@ -44,6 +44,7 @@ brew "terminal-notifier"
 brew "tmux"
 brew "tokei"
 brew "watch"
+brew "zig"
 
 cask "1password"
 cask "1password-cli"
