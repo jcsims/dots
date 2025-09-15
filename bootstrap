@@ -65,6 +65,7 @@ maybe-link bin/ec ~/bin/ec
 maybe-link bin/check-for-sync-conflicts /usr/local/bin/check-for-sync-conflicts true
 maybe-link bin/check-problems /usr/local/bin/check-problems true
 maybe-link bin/sync-org-roam /usr/local/bin/sync-org-roam true
+maybe-link bin/sync-org /usr/local/bin/sync-org true
 maybe-link bin/review ~/bin/review
 if work-install
     maybe-link Brewfile-work ~/.Brewfile
@@ -97,6 +98,7 @@ if [ "$OS" = Darwin ]
     maybe-link launch-control/check-problems.plist ~/Library/LaunchAgents/check-problems.plist
     maybe-link launch-control/check-for-sync-conflicts.plist ~/Library/LaunchAgents/check-for-sync-conflicts.plist
     maybe-link launch-control/org-roam-sync.plist ~/Library/LaunchAgents/org-roam-sync.plist
+    maybe-link launch-control/org-sync.plist ~/Library/LaunchAgents/org-sync.plist
     # mac.fish depends on homebrew being installed
     source $DOTS/bootstrap.d/mac.fish
 end
