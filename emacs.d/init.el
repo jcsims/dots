@@ -158,6 +158,9 @@
   ;; Make sure that cider doesn't overwrite xref keybindings, but let LSP handle
   ;; everything.
   (cider-xref-fn-depth 90)
+  ;; Align the second line of docstrings with the line above, instead of the
+  ;; quotation marks.
+  (clojure-docstring-fill-prefix-width 3)
   :config
   (add-hook 'cider-repl-mode-hook 'paredit-mode)
   ;; kill REPL buffers for a project as well
