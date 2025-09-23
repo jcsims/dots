@@ -51,7 +51,7 @@ brew "jq"
 brew "ollama"
 # For the system Java wrappers to find this JDK, symlink it with
 #   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
-brew "openjdk@17"
+brew "openjdk"
 brew "mas"
 brew "pkg-config" # For jinx module build
 brew "ripgrep"
