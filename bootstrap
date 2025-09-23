@@ -20,10 +20,8 @@ end
 
 # Create some directories we need, in case they don't already exist
 
-mkdir -p ~/bin ~/.emacs.d/lisp ~/Library/LaunchAgents ~/Library/KeyBindings
-mkdir -p ~/.config/alacritty ~/.config/clojure-lsp ~/.config/fish ~/.config/ghostty ~/.config/git ~/.config/zed
-
-test -e /usr/local/bin || sudo mkdir -p /usr/local/bin
+mkdir -p ~/bin ~/.emacs.d/lisp ~/Library/KeyBindings
+mkdir -p ~/.config/alacritty ~/.config/clojure-lsp ~/.config/fish ~/.config/git
 
 # Link all the things
 
@@ -34,7 +32,7 @@ function work-install
     [ (whoami) = csims ]
 end
 
-function maybe-link -a source_path target_path use_sudo
+function maybe-link -a source_path target_path
     set -l source "$DOTS/$source_path"
 
     if test -e $target_path
@@ -49,12 +47,7 @@ function maybe-link -a source_path target_path use_sudo
             error "Real file $target_path is in the way of symlinking!"
         end
     else
-        set -l cmd ln -s $DOTS/$source_path $target_path
-        if set --query use_sudo
-            sudo $cmd
-        else
-            $cmd
-        end
+        ln -s $DOTS/$source_path $target_path
     end
 end
 
@@ -62,11 +55,6 @@ maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
-maybe-link bin/check-for-sync-conflicts /usr/local/bin/check-for-sync-conflicts true
-maybe-link bin/check-problems /usr/local/bin/check-problems true
-maybe-link bin/sync-org-roam /usr/local/bin/sync-org-roam true
-maybe-link bin/sync-org /usr/local/bin/sync-org true
-maybe-link bin/review ~/bin/review
 if work-install
     maybe-link Brewfile-work ~/.Brewfile
 else
@@ -76,17 +64,12 @@ maybe-link config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
 maybe-link config/clojure-lsp/config.edn ~/.config/clojure-lsp/config.edn
 maybe-link config/fish/config.fish ~/.config/fish/config.fish
 maybe-link config/fish/fish_plugins ~/.config/fish/fish_plugins
-maybe-link config/ghostty/config ~/.config/ghostty/config
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
-maybe-link config/zed/settings.json ~/.config/zed/settings.json
-maybe-link config/zed/tasks.json ~/.config/zed/tasks.json
 if work-install
     maybe-link emacs.d/lisp/php-cs-fixer-format.el ~/.emacs.d/lisp/php-cs-fixer-format.el
     maybe-link emacs.d/lisp/work.el ~/.emacs.d/lisp/work.el
 end
-maybe-link emacs.d/lisp/work-bookmarks.el ~/.emacs.d/lisp/work-bookmarks.el
-maybe-link emacs.d/lisp/personal-bookmarks.el ~/.emacs.d/lisp/personal-bookmarks.el
 maybe-link emacs.d/lisp/bookmark-frame.el ~/.emacs.d/lisp/bookmark-frame.el
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
 maybe-link psqlrc ~/.psqlrc
@@ -95,10 +78,6 @@ maybe-link tmux.conf ~/.tmux.conf
 if [ "$OS" = Darwin ]
     source $DOTS/bootstrap.d/homebrew.fish
     maybe-link DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
-    maybe-link launch-control/check-problems.plist ~/Library/LaunchAgents/check-problems.plist
-    maybe-link launch-control/check-for-sync-conflicts.plist ~/Library/LaunchAgents/check-for-sync-conflicts.plist
-    maybe-link launch-control/org-roam-sync.plist ~/Library/LaunchAgents/org-roam-sync.plist
-    maybe-link launch-control/org-sync.plist ~/Library/LaunchAgents/org-sync.plist
     # mac.fish depends on homebrew being installed
     source $DOTS/bootstrap.d/mac.fish
 end
