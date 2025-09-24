@@ -19,7 +19,6 @@ brew "buildifier"
 brew "clj-kondo"
 brew "composer"
 brew "ibazel" # Bazel builds on file changes
-brew "llm"
 brew "php@8.2"
 brew "php-cs-fixer"
 brew "postgresql@15", link: true
@@ -65,12 +64,10 @@ cask "1password"
 cask "1password-cli"
 cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
-cask "arc"
 cask "daisydisk"
 cask "dash"
 cask "emacs-app"
 cask "font-hack-nerd-font"
-cask "ghostty"
 cask "google-chrome"
 cask "istat-menus"
 cask "jetbrains-toolbox"
@@ -81,8 +78,6 @@ cask "obsidian"
 cask "plexamp"
 cask "rectangle"
 cask "slack"
-cask "spotify"
-cask "zed"
 
 mas "GoodLinks", id: 1474335294
 mas "Things", id: 904280696
