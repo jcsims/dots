@@ -72,14 +72,15 @@
     "Open an Obsidian meeting note from today."
     (interactive)
     (let* ((today-string (format-time-string "%Y-%m-%d"))
-           (meeting-dir (expand-file-name "splash/meetings" obsidian-directory))
+           (meeting-dir (expand-file-name "meetings" obsidian-directory))
            (choices (->> (directory-files-recursively meeting-dir "\.*.md$")
                          (seq-filter #'obsidian-file-p)
                          (seq-map (lambda (f) (file-relative-name f meeting-dir)))
                          (seq-filter (lambda (f) (s-starts-with? today-string f))))))
       (if choices
-          (obsidian-find-file (expand-file-name (completing-read "Select file: " choices)
-                                                meeting-dir))
+	  (let* ((file-name (completing-read "Select file: " choices)))
+	    (message "Opening %s" file-name)
+            (obsidian-find-file file-name))
         (message "No meeting files for today.")))))
 
 (provide 'work)
