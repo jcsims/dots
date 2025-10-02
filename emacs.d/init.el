@@ -962,7 +962,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (global-set-key (kbd "C-c e f") (lambda () (interactive) (find-file "~/.config/fish/config.fish")))
   (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.Brewfile")))
   (global-set-key (kbd "C-c e w") (lambda () (interactive) (find-file "~/.emacs.d/lisp/work.el")))
-  (global-set-key (kbd "C-c e b") (lambda () (interactive) (find-file "~/.emacs.d/lisp/work-bookmarks.el")))
+  (global-set-key (kbd "C-c e b") (lambda () (interactive) (find-file "~/.emacs.d/work-bookmarks/work-bookmarks.el")))
   (global-set-key (kbd "C-c e j") (lambda () (interactive) (find-file "~/Library/Mobile Documents/iCloud~com~xenodium~Journelly/Documents/Journelly.org")))
 
   ;; Taken from the Emacs Wiki: http://www.emacswiki.org/emacs/InsertDate
@@ -1130,7 +1130,7 @@ format. With PREFIX, copy to kill ring."
   (load-file-if-present "lisp/chatgpt-shell.el")
 
   ;; Bookmark helper
-  (load-file-if-present "lisp/work-bookmarks.el")
+  (load-file-if-present "work-bookmarks/work-bookmarks.el")
   (load-file-if-present "lisp/personal-bookmarks.el")
   (load-file-if-present "lisp/bookmark-frame.el")
 
