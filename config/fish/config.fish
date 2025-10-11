@@ -45,6 +45,13 @@ if status is-interactive
     # For done notifications, don't notify when it's running emacs from the shell
     set -U __done_exclude '^emacsclient'
 
+    # Use terminal-notifier without sender parameter to avoid hangs in Ghostty
+    if test "$__done_notify_sound" -eq 1
+        set -g __done_notification_command 'echo "$message" | terminal-notifier -title "$title" -sound default'
+    else
+        set -g __done_notification_command 'echo "$message" | terminal-notifier -title "$title"'
+    end
+
     abbr --add ga 'git add'
     abbr --add gi 'git add -i'
     abbr --add gc 'git commit'
