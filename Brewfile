@@ -13,7 +13,6 @@ brew "clojure/tools/clojure"
 brew "codecrafters-io/tap/codecrafters"
 
 brew "aspell"
-brew "bash-language-server"
 brew "bat"
 brew "coreutils" # timeout
 brew "enchant" # For jinx module build
@@ -26,9 +25,6 @@ brew "fzf"
 brew "git"
 # For the emacs-plus build, native-comp, and the jinx module
 brew "gcc"
-brew "go"
-brew "golangci-lint"
-brew "gopls"
 brew "htop"
 brew "jq"
 brew "openjdk"
@@ -45,7 +41,6 @@ brew "watch"
 brew "zig"
 
 cask "1password"
-cask "1password-cli"
 cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
 cask "arq"
@@ -61,7 +56,6 @@ cask "launchcontrol"
 cask "monitorcontrol"
 cask "netnewswire"
 cask "obsidian"
-cask "openaudible"
 cask "plexamp"
 cask "rectangle"
 cask "slack"
