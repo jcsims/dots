@@ -25,6 +25,7 @@ brew "fzf"
 brew "git"
 # For the emacs-plus build, native-comp, and the jinx module
 brew "gcc"
+brew "gleam"
 brew "htop"
 brew "jq"
 brew "openjdk"
