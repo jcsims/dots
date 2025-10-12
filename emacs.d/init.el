@@ -1121,6 +1121,8 @@ format. With PREFIX, copy to kill ring."
       (package-reinstall pkg)
       (require pkg)))
 
+  ;; TODO: Add ~/.emacs.d/lisp/ to `load-path` so that a plain `require` will
+  ;; pull them in if necessary. This should obviate the need for the `load`s.
   (defun load-file-if-present (path)
     (let ((file (expand-file-name path user-emacs-directory)))
       (when (file-exists-p file)
