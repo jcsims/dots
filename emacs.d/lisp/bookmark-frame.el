@@ -6,8 +6,6 @@
 ;;; Code:
 (eval-and-compile ;; Borrowed from https://xenodium.com/building-your-own-bookmark-launcher/
   (require 'seq)
-  (require 'work-bookmarks)
-  (require 'personal-bookmarks)
 
   (defun browser-bookmarks (bookmarks-var)
     "Return all bookmarks defined in BOOKMARKS-VAR"
