@@ -61,12 +61,12 @@ brew "watch"
 
 cask "1password"
 cask "1password-cli"
+cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
 cask "daisydisk"
 cask "dash"
 cask "emacs-app"
 cask "font-hack-nerd-font"
-cask "ghostty"
 cask "istat-menus"
 cask "jetbrains-toolbox"
 cask "launchcontrol"
