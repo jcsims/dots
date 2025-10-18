@@ -14,7 +14,6 @@ fish_add_path -m ~/bin
 set -gx CLICOLOR 1
 set -gx EDITOR $HOME/bin/e
 set -gx VISUAL $HOME/bin/e
-set -gx BAT_THEME 'Monokai Extended'
 set -gx PROJECT_PATHS $HOME/code $HOME/code/work
 
 # Remove the default greeting message on a new shell
