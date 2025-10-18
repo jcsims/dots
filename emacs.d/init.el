@@ -114,6 +114,12 @@
 
 ;;; Long tail
 
+(use-package ansi-color
+  :ensure f
+  ;; Interpret ANSI color codes in compilation buffer
+  ;; This is used for running PHP tests at work, and for Zig's build process
+  :hook (compilation-filter . ansi-color-compilation-filter))
+
 (use-package atomic-chrome
   :if (display-graphic-p)
   :config

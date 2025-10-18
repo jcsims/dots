@@ -54,11 +54,6 @@
   :ensure f
   :hook ((typescript-ts-mode . eglot-ensure)))
 
-(use-package ansi-color
-  :ensure f
-  ;; Interpret ANSI color codes in compilation buffer
-  :hook (compilation-filter . ansi-color-compilation-filter))
-
 (use-package obsidian
   :demand t
   :custom (obsidian-directory "~/notes/splash")
