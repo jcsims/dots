@@ -40,6 +40,7 @@ brew "tmux"
 brew "tokei"
 brew "watch"
 brew "zig"
+brew "zls"
 
 cask "1password"
 cask "alacritty", args: {"no-quarantine": true}
