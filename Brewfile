@@ -45,6 +45,7 @@ brew "zls"
 cask "1password"
 cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
+cask "arduino-ide"
 cask "arq"
 cask "balenaetcher"
 cask "calibre"
@@ -68,5 +69,5 @@ cask "transmit"
 mas "GoodLinks", id: 1474335294
 mas "Ivory", id: 6444602274
 mas "Kiwix", id: 997079563
-mas "Parcel", id: 639968404
+mas "Parcel", id: 375589283
 mas "Things", id: 904280696
