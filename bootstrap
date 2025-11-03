@@ -80,9 +80,5 @@ if [ "$OS" = Darwin ]
     source $DOTS/bootstrap.d/mac.fish
 end
 
-if [ (hostname) = taichi ]
-    source $DOTS/bootstrap.d/homebrew.fish
-end
-
 info "Updating/installing fisher plugins..."
 fisher update
