@@ -52,7 +52,6 @@ function maybe-link -a source_path target_path
 end
 
 maybe-link bootstrap ~/bin/bootstrap
-maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
 if work-install
@@ -70,7 +69,6 @@ if work-install
     maybe-link emacs.d/lisp/php-cs-fixer-format.el ~/.emacs.d/lisp/php-cs-fixer-format.el
     maybe-link emacs.d/lisp/work.el ~/.emacs.d/lisp/work.el
 end
-maybe-link emacs.d/lisp/bookmark-frame.el ~/.emacs.d/lisp/bookmark-frame.el
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf

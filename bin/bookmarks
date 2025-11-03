@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# Using bash instead of fish here, because Alfred launches this with a very
-# limited shell (meaning e.g. Homebrew-installed software is not available on
-# the PATH, like fish).
-
-/opt/homebrew/bin/emacsclient -ne "(present-open-bookmark-frame)"
