@@ -12,8 +12,8 @@ end
 fish_add_path -m ~/bin
 
 set -gx CLICOLOR 1
-set -gx EDITOR $HOME/bin/e
-set -gx VISUAL $HOME/bin/e
+set -gx EDITOR hx
+set -gx VISUAL hx
 set -gx PROJECT_PATHS $HOME/code $HOME/code/work
 
 # Remove the default greeting message on a new shell
@@ -28,6 +28,9 @@ set -g hydro_color_duration yellow
 ulimit -Sn 4096
 
 if status is-interactive
+
+    # Bind C-z to `fg`, mirroring the keybind that put the app into the background.
+    bind \cz 'fg 2>/dev/null; commandline -f repaint'
 
     # Small helper function to take key-value pairs of env variables and export them
     function env2fish
