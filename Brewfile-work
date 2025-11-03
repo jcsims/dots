@@ -45,7 +45,9 @@ brew "fisher"
 brew "fzf"
 brew "gh"
 brew "git"
+brew "helix"
 brew "htop"
+brew "jj"
 brew "jq"
 # For the system Java wrappers to find this JDK, symlink it with
 #   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
@@ -63,6 +65,7 @@ cask "1password"
 cask "1password-cli"
 cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
+cask "claude-code"
 cask "daisydisk"
 cask "dash"
 cask "emacs-app"
