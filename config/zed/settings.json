@@ -21,7 +21,7 @@
       "language_servers": ["intelephense", "!phpactor"]
     }
   },
-  "theme": "Gruvbox Dark",
+  "theme": "Ayu Mirage",
   "terminal": {
     "option_as_meta": true,
     "copy_on_select": true,
