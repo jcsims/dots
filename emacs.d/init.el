@@ -741,7 +741,7 @@ same directory as the org-buffer and insert a link to this file."
 
 (use-package rustic
   :config
-  (setq rustic-format-on-save nil
+  (setq rustic-format-trigger 'on-save
         rustic-lsp-client 'eglot)
   :custom
   (rustic-cargo-use-last-stored-arguments t))
