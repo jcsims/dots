@@ -41,6 +41,7 @@ brew "enchant" # For jinx module build
 brew "eza"
 brew "fd"
 brew "fish"
+brew "fish-lsp"
 brew "fisher"
 brew "fzf"
 brew "gh"

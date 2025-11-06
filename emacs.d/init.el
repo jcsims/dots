@@ -278,18 +278,22 @@
 (use-package eglot
   :hook
   ((clojure-mode
+    fish-mode
     go-ts-mode
     nix-mode
     python-mode
     sh-mode)
    . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
-  :config (setq eglot-autoshutdown t
-                eglot-confirm-server-initiated-edits nil
-                read-process-output-max (* 1024 1024)
-                eglot-extend-to-xref t
-                ;; Don't block on connecting to the lsp server at all
-                eglot-sync-connect nil)
+  :config
+  (setq eglot-autoshutdown t
+        eglot-confirm-server-initiated-edits nil
+        read-process-output-max (* 1024 1024)
+        eglot-extend-to-xref t
+        ;; Don't block on connecting to the lsp server at all
+        eglot-sync-connect nil)
+  (add-to-list 'eglot-server-programs
+               '(fish-mode . ("fish-lsp" "start")))
   :bind (:map eglot-mode-map
               ("C-M-." . xref-find-references)
               ("s-l f" . eglot-format)
