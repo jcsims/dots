@@ -14,7 +14,7 @@
   :custom (terraform-format-on-save t))
 
 (use-package apheleia
-  :hook clojure-mode)
+  :hook clojure-ts-mode)
 
 (use-package bazel
   :custom
@@ -46,17 +46,9 @@
         ("C-c C-t C-n" . splash-website-test-class)
         ("C-c C-t C-t" . splash-website-test-method)))
 
-(use-package php-mode
-  :ensure f
-  :hook (php-mode . eglot-ensure)
-  :bind
-  (:map php-mode-map
-        ("C-c C-t C-n" . splash-website-test-class)
-        ("C-c C-t C-t" . splash-website-test-method)))
-
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               '(php-mode php-ts-mode . ("intelephense" "--stdio"))))
+               '(php-ts-mode . ("intelephense" "--stdio"))))
 
 (use-package ob-php
   :after ob

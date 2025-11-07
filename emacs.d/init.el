@@ -149,7 +149,7 @@
   :config (breadcrumb-mode))
 
 (use-package cider
-  :after (clojure-mode paredit)
+  :after (clojure-ts-mode paredit)
   :commands (cider-mode)
   :bind (:map cider-mode-map
               ("C-c i" . cider-inspect-last-result)
@@ -194,14 +194,14 @@
   ;;(add-hook 'cider-mode-hook #'mu-cider-disable-completion)
   )
 
-(use-package clojure-mode
+(use-package clojure-ts-mode
   :after (paredit)
-  :mode (("\\.edn\\'" . clojure-mode))
+  :mode (("\\.edn\\'" . clojure-ts-mode))
   :config (when work-install
             (setq clojure-indent-style 'always-indent))
   :hook
-  (clojure-mode . paredit-mode)
-  (clojure-mode . cider-mode))
+  (clojure-ts-mode . paredit-mode)
+  (clojure-ts-mode . cider-mode))
 
 (use-package company
   :config
@@ -277,7 +277,7 @@
 
 (use-package eglot
   :hook
-  ((clojure-mode
+  ((clojure-ts-mode
     fish-mode
     go-ts-mode
     nix-mode
@@ -860,7 +860,8 @@ same directory as the org-buffer and insert a link to this file."
              (css-mode . css-ts-mode)
              (json-mode . json-ts-mode)
              (js-json-mode . json-ts-mode)
-             (php-mode . php-ts-mode)))
+             (php-mode . php-ts-mode)
+             (clojure-mode . clojure-ts-mode)))
     (add-to-list 'major-mode-remap-alist mapping))
   :config
   (jcs/setup-install-grammars))
