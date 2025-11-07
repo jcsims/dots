@@ -1,17 +1,5 @@
 #!/usr/bin/env fish
 
-# Deploy services via GitHub Actions workflow
-# Usage: ./deploy.fish [OPTIONS] SERVICE [SERVICE...]
-#
-# Arguments:
-#   SERVICE                One or more services to deploy (space-separated bazel package coordinates)
-#
-# Options:
-#   -b, --branch BRANCH    Git branch/ref to deploy (default: current branch)
-#   -e, --env ENVIRONMENTS Environments to deploy to (default: stage)
-#   -d, --dry-run         Print the gh command without executing it
-#   -h, --help            Show this help message
-
 function __deploy_show_help
     echo "Usage: deploy.fish [OPTIONS] SERVICE [SERVICE...]"
     echo ""
@@ -25,8 +13,8 @@ function __deploy_show_help
     echo "  -b, --branch BRANCH    Git branch/ref to deploy (default: current branch)"
     echo "  -e, --env ENVIRONMENTS Environments to deploy to (default: stage)"
     echo "                         Space-separated: 'stage' or 'stage prod'"
-    echo "  -d, --dry-run         Print the gh command without executing it"
-    echo "  -h, --help            Show this help message"
+    echo "  -d, --dry-run          Print the gh command without executing it"
+    echo "  -h, --help             Show this help message"
     echo ""
     echo "Examples:"
     echo "  ./deploy.fish forge"
