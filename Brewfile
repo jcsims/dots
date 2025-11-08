@@ -29,7 +29,6 @@ brew "git"
 # For the emacs-plus build, native-comp, and the jinx module
 brew "gcc"
 brew "gleam"
-brew "helix"
 brew "htop"
 brew "jj"
 brew "jq"
