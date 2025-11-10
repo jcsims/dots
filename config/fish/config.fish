@@ -45,7 +45,7 @@ if status is-interactive
     end
 
     # For done notifications, don't notify when it's running emacs from the shell
-    set -U __done_exclude '^emacsclient'
+    set -g __done_exclude '^emacsclient|^b$'
 
     abbr --add ga 'git add'
     abbr --add gi 'git add -i'
