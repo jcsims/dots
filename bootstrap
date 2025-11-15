@@ -21,7 +21,7 @@ end
 # Create some directories we need, in case they don't already exist
 
 mkdir -p ~/bin ~/.emacs.d/lisp ~/Library/KeyBindings
-mkdir -p ~/.config/alacritty ~/.config/clojure-lsp ~/.config/fish/completions ~/.config/fish/functions ~/.config/git
+mkdir -p ~/.config/alacritty ~/.config/clojure-lsp ~/.config/fish/completions ~/.config/fish/functions ~/.config/ghostty ~/.config/git
 
 # Link all the things
 
@@ -65,6 +65,7 @@ maybe-link config/fish/config.fish ~/.config/fish/config.fish
 maybe-link config/fish/fish_plugins ~/.config/fish/fish_plugins
 maybe-link config/fish/completions/deploy.fish ~/.config/fish/completions/deploy.fish
 maybe-link config/fish/functions/deploy.fish ~/.config/fish/functions/deploy.fish
+maybe-link config/ghostty/config ~/.config/ghostty/config
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
 if work-install
