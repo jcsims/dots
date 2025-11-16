@@ -17,6 +17,7 @@ brew "aspell"
 brew "bat"
 brew "coreutils" # timeout
 brew "enchant" # For jinx module build
+brew "esptool"
 brew "exercism"
 brew "eza"
 brew "fd"
