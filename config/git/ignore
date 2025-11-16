@@ -9,5 +9,3 @@ flycheck_*.el
 tramp
 .clj-kondo
 .lsp
-
-**/.claude/settings.local.json

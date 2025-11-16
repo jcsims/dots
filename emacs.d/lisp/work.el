@@ -14,7 +14,7 @@
   :custom (terraform-format-on-save t))
 
 (use-package apheleia
-  :hook clojure-ts-mode)
+  :hook clojure-mode)
 
 (use-package bazel
   :custom
