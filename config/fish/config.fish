@@ -29,8 +29,11 @@ ulimit -Sn 4096
 
 if status is-interactive
 
-    # Bind C-z to `fg`, mirroring the keybind that put the app into the background.
-    bind \cz 'fg 2>/dev/null; commandline -f repaint'
+    # Override TERM for Ghostty to use a standard terminal type
+    # This ensures emacsclient works correctly from the terminal
+    if test "$TERM_PROGRAM" = ghostty
+        set -gx TERM xterm-256color
+    end
 
     # Small helper function to take key-value pairs of env variables and export them
     function env2fish

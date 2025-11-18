@@ -13,3 +13,4 @@ copy-on-select = clipboard
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
+keybind = shift+enter=text:\x1b\r
