@@ -45,7 +45,6 @@ brew "watch"
 brew "yt-dlp"
 
 cask "1password"
-cask "alacritty", args: {"no-quarantine": true}
 cask "alfred"
 cask "arduino-ide"
 cask "arq"

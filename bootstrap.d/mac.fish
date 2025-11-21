@@ -13,9 +13,6 @@ defaults write -g KeyRepeat -int 2
 info "Setting the proper scroll direction"
 defaults write -g com.apple.swipescrolldirection -boolean NO
 
-info "Turning off strange bold fonts in Alacritty"
-defaults write org.alacritty AppleFontSmoothing -int 0
-
 info "Configuring the Dock"
 defaults write com.apple.dock orientation -string left
 defaults write com.apple.dock tilesize -int 40
