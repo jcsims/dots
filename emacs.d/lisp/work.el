@@ -36,19 +36,18 @@
 (use-package php-cs-fixer-format
   :load-path "./lisp"
   :custom (php-cs-fixer-format-arguments '("--config=/Users/csims/code/work/Website/.php-cs-fixer.php"))
-  :hook ((php-mode php-ts-mode) . php-cs-fixer-format-on-save-mode))
+  :hook ((php-mode) . php-cs-fixer-format-on-save-mode))
 
-(use-package php-ts-mode
-  :ensure f
-  :hook (php-ts-mode . eglot-ensure)
+(use-package php-mode
+  :hook (php-mode . eglot-ensure)
   :bind
-  (:map php-ts-mode-map
+  (:map php-mode-map
         ("C-c C-t C-n" . splash-website-test-class)
         ("C-c C-t C-t" . splash-website-test-method)))
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               '(php-ts-mode . ("intelephense" "--stdio"))))
+               '(php-mode . ("intelephense" "--stdio"))))
 
 (use-package ob-php
   :after ob

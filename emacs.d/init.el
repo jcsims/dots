@@ -859,8 +859,7 @@ same directory as the org-buffer and insert a link to this file."
              (bash-mode . bash-ts-mode)
              (css-mode . css-ts-mode)
              (json-mode . json-ts-mode)
-             (js-json-mode . json-ts-mode)
-             (php-mode . php-ts-mode)))
+             (js-json-mode . json-ts-mode)))
     (add-to-list 'major-mode-remap-alist mapping))
   :config
   (jcs/setup-install-grammars))
