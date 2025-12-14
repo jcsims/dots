@@ -197,8 +197,7 @@
 (use-package clojure-mode
   :after (paredit)
   :mode (("\\.edn\\'" . clojure-mode))
-  :config (when work-install
-            (setq clojure-indent-style 'always-indent))
+  :config (setq clojure-indent-style 'always-indent)
   :hook
   (clojure-mode . paredit-mode)
   (clojure-mode . cider-mode))
