@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Only attempt this if the screen is unlocked
+if [ "$(/usr/libexec/PlistBuddy -c "print :IOConsoleUsers:0:CGSSessionScreenIsLocked" /dev/stdin 2>/dev/null <<< "$(ioreg -n Root -d1 -a)")" != "true" ]; then
+    if curl -fq https://github.com > /dev/null 2>&1; then
+        cd ~/org-roam || exit 1
+        if ! ./sync; then
+            echo "org-roam sync failed! $(date)" >> "$HOME/problems"
+        fi
+    fi
+fi
