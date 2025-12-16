@@ -723,10 +723,13 @@ same directory as the org-buffer and insert a link to this file."
          (before-save . vulpea-project-update-tag))
   :config
   (org-roam-db-autosync-mode)
-  (advice-add 'org-roam-refile :after 'org-save-all-org-buffers)
-  ;; Help make agenda loading faster by only including org-roam files
-  ;; with todo headers in the agenda files
-  ;; Stolen from
+  ;; This is broken at the moment, since with the :after combinator, both
+  ;; functions receive the same arguments:
+  ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Advice-Combinators.html
+  ;; org-roam-refile takes one argument, and org-save-all-org-buffers takes none.
+  ;; (advice-add 'org-roam-refile :after 'org-save-all-org-buffers) Help make
+  ;; agenda loading faster by only including org-roam files with todo headers in
+  ;; the agenda files Stolen from
   ;; https://d12frosted.io/posts/2021-01-16-task-management-with-roam-vol5.html
   (add-to-list 'org-tags-exclude-from-inheritance "project")
 
