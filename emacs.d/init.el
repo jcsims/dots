@@ -569,6 +569,8 @@ same directory as the org-buffer and insert a link to this file."
          :map org-mode-map
          ("C-a" . org-beginning-of-line)))
 
+(defvar jcs/journelly-file "~/Library/Mobile Documents/iCloud~com~xenodium~Journelly/Documents/Journelly.org")
+
 (use-package org-agenda
   :ensure f
   :after (org vulpea)
@@ -640,7 +642,8 @@ same directory as the org-buffer and insert a link to this file."
 
   (defun vulpea-agenda-files-update (&rest _)
     "Update the value of `org-agenda-files' based on `project' tag."
-    (setq org-agenda-files (vulpea-project-files)))
+    (setq org-agenda-files (-concat (vulpea-project-files)
+                                    (list jcs/journelly-file))))
 
   (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
   (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
@@ -702,6 +705,8 @@ same directory as the org-buffer and insert a link to this file."
                     '(jcs/org-skip-function 'agenda)))))))))
 
 (use-package org-mac-link)
+
+(defvar jcs/org-roam-dir (file-truename "~/org-roam"))
 
 (use-package org-roam
   :after (org)
@@ -1055,7 +1060,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.Brewfile")))
   (global-set-key (kbd "C-c e w") (lambda () (interactive) (find-file "~/.emacs.d/lisp/work.el")))
   (global-set-key (kbd "C-c e b") (lambda () (interactive) (find-file "~/.emacs.d/work-links/work-bookmarks.el")))
-  (global-set-key (kbd "C-c e j") (lambda () (interactive) (find-file "~/Library/Mobile Documents/iCloud~com~xenodium~Journelly/Documents/Journelly.org")))
+  (global-set-key (kbd "C-c e j") (lambda () (interactive) (find-file jcs/journelly-file)))
 
   ;; Taken from the Emacs Wiki: http://www.emacswiki.org/emacs/InsertDate
   (eval-and-compile
