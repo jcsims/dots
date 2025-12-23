@@ -279,6 +279,7 @@
   ((clojure-mode
     fish-mode
     go-ts-mode
+    nix-mode
     python-mode
     sh-mode)
    . eglot-ensure)
@@ -454,6 +455,9 @@
 (use-package newcomment
   :ensure f
   :config (global-set-key [remap comment-dwim] #'comment-line))
+
+(use-package nix-mode
+  :hook (before-save . nix-format-before-save))
 
 (use-package no-littering)
 
