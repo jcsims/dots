@@ -361,14 +361,14 @@
 (use-package go-ts-mode
   :ensure f
   :mode (("\\.go\\'" . go-ts-mode))
+  :custom (go-ts-mode-indent-offset 2)
   ;; These shouldn't be on the global hooks, just for go-ts-mode
   :hook (;;(before-save . eglot-format-buffer)
          ;;(before-save . eglot-code-action-organize-imports)
          (go-ts-mode . set-go-local-config))
   :config
   (defun set-go-local-config ()
-    (setq-local tab-width 2
-                compile-command "go test -v && go vet && golangci-lint run --color never")))
+    (setq-local compile-command "go test -v && go vet && golangci-lint run")))
 
 (use-package help
   :ensure f
