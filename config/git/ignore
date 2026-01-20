@@ -11,3 +11,6 @@ tramp
 .lsp
 
 **/.claude/settings.local.json
+
+# Agent worktrees for parallel Claude Code sessions
+.agents/
