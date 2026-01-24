@@ -21,6 +21,7 @@ end
 # Create some directories we need, in case they don't already exist
 mkdir -p ~/bin ~/.emacs.d/lisp ~/Library/LaunchAgents ~/Library/KeyBindings
 mkdir -p ~/.config/clojure-lsp ~/.config/fish/completions ~/.config/fish/functions ~/.config/ghostty ~/.config/git
+mkdir -p ~/.claude
 
 test -e /usr/local/bin || sudo mkdir -p /usr/local/bin
 
@@ -85,6 +86,8 @@ maybe-link emacs.d/lisp/bookmark-frame.el ~/.emacs.d/lisp/bookmark-frame.el
 maybe-link emacs.d/init.el ~/.emacs.d/init.el
 maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf
+maybe-link config/claude/settings.json ~/.claude/settings.json
+maybe-link config/claude/statusline.sh ~/.claude/statusline.sh
 
 if [ "$OS" = Darwin ]
     source $DOTS/bootstrap.d/homebrew.fish
