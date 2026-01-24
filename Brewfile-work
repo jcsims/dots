@@ -59,6 +59,7 @@ brew "openjdk"
 brew "mas"
 brew "pkg-config" # For jinx module build
 brew "ripgrep"
+brew "rust"
 brew "shellcheck"
 brew "terminal-notifier"
 brew "tmux"
