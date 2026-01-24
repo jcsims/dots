@@ -37,6 +37,7 @@ brew "aspell"
 brew "bash"
 brew "bash-language-server"
 brew "bat"
+brew "cargo-binstall"
 brew "coreutils" # timeout
 brew "enchant" # For jinx module build
 brew "eza"
