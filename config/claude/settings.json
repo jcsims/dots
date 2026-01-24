@@ -1,9 +1,21 @@
 {
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true
-  },
   "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "php-lsp@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(bazel test:*)",
+      "Bash(clj-kondo:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(git show:*)",
+      "Bash(bazel query:*)"
+    ],
+    "defaultMode": "default"
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
