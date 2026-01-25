@@ -50,7 +50,7 @@ function maybe-link -a source_path target_path use_sudo
         end
     else
         set -l cmd ln -s $DOTS/$source_path $target_path
-        if set --query use_sudo
+        if test -n "$use_sudo"
             sudo $cmd
         else
             $cmd
