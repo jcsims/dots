@@ -312,6 +312,10 @@
   ;; Unbind the key that minimizes Emacs. I never want this, and accidentally
   ;; hit it way too often.
   (global-unset-key (kbd "C-z"))
+  ;; On macOS, attempt to work around the pitifully small 1KB limit on read
+  ;; buffers by using pipes instead.
+  (when (memq window-system '(mac ns))
+    (setq process-connection-type nil))
   :custom
   ;; Emacs 30 and newer: Disable Ispell completion function.
   ;; Try `cape-dict' as an alternative.
