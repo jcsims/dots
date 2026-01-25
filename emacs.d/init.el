@@ -417,12 +417,10 @@
   :custom
   (magit-git-executable "/opt/homebrew/bin/git")
   (magit-branch-prefer-remote-upstream t)
-  (magit-save-repository-buffers 'dontask))
-
-;; Attempt to speed up some magit operations
-(use-package magit-prime
-  :config
-  (add-hook 'magit-pre-refresh-hook 'magit-prime-refresh-cache))
+  (magit-save-repository-buffers 'dontask)
+  ;; Use pipes for process communication - much faster and we don't need the
+  ;; password prompting that the default `pty` offers.
+  (magit-process-connection-type nil))
 
 (use-package man
   :ensure f
