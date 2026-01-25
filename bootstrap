@@ -46,7 +46,11 @@ function maybe-link -a source_path target_path use_sudo
                 warn "$target_path is linked to something else: $target_real"
             end
         else
-            error "Real file $target_path is in the way of symlinking!"
+            if diff -q $source $target_path >/dev/null 2>&1
+                warn "Real file $target_path is in the way of symlinking! (contents are identical)"
+            else
+                error "Real file $target_path is in the way of symlinking! (contents differ)"
+            end
         end
     else
         set -l cmd ln -s $DOTS/$source_path $target_path
