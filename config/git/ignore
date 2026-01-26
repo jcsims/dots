@@ -12,5 +12,8 @@ tramp
 
 **/.claude/settings.local.json
 
-# Agent worktrees for parallel Claude Code sessions
-.agents/
+# Docket issues - not using this collaboratively with anyone yet.
+.docket
+
+# Not syncing this with git anywhere, quite yet.
+.claude
