@@ -9,7 +9,7 @@ function agent --description "Manage Claude Code agent worktrees"
         return 1
     end
     set -l repo_name (basename $repo_root)
-    set -l agents_dir "$repo_root/.agents"
+    set -l repo_parent (dirname $repo_root)
 
     switch $cmd
         case new create
@@ -44,13 +44,12 @@ function agent --description "Manage Claude Code agent worktrees"
                 or return 1
             end
 
-            set -l worktree_path "$agents_dir/$name"
-            set -l branch_name "jcs/$name"
+            set -l worktree_dir "wt-$name"
+            set -l worktree_path "$repo_parent/$worktree_dir"
 
-            mkdir -p $agents_dir
             echo "Creating agent worktree '$name' from '$base_branch'..."
 
-            git worktree add -b $branch_name $worktree_path $base_branch
+            git worktree add -b $name $worktree_path $base_branch
             or begin
                 echo "Error: Failed to create worktree"
                 return 1
@@ -58,27 +57,33 @@ function agent --description "Manage Claude Code agent worktrees"
 
             # Copy and augment CLAUDE.md if it exists
             if test -f "$repo_root/CLAUDE.md"
-                set -l subtree_context "# Subtree Context
+                set -l worktree_context "# Worktree Context
 
-You are working in an agent subtree at:
+You are working in an agent worktree at:
   $worktree_path
 
-This subtree directory should be used for ALL work, including exploratory work,
+This worktree directory should be used for ALL work, including exploratory work,
 scratch files, and any other files you need to create. Do not modify files
 outside this directory.
 
 ---
 
 "
-                echo -n $subtree_context >"$worktree_path/CLAUDE.md"
+                echo -n $worktree_context >"$worktree_path/CLAUDE.md"
                 cat "$repo_root/CLAUDE.md" >>"$worktree_path/CLAUDE.md"
-                echo "Copied CLAUDE.md with subtree context"
+                echo "Copied CLAUDE.md with worktree context"
+            end
+
+            # Symlink .claude directory if it exists in repo but not in worktree
+            if test -d "$repo_root/.claude" -a ! -e "$worktree_path/.claude"
+                ln -s "$repo_root/.claude" "$worktree_path/.claude"
+                echo "Symlinked .claude directory"
             end
 
             echo ""
             echo "Agent worktree created:"
             echo "  Path:   $worktree_path"
-            echo "  Branch: $branch_name"
+            echo "  Branch: $name"
             echo ""
             echo "To start working:"
             echo "  cd $worktree_path && claude"
@@ -86,46 +91,52 @@ outside this directory.
             echo "Or use: agent start $name"
 
         case list ls
-            if not test -d $agents_dir
-                echo "No agent worktrees found in $repo_name"
-                return 0
-            end
-
-            set -l dirs $agents_dir/*/
-            if test (count $dirs) -eq 0 -o "$dirs[1]" = "$agents_dir/*/"
-                echo "No agent worktrees found in $repo_name"
-                return 0
-            end
-
             echo "Agent worktrees for $repo_name:"
             echo ""
 
-            for dir in $dirs
-                test -d "$dir"; or continue
+            set -l found 0
+            for line in (git worktree list --porcelain)
+                if string match -q "worktree *" $line
+                    set -l worktree_path (string replace "worktree " "" $line)
+                    # Skip the main worktree
+                    if test "$worktree_path" = "$repo_root"
+                        continue
+                    end
+                    # Only show worktrees in sister directories with wt- prefix
+                    set -l dir_name (basename $worktree_path)
+                    if not string match -q "wt-*" $dir_name
+                        continue
+                    end
 
-                set -l name (basename $dir)
-                set -l branch (git -C $dir branch --show-current 2>/dev/null)
-                set -l status_info ""
+                    set found (math $found + 1)
+                    set -l branch (git -C $worktree_path branch --show-current 2>/dev/null)
+                    set -l name (string replace "wt-" "" $dir_name)
+                    set -l status_info ""
 
-                set -l changes (git -C $dir status --porcelain 2>/dev/null)
-                if test -n "$changes"
-                    set status_info " (has changes)"
+                    set -l changes (git -C $worktree_path status --porcelain 2>/dev/null)
+                    if test -n "$changes"
+                        set status_info " (has changes)"
+                    end
+
+                    printf "  %-20s %s%s\n" $name $branch $status_info
                 end
+            end
 
-                printf "  %-20s %s%s\n" $name $branch $status_info
+            if test $found -eq 0
+                echo "  (none)"
             end
             echo ""
 
         case cd path
             set -l name $args[1]
-            set -l worktree_path (_agent_require_worktree $agents_dir $name "cd (agent cd <name>)")
+            set -l worktree_path (_agent_require_worktree $repo_parent $name "cd (agent cd <name>)")
             or return 1
 
             echo $worktree_path
 
         case start
             set -l name $args[1]
-            set -l worktree_path (_agent_require_worktree $agents_dir $name "agent start <name>")
+            set -l worktree_path (_agent_require_worktree $repo_parent $name "agent start <name>")
             or return 1
 
             echo "Starting Claude in agent worktree '$name'..."
@@ -136,37 +147,45 @@ outside this directory.
             or return 1
 
             set -l name $argv[1]
-            set -l worktree_path (_agent_require_worktree $agents_dir $name "agent remove <name> [--force]")
+            set -l worktree_path (_agent_require_worktree $repo_parent $name "agent remove <name> [--force]")
             or return 1
-
-            set -l branch_name "agent/$name"
 
             # Check for uncommitted changes
             set -l changes (git -C $worktree_path status --porcelain 2>/dev/null)
             if test -n "$changes"
-                echo "Warning: Worktree has uncommitted changes!"
-                read -P "Continue anyway? [y/N] " confirm
-                if not string match -qi y -- $confirm
-                    echo Aborted
-                    return 1
+                if not set -q _flag_force
+                    echo "Warning: Worktree has uncommitted changes!"
+                    read -P "Continue anyway? [y/N] " confirm
+                    if not string match -qi y -- $confirm
+                        echo Aborted
+                        return 1
+                    end
                 end
             end
 
             echo "Removing agent worktree '$name'..."
-            git worktree remove $worktree_path --force
+            if set -q _flag_force
+                git worktree remove $worktree_path --force
+            else
+                git worktree remove $worktree_path
+                or begin
+                    echo "Hint: Use --force to remove worktrees with uncommitted changes"
+                    return 1
+                end
+            end
 
             if set -q _flag_force
-                echo "Deleting branch '$branch_name'..."
-                git branch -D $branch_name 2>/dev/null
+                echo "Deleting branch '$name'..."
+                git branch -D $name 2>/dev/null
             else
-                echo "Branch '$branch_name' preserved. Delete with: git branch -D $branch_name"
+                echo "Branch '$name' preserved. Delete with: git branch -D $name"
             end
 
             echo "Done."
 
         case status
             set -l name $args[1]
-            set -l worktree_path (_agent_require_worktree $agents_dir $name "agent status <name>")
+            set -l worktree_path (_agent_require_worktree $repo_parent $name "agent status <name>")
             or return 1
 
             echo "Status for agent '$name':"
@@ -174,14 +193,14 @@ outside this directory.
 
         case diff
             set -l name $args[1]
-            set -l worktree_path (_agent_require_worktree $agents_dir $name "agent diff <name>")
+            set -l worktree_path (_agent_require_worktree $repo_parent $name "agent diff <name>")
             or return 1
 
             git -C $worktree_path diff
 
         case log
             set -l name $args[1]
-            set -l worktree_path (_agent_require_worktree $agents_dir $name "agent log <name>")
+            set -l worktree_path (_agent_require_worktree $repo_parent $name "agent log <name>")
             or return 1
 
             echo "Commits for agent '$name':"
@@ -191,15 +210,11 @@ outside this directory.
 
         case merge
             set -l name $args[1]
-            if test -z "$name"
-                echo "Usage: agent merge <name>"
-                echo "  Merges the agent's branch into your current branch"
-                return 1
-            end
-            set -l branch_name "agent/$name"
+            set -l worktree_path (_agent_require_worktree $repo_parent $name "agent merge <name>")
+            or return 1
 
-            echo "Merging '$branch_name' into current branch..."
-            git merge $branch_name
+            echo "Merging '$name' into current branch..."
+            git merge $name
 
         case ''
             _agent_help
@@ -224,13 +239,13 @@ function _agent_default_branch
 end
 
 # Helper: Validate worktree exists and return path
-function _agent_require_worktree --argument-names agents_dir name usage
+function _agent_require_worktree --argument-names repo_parent name usage
     if test -z "$name"
         echo "Usage: $usage"
         return 1
     end
 
-    set -l worktree_path "$agents_dir/$name"
+    set -l worktree_path "$repo_parent/wt-$name"
     if not test -d $worktree_path
         echo "Error: Agent worktree '$name' not found"
         return 1
@@ -246,20 +261,22 @@ function _agent_help
     echo "Usage: agent <command> [args]"
     echo ""
     echo "Commands:"
-    echo "  new <name> [-c]      Create a new agent worktree (default: from main/master)"
-    echo "  list                 List all agent worktrees"
-    echo "  start <name>         Start Claude in an agent worktree"
-    echo "  cd <name>            Print path (use: cd (agent cd name))"
-    echo "  status <name>        Show git status for agent"
-    echo "  diff <name>          Show diff for agent"
-    echo "  log <name>           Show commits for agent"
-    echo "  merge <name>         Merge agent branch into current branch"
-    echo "  remove <name>        Remove an agent worktree"
+    echo "  new <name> [-c] [base]  Create a new agent worktree"
+    echo "                         -c: base off current branch (default: main/master)"
+    echo "                         base: explicit base branch"
+    echo "  list                   List all agent worktrees"
+    echo "  start <name>           Start Claude in an agent worktree"
+    echo "  cd <name>              Print path (use: cd (agent cd name))"
+    echo "  status <name>          Show git status for agent"
+    echo "  diff <name>            Show diff for agent"
+    echo "  log <name>             Show commits for agent"
+    echo "  merge <name>           Merge agent branch into current branch"
+    echo "  remove <name> [-f]     Remove an agent worktree (-f: also delete branch)"
     echo ""
     echo "Example workflow:"
     echo "  agent new feature-x          # Create worktree"
-    echo "  agent start feature-x        # Start Claude in new terminal"
+    echo "  agent start feature-x        # Start Claude in worktree"
     echo "  agent status feature-x       # Check progress"
     echo "  agent merge feature-x        # Merge when done"
-    echo "  agent remove feature-x       # Clean up"
+    echo "  agent remove -f feature-x    # Clean up worktree and branch"
 end
