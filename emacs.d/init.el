@@ -336,6 +336,8 @@
 (use-package files
   :ensure f
   :after (no-littering)
+  ;; Dont prompt to kill sub-processes (e.g. a REPL) on exit
+  :custom (confirm-kill-processes nil)
   :config
   (auto-save-visited-mode 1)
   (setq backup-directory-alist ; Save backups to a central location
