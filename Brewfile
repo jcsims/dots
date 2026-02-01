@@ -16,6 +16,7 @@ brew 'codecrafters-io/tap/codecrafters'
 
 brew 'arduino-cli'
 brew 'aspell'
+brew 'bash-language-server'
 brew 'bat'
 brew 'cargo-binstall'
 brew 'coreutils' # timeout
