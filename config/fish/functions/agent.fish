@@ -12,6 +12,10 @@ function agent --description "Manage Claude Code agent worktrees"
     set -l repo_parent (dirname $repo_root)
 
     switch $cmd
+        case -h --help help
+            _agent_help
+            return 0
+
         case new create
             argparse --name="agent new" c/current -- $args
             or return 1
@@ -53,25 +57,6 @@ function agent --description "Manage Claude Code agent worktrees"
             or begin
                 echo "Error: Failed to create worktree"
                 return 1
-            end
-
-            # Copy and augment CLAUDE.md if it exists
-            if test -f "$repo_root/CLAUDE.md"
-                set -l worktree_context "# Worktree Context
-
-You are working in an agent worktree at:
-  $worktree_path
-
-This worktree directory should be used for ALL work, including exploratory work,
-scratch files, and any other files you need to create. Do not modify files
-outside this directory.
-
----
-
-"
-                echo -n $worktree_context >"$worktree_path/CLAUDE.md"
-                cat "$repo_root/CLAUDE.md" >>"$worktree_path/CLAUDE.md"
-                echo "Copied CLAUDE.md with worktree context"
             end
 
             # Symlink .claude directory if it exists in repo but not in worktree
