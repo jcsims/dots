@@ -829,7 +829,16 @@ canceled tasks."
   (project-vc-ignores '(".clj-kondo"
                         ".cpcache"
                         ".lsp/.cache"))
-  :config (add-to-list 'project-switch-commands '(magit-project-status "Magit" ?m) t))
+  :config
+  (add-to-list 'project-switch-commands '(magit-project-status "Magit" ?m) t)
+
+  (defun jcs/project-forget-missing ()
+    "Remove known projects that no longer exist on the filesystem."
+    (interactive)
+    (project--ensure-read-project-list)
+    (dolist (proj project--list)
+      (unless (file-directory-p (car proj))
+        (project-forget-project (car proj))))))
 
 (use-package recentf
   :ensure f
