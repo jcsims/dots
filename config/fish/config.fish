@@ -75,6 +75,8 @@ if status is-interactive
 
     abbr --add todos 'git diff origin/master | grep --color=always -C 10 TODO | bat'
 
+    abbr --add todo 'e ~/todo.md'
+
     abbr --add cat bat
 
     alias eza 'eza '\''--icons'\'' '\''--git'\'''
