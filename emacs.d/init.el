@@ -437,6 +437,9 @@
   :init (marginalia-mode))
 
 (use-package markdown-mode
+  :bind (:map markdown-mode-map
+              ("M-<up>" . markdown-move-up)
+              ("M-<down>" . markdown-move-down))
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
