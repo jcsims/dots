@@ -109,9 +109,9 @@ function deploy
     # Run the workflow (or dry-run)
     if test "$dry_run" = true
         echo "Dry-run mode: Would execute:"
-        echo "$gh_command"
+        echo (string escape -- $gh_command)
     else
-        eval $gh_command
+        $gh_command
 
         if test $status -eq 0
             echo ""
