@@ -73,9 +73,7 @@ if status is-interactive
     # Set Upstream
     abbr --add gsu 'git branch --set-upstream-to=origin/master (git branch --show-current)'
 
-    abbr --add todos 'git diff origin/master | grep --color=always -C 10 TODO | bat'
-
-    abbr --add todo 'e ~/todo.md'
+    abbr --add todos 'e ~/todo.md'
 
     abbr --add cat bat
 

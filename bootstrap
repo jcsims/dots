@@ -79,6 +79,9 @@ maybe-link config/fish/fish_plugins ~/.config/fish/fish_plugins
 maybe-link config/fish/completions/deploy.fish ~/.config/fish/completions/deploy.fish
 maybe-link config/fish/functions/deploy.fish ~/.config/fish/functions/deploy.fish
 maybe-link config/fish/functions/agent.fish ~/.config/fish/functions/agent.fish
+maybe-link config/fish/functions/next.fish ~/.config/fish/functions/next.fish
+maybe-link config/fish/functions/done.fish ~/.config/fish/functions/done.fish
+maybe-link config/fish/functions/archive.fish ~/.config/fish/functions/archive.fish
 maybe-link config/ghostty/config ~/.config/ghostty/config
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
