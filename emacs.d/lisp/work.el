@@ -29,6 +29,13 @@
 (use-package environ)
 (use-package splash
   :load-path "/Users/csims/code/work/stonehenge/development/emacs/"
+  :config
+  (defun jcs/splash-cider-jack-in ()
+    (interactive)
+    (let (project-dir (project-root (project-current)))
+      (cider-jack-in-clj
+       (list :project-dir project-dir
+             :jack-in-cmd "bazel run //development/repl:repl"))))
   :custom
   (splash-stonehenge-dir "/Users/csims/code/work/stonehenge/")
   (splash-website-dir "/Users/csims/code/work/Website/"))
