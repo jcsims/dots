@@ -64,6 +64,11 @@ function archive --description "Move completed tasks in ~/todo.md to the Archive
         set -e new_kept[-1]
     end
 
+    # Strip leading blank lines from archive_lines (the header's blank line is re-added below)
+    while test (count $archive_lines) -gt 0; and test -z "$archive_lines[1]"
+        set -e archive_lines[1]
+    end
+
     # Build output: kept content, then archive section with new items on top
     set -l output $new_kept
     set -a output ""
