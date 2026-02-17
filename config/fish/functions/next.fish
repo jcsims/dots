@@ -1,11 +1,16 @@
-function next --description "Print the next incomplete task from ~/todo.md"
+function next --description "Print the next n incomplete tasks from ~/todo.md"
     set -l file ~/todo.md
+    set -l n 1
+    if test (count $argv) -gt 0
+        set n $argv[1]
+    end
+
     if not test -f $file
         echo "No todo.md found"
         return 1
     end
 
-    set -l found false
+    set -l task_count 0
     set -l lines (cat $file)
 
     for i in (seq (count $lines))
@@ -18,7 +23,7 @@ function next --description "Print the next incomplete task from ~/todo.md"
         if echo $line | string match -qr '^\s*- (\[ \] )?[^\[]'
             # Print the task line, stripping the checkbox if present
             echo $line | string replace -r '^\s*- (\[ \] )?' -- '- '
-            set found true
+            set task_count (math $task_count + 1)
 
             # Print any following indented context lines
             set -l j (math $i + 1)
@@ -32,11 +37,12 @@ function next --description "Print the next incomplete task from ~/todo.md"
                 end
                 set j (math $j + 1)
             end
-            break
+
+            test $task_count -ge $n; and break
         end
     end
 
-    if not $found
+    if test $task_count -eq 0
         echo "No remaining tasks"
         return 1
     end
