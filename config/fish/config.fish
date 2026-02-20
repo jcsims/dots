@@ -69,7 +69,7 @@ if status is-interactive
     abbr --add gpl 'git pull --rebase --prune'
     abbr --add gs 'git status -sb'
     # Delete Other Branches
-    abbr --add gdob 'git branch | grep -v \'^*\' | grep -v \'^+\' | grep -v main | grep -v master | xargs git branch -d'
+    abbr --add gdob 'git branch | grep -v \'^*\' | grep -v \'^+\' | grep -v main | grep -v master | xargs git branch -D'
     # Set Upstream
     abbr --add gsu 'git branch --set-upstream-to=origin/master (git branch --show-current)'
 
