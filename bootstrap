@@ -46,9 +46,9 @@ function maybe-link -a source_path target_path use_sudo
             end
         else
             if diff -q $source $target_path >/dev/null 2>&1
-                warn "Real file $target_path is in the way of symlinking! (contents are identical)"
+                warn "Real file $target_path is in the way of symlinking! (contents are identical, source: $source)"
             else
-                error "Real file $target_path is in the way of symlinking! (contents differ)"
+                error "Real file $target_path is in the way of symlinking! (contents differ, source: $source)"
             end
         end
     else
