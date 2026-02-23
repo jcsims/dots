@@ -14,3 +14,6 @@ cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
 keybind = shift+enter=text:\x1b\r
+
+# Don't dim unfocused split windows
+unfocused-split-opacity = 1
