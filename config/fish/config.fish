@@ -77,6 +77,8 @@ if status is-interactive
 
     abbr --add cat bat
 
+    abbr --add vim nvim
+
     alias eza 'eza '\''--icons'\'' '\''--git'\'''
     alias la 'eza -a'
     alias ll 'eza -l'

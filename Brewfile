@@ -48,6 +48,7 @@ brew 'kubectl'
 brew 'openjdk'
 brew 'leiningen'
 brew 'mas'
+brew 'neovim'
 brew 'pkg-config' # For jinx module build
 brew 'ripgrep'
 brew 'rust'
