@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [ -s "$HOME"/problems ] ; then
-    /opt/homebrew/bin/terminal-notifier \
-        -title "There's a problem!" \
-        -message "$(head -n 1 "$HOME"/problems)"
-fi

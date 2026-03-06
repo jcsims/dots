@@ -1,11 +1,33 @@
 #!/usr/bin/env bash
 
-# Only attempt this if the screen is unlocked
-if [ "$(/usr/libexec/PlistBuddy -c "print :IOConsoleUsers:0:CGSSessionScreenIsLocked" /dev/stdin 2>/dev/null <<< "$(ioreg -n Root -d1 -a)")" != "true" ]; then
-    if curl -fq https://codeberg.org > /dev/null 2>&1; then
-        cd ~/org || exit 1
-        if ! ./sync; then
-            echo "org sync failed! $(date)" >> "$HOME/problems"
-        fi
+LOG="$HOME/Library/Logs/sync-org.log"
+
+# Simple log rotation (~100KB)
+if [ -f "$LOG" ] && [ "$(stat -f%z "$LOG" 2>/dev/null || echo 0)" -gt 102400 ]; then
+    mv "$LOG" "$LOG.old"
+fi
+
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') $1" >> "$LOG"
+}
+
+# Check Codeberg reachability
+if ! curl --connect-timeout 5 -fqs https://codeberg.org > /dev/null 2>&1; then
+    log "Codeberg unreachable, skipping sync"
+    exit 0
+fi
+
+log "Starting sync"
+cd ~/org || exit 1
+
+if output=$(./sync 2>&1); then
+    log "Sync completed: $(echo "$output" | tail -1)"
+else
+    log "Sync failed: $output"
+    if command -v terminal-notifier &>/dev/null; then
+        terminal-notifier \
+            -title "Org Sync Failed" \
+            -message "$(echo "$output" | tail -1)" \
+            -group "org-sync"
     fi
 fi

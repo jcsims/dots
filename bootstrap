@@ -21,6 +21,7 @@ end
 # Create some directories we need, in case they don't already exist
 mkdir -p ~/bin ~/.emacs.d/lisp ~/Library/KeyBindings
 mkdir -p ~/.config/clojure-lsp ~/.config/fish/completions ~/.config/fish/functions ~/.config/ghostty ~/.config/git
+mkdir -p ~/Library/LaunchAgents ~/Library/Logs
 
 test -e /usr/local/bin || sudo mkdir -p /usr/local/bin
 
@@ -65,8 +66,6 @@ maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
-maybe-link bin/check-problems /usr/local/bin/check-problems true
-maybe-link bin/sync-org-roam /usr/local/bin/sync-org-roam true
 maybe-link bin/sync-org /usr/local/bin/sync-org true
 if work-install
     maybe-link Brewfile-work ~/.Brewfile
@@ -98,6 +97,14 @@ if [ "$OS" = Darwin ]
     maybe-link DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
     # mac.fish depends on homebrew being installed
     source $DOTS/bootstrap.d/mac.fish
+
+    # Generate and install sync-org launchd plist
+    set -l plist_dest ~/Library/LaunchAgents/com.jcsims.sync-org.plist
+    sed "s|__HOME__|$HOME|g" $DOTS/launchd/com.jcsims.sync-org.plist.template >$plist_dest
+    if not launchctl list 2>/dev/null | grep -q com.jcsims.sync-org
+        launchctl load $plist_dest
+        info "Loaded sync-org launchd agent"
+    end
 end
 
 info "Updating/installing fisher plugins..."
