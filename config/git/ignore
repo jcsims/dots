@@ -9,11 +9,3 @@ flycheck_*.el
 tramp
 .clj-kondo
 .lsp
-
-**/.claude/settings.local.json
-
-# Docket issues - not using this collaboratively with anyone yet.
-.docket
-
-# Not syncing this with git anywhere, quite yet.
-.claude
