@@ -878,8 +878,6 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
 
 (use-package vundo)
 
-(use-package vulpea)
-
 (use-package wgrep)
 
 (use-package which-key
