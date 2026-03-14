@@ -612,8 +612,7 @@ same directory as the org-buffer and insert a link to this file."
         org-agenda-show-future-repeats nil
         org-agenda-files (list jcs/work-file
                                jcs/inbox-file
-                               jcs/meetings-file
-                               jcs/journelly-file))
+                               jcs/meetings-file))
 
   (defun jcs/tomorrow ()
     "Returns a timestamp representing midnight of the next day."
@@ -905,9 +904,6 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (xref-search-program 'ripgrep))
 
 (use-package yaml-ts-mode :ensure f)
-
-(use-package zig-mode
-  :custom (zig-indent-offset 2))
 
 ;; This needs to come late, so that it's the first hook that gets executed -
 ;; hooks prepend as they get added.
