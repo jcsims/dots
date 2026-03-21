@@ -79,6 +79,9 @@ if status is-interactive
 
     abbr --add vim nvim
 
+    abbr --add k kubectl
+    abbr --add kns 'kubectl config set-context --current --namespace'
+
     alias eza 'eza '\''--icons'\'' '\''--git'\'''
     alias la 'eza -a'
     alias ll 'eza -l'
