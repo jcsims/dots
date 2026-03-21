@@ -201,6 +201,127 @@ function agent --description "Manage Claude Code agent worktrees"
             echo "Merging '$name' into current branch..."
             git merge $name
 
+        case jira
+            argparse --name="agent jira" c/current 'j/jql=' n/no-start -- $args
+            or return 1
+
+            set -l subcmd $argv[1]
+
+            # "agent jira list" — just print tickets
+            if test "$subcmd" = list
+                _agent_jira_list "$_flag_jql"
+                return $status
+            end
+
+            # Determine ticket key: either passed directly or selected via fzf
+            set -l ticket_key
+            if test -n "$subcmd"
+                # Treat argument as a ticket key if it looks like one (e.g. PROJ-123)
+                if string match -rq '^[A-Z]+-[0-9]+$' -- $subcmd
+                    set ticket_key $subcmd
+                else
+                    echo "Error: '$subcmd' doesn't look like a Jira ticket key (expected PROJ-123)"
+                    return 1
+                end
+            else
+                # Interactive selection via fzf
+                if not command -q fzf
+                    echo "Error: fzf is required for interactive ticket selection"
+                    echo "Install with: brew install fzf"
+                    return 1
+                end
+
+                set -l selection (_agent_jira_list "$_flag_jql" | fzf --header="Select a ticket" --ansi)
+                or begin
+                    echo "No ticket selected."
+                    return 1
+                end
+
+                # Extract ticket key (first column)
+                set ticket_key (echo $selection | string trim | string split -f1 " " | string split -f1 \t)
+                if test -z "$ticket_key"
+                    echo "Error: Could not parse ticket key from selection"
+                    return 1
+                end
+            end
+
+            echo "Fetching details for $ticket_key..."
+            set -l ticket_details (jira issue view $ticket_key --plain 2>/dev/null)
+            or begin
+                echo "Error: Failed to fetch ticket details for $ticket_key"
+                return 1
+            end
+
+            # Extract acceptance criteria from customfield_10080 (ADF format)
+            set -l acceptance_criteria (jira issue view $ticket_key --raw 2>/dev/null | jira-adf-extract)
+
+
+            # Use lowercased ticket key as worktree name
+            set -l name (string lower $ticket_key)
+
+            # Determine base branch
+            set -l base_branch
+            if set -q _flag_current
+                set base_branch (git symbolic-ref --short HEAD 2>/dev/null)
+                or begin
+                    echo "Error: Could not determine current branch"
+                    return 1
+                end
+            else
+                set base_branch (_agent_default_branch)
+                or return 1
+            end
+
+            set -l worktree_dir "wt-$name"
+            set -l worktree_path "$repo_parent/$worktree_dir"
+
+            echo "Creating agent worktree '$name' from '$base_branch'..."
+
+            git worktree add -b $name $worktree_path $base_branch
+            or begin
+                echo "Error: Failed to create worktree"
+                return 1
+            end
+
+            # Symlink .claude directory
+            if test -d "$repo_root/.claude" -a ! -e "$worktree_path/.claude"
+                ln -s "$repo_root/.claude" "$worktree_path/.claude"
+                echo "Symlinked .claude directory"
+            end
+
+            echo ""
+            echo "Agent worktree created:"
+            echo "  Ticket: $ticket_key"
+            echo "  Path:   $worktree_path"
+            echo "  Branch: $name"
+
+            if set -q _flag_no_start
+                echo ""
+                echo "To start working:"
+                echo "  agent start $name"
+                return 0
+            end
+
+            # Build the initial prompt with ticket context
+            set -l ac_section ""
+            if test -n "$acceptance_criteria"
+                set ac_section "
+
+## Acceptance Criteria
+
+$acceptance_criteria"
+            end
+
+            set -l prompt "I'm working on Jira ticket $ticket_key. Here are the ticket details:
+
+$ticket_details$ac_section
+
+Please review this ticket and help me implement it. Start by understanding the requirements and exploring the relevant code."
+
+            echo ""
+            echo "Starting Claude with $ticket_key context..."
+            cd $worktree_path && claude "$prompt"
+
         case ''
             _agent_help
 
@@ -239,6 +360,24 @@ function _agent_require_worktree --argument-names repo_parent name usage
     echo $worktree_path
 end
 
+# Helper: List Jira tickets assigned to current user
+function _agent_jira_list --argument-names custom_jql
+    if not command -q jira
+        echo "Error: jira CLI is required (brew install jira-cli)" >&2
+        return 1
+    end
+
+    if test -n "$custom_jql"
+        jira issue list --jql "$custom_jql" --plain --no-headers --columns key,summary,status,priority 2>/dev/null
+    else
+        jira issue list -a(jira me) -s "To Do" -s "In Progress" --plain --no-headers --columns key,summary,status,priority 2>/dev/null
+    end
+    or begin
+        echo "Error: Failed to fetch Jira issues" >&2
+        return 1
+    end
+end
+
 # Helper: Print help text
 function _agent_help
     echo "agent - Manage Claude Code agent worktrees"
@@ -257,6 +396,13 @@ function _agent_help
     echo "  log <name>             Show commits for agent"
     echo "  merge <name>           Merge agent branch into current branch"
     echo "  remove <name> [-f]     Remove an agent worktree (-f: also delete branch)"
+    echo "  jira [PROJ-123]        Select a Jira ticket, create worktree, start Claude"
+    echo "  jira list              List Jira tickets assigned to you"
+    echo ""
+    echo "Jira options:"
+    echo "  -c, --current          Base off current branch instead of main/master"
+    echo "  -j, --jql <query>      Custom JQL filter (default: assigned open tickets)"
+    echo "  -n, --no-start         Create worktree but don't start Claude"
     echo ""
     echo "Example workflow:"
     echo "  agent new feature-x          # Create worktree"
@@ -264,4 +410,9 @@ function _agent_help
     echo "  agent status feature-x       # Check progress"
     echo "  agent merge feature-x        # Merge when done"
     echo "  agent remove -f feature-x    # Clean up worktree and branch"
+    echo ""
+    echo "Jira workflow:"
+    echo "  agent jira                   # Pick ticket via fzf, create worktree, start"
+    echo "  agent jira HLC-1234          # Create worktree for specific ticket"
+    echo "  agent jira -n HLC-1234       # Create worktree only, start later"
 end
