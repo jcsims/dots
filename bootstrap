@@ -19,7 +19,7 @@ function info
 end
 
 # Create some directories we need, in case they don't already exist
-mkdir -p ~/bin ~/.claude ~/.emacs.d/lisp ~/Library/KeyBindings
+mkdir -p ~/bin ~/.claude/skills/jira ~/.emacs.d/lisp ~/Library/KeyBindings
 mkdir -p ~/.config/clojure-lsp ~/.config/fish/completions ~/.config/fish/functions ~/.config/ghostty ~/.config/git
 mkdir -p ~/Library/LaunchAgents ~/Library/Logs
 
@@ -66,6 +66,9 @@ maybe-link bootstrap ~/bin/bootstrap
 maybe-link bin/bookmarks ~/bin/bookmarks
 maybe-link bin/e ~/bin/e
 maybe-link bin/ec ~/bin/ec
+maybe-link bin/jira-adf-extract ~/bin/jira-adf-extract
+maybe-link bin/jira-links ~/bin/jira-links
+maybe-link bin/jira-parent ~/bin/jira-parent
 maybe-link bin/sync-org /usr/local/bin/sync-org true
 if work-install
     maybe-link Brewfile-work ~/.Brewfile
@@ -95,6 +98,7 @@ maybe-link psqlrc ~/.psqlrc
 maybe-link tmux.conf ~/.tmux.conf
 maybe-link config/claude/settings.json ~/.claude/settings.json
 maybe-link config/claude/statusline.sh ~/.claude/statusline.sh
+maybe-link config/claude/skills/jira/SKILL.md ~/.claude/skills/jira/SKILL.md
 
 if [ "$OS" = Darwin ]
     source $DOTS/bootstrap.d/homebrew.fish
