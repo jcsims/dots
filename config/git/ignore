@@ -9,3 +9,8 @@ flycheck_*.el
 tramp
 .clj-kondo
 .lsp
+
+**/.claude/settings.local.json
+
+# Not syncing this with git anywhere, quite yet.
+.claude
