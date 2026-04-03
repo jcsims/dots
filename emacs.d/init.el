@@ -227,6 +227,8 @@
 (use-package crux
   :bind (("C-a" . crux-move-beginning-of-line)))
 
+(use-package csv-mode)
+
 (use-package deadgrep)
 
 (use-package default-text-scale
