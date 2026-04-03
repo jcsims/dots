@@ -27,6 +27,7 @@ brew 'postgresql@15', link: true
 brew 'python@3.10'
 brew 'python-lsp-server'
 brew 'sql-formatter'
+brew 'terraform-ls'
 brew 'typescript-language-server'
 brew 'yarn'
 
@@ -35,6 +36,7 @@ cask 'cljstyle'
 
 ## Common tools
 brew 'aspell'
+brew 'ast-grep'
 brew 'bash'
 brew 'bash-language-server'
 brew 'bat'
@@ -65,6 +67,7 @@ brew 'shellcheck'
 brew 'terminal-notifier'
 brew 'tmux'
 brew 'tokei'
+brew 'uv'
 brew 'watch'
 
 cask '1password'
