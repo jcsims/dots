@@ -2,6 +2,7 @@
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "alwaysThinkingEnabled": true,
   "attribution": {
     "commit": "",
     "pr": ""
@@ -27,6 +28,5 @@
     "php-lsp@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
   "model": "opus"
 }
