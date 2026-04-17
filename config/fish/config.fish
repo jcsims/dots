@@ -73,8 +73,6 @@ if status is-interactive
     # Set Upstream
     abbr --add gsu 'git branch --set-upstream-to=origin/master (git branch --show-current)'
 
-    abbr --add todos 'e ~/todo.md'
-
     abbr --add cat bat
 
     abbr --add vim nvim
