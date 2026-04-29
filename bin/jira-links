@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Extract linked issues from raw Jira JSON.
+# Usage: jira issue view ISSUE-1 --raw | jira-links
+output=$(jq -r '
+  .fields.issuelinks[]? |
+  if .outwardIssue then
+    "- \(.type.outward): \(.outwardIssue.key) — \(.outwardIssue.fields.summary) [\(.outwardIssue.fields.status.name)]"
+  elif .inwardIssue then
+    "- \(.type.inward): \(.inwardIssue.key) — \(.inwardIssue.fields.summary) [\(.inwardIssue.fields.status.name)]"
+  else empty end
+')
+
+if [ -n "$output" ]; then
+    echo "$output"
+else
+    echo "(none)"
+fi
