@@ -56,9 +56,12 @@ brew 'talosctl'
 brew 'terminal-notifier'
 brew 'tmux'
 brew 'tokei'
+brew 'tree-sitter-cli' # Used by nvim mini-max
 brew 'uv'
 brew 'watch'
 brew 'yt-dlp'
+brew 'zig'
+brew 'zls'
 
 cask '1password'
 cask 'alfred'

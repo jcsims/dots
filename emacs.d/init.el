@@ -283,7 +283,8 @@
     go-ts-mode
     nix-mode
     python-mode
-    sh-mode)
+    sh-mode
+    zig-mode)
    . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :config
@@ -906,6 +907,8 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (xref-search-program 'ripgrep))
 
 (use-package yaml-ts-mode :ensure f)
+
+(use-package zig-mode)
 
 ;; This needs to come late, so that it's the first hook that gets executed -
 ;; hooks prepend as they get added.
