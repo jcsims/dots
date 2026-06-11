@@ -74,6 +74,19 @@ check "line: full"   (_todo_line 0 a1z turbo "Hello world") "- [ ] Hello world @
 check "line: done"   (_todo_line 1 ddd "" "Old done")       "- [x] Old done (ddd)"
 check "line: notag"  (_todo_line 0 bbb "" "Plain")          "- [ ] Plain (bbb)"
 
+set -g _gid (_todo_gen_id)
+check "genid: format" (string match -rq '^[a-z0-9]{3}$' -- $_gid; and echo yes) "yes"
+
+# Never returns an id already in the exclude list.
+set -g _seen
+for i in (seq 200)
+    set -l g (_todo_gen_id aaa bbb ccc $_seen)
+    if contains -- $g aaa bbb ccc
+        set -a _seen COLLISION
+    end
+end
+check "genid: avoids excluded" (contains -- COLLISION $_seen; and echo bad; or echo good) "good"
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
