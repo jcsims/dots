@@ -87,6 +87,12 @@ for i in (seq 200)
 end
 check "genid: avoids excluded" (contains -- COLLISION $_seen; and echo bad; or echo good) "good"
 
+set -g _lines "- [ ] one (aaa)" "  ctx a" "https://x" "- [ ] two (bbb)" "  ctx b"
+check "blockend: first block incl flush-left ctx" (_todo_block_end 1 $_lines) "3"
+check "blockend: second block to end"             (_todo_block_end 4 $_lines) "5"
+set -g _single "- [ ] only (aaa)"
+check "blockend: single line block" (_todo_block_end 1 $_single) "1"
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
