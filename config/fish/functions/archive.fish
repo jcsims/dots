@@ -1,5 +1,5 @@
 function archive --description "Move completed tasks in ~/todo.md to the Archive header"
-    set -l file ~/todo.md
+    set -l file (_todo_file)
     if not test -f $file
         echo "No todo.md found"
         return 1

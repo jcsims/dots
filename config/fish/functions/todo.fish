@@ -1,5 +1,5 @@
 function todo --description "Add a task to the backlog (the # Todo section) in ~/todo.md"
-    set -l file ~/todo.md
+    set -l file (_todo_file)
     if not test -f $file
         echo "No todo.md found"
         return 1

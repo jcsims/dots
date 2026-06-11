@@ -1,5 +1,5 @@
 function next --description "Print the Doing list and the next n backlog tasks from ~/todo.md"
-    set -l file ~/todo.md
+    set -l file (_todo_file)
     set -l n 1
     if test (count $argv) -gt 0
         set n $argv[1]

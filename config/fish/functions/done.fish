@@ -1,5 +1,5 @@
 function done --description "Mark the first Doing task (or next backlog task) in ~/todo.md as done"
-    set -l file ~/todo.md
+    set -l file (_todo_file)
     if not test -f $file
         echo "No todo.md found"
         return 1

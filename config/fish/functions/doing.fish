@@ -1,5 +1,5 @@
 function doing --description "Start the top backlog task, or add an interruption task to the top of Doing"
-    set -l file ~/todo.md
+    set -l file (_todo_file)
     if not test -f $file
         echo "No todo.md found"
         return 1
