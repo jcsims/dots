@@ -1,41 +1,66 @@
-function done --description "Mark the next incomplete task in ~/todo.md as done"
+function done --description "Mark the first Doing task (or next backlog task) in ~/todo.md as done"
     set -l file ~/todo.md
     if not test -f $file
         echo "No todo.md found"
         return 1
     end
 
-    set -l lines (cat $file)
-    set -l found false
+    _todo_read $file; or return 1
 
-    for i in (seq (count $lines))
-        set -l line $lines[$i]
+    # Prefer finishing active work: the first incomplete Doing task, then fall
+    # back to the top of the backlog.
+    set -l target
+    set -l idx 0
 
-        # Skip completed tasks
-        echo $line | string match -qr '^\s*- \[x\]' && continue
-
-        # Match incomplete task lines
-        if echo $line | string match -qr '^\s*- (\[ \] )?[^\[]'
-            set found true
-
-            # Mark as done: convert to checked checkbox
-            set lines[$i] (echo $line | string replace -r '^\s*- (\[ \] )?' -- '- [x] ')
-
-            # Print what we completed
-            echo "✓ "(echo $line | string replace -r '^\s*- (\[ \] )?' -- '')
+    set -l i 1
+    while test $i -le (count $__td_doing)
+        if string match -qr '^\s*- \[x\]' -- $__td_doing[$i]
+            set i (math $i + 1)
+            continue
+        end
+        if string match -qr '^\s*- (\[ \] )?[^\[]' -- $__td_doing[$i]
+            set target doing
+            set idx $i
             break
+        end
+        set i (math $i + 1)
+    end
+
+    if test $idx -eq 0
+        set i 1
+        while test $i -le (count $__td_todo)
+            if string match -qr '^\s*- \[x\]' -- $__td_todo[$i]
+                set i (math $i + 1)
+                continue
+            end
+            if string match -qr '^\s*- (\[ \] )?[^\[]' -- $__td_todo[$i]
+                set target todo
+                set idx $i
+                break
+            end
+            set i (math $i + 1)
         end
     end
 
-    if not $found
-        echo "No remaining tasks"
+    if test $idx -eq 0
+        set -e __td_doing __td_todo __td_archive
+        echo "No tasks to complete"
         return 1
     end
 
-    printf '%s\n' $lines >$file
+    if test $target = doing
+        set -l line $__td_doing[$idx]
+        set __td_doing[$idx] (string replace -r '^\s*- (\[ \] )?' -- '- [x] ' $line)
+        echo "✓ "(string replace -r '^\s*- (\[ \] )?' -- '' $line)
+    else
+        set -l line $__td_todo[$idx]
+        set __td_todo[$idx] (string replace -r '^\s*- (\[ \] )?' -- '- [x] ' $line)
+        echo "✓ "(string replace -r '^\s*- (\[ \] )?' -- '' $line)
+    end
 
-    # Show the next task
+    _todo_write $file
+
     echo ""
-    echo "Next:"
     next
+    return 0
 end

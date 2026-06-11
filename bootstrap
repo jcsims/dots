@@ -76,6 +76,11 @@ maybe-link config/fish/functions/agent.fish ~/.config/fish/functions/agent.fish
 maybe-link config/fish/functions/next.fish ~/.config/fish/functions/next.fish
 maybe-link config/fish/functions/done.fish ~/.config/fish/functions/done.fish
 maybe-link config/fish/functions/archive.fish ~/.config/fish/functions/archive.fish
+maybe-link config/fish/functions/doing.fish ~/.config/fish/functions/doing.fish
+maybe-link config/fish/functions/todo.fish ~/.config/fish/functions/todo.fish
+maybe-link config/fish/functions/_todo_strip.fish ~/.config/fish/functions/_todo_strip.fish
+maybe-link config/fish/functions/_todo_read.fish ~/.config/fish/functions/_todo_read.fish
+maybe-link config/fish/functions/_todo_write.fish ~/.config/fish/functions/_todo_write.fish
 maybe-link config/ghostty/config ~/.config/ghostty/config
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
