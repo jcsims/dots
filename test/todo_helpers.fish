@@ -58,6 +58,22 @@ setup "$SAMPLE"
 check "harness: file written" (head -1 $TODO_FILE) "## Doing"
 teardown
 
+_todo_split "- [ ] Hello world @turbo (a1z)"
+check "split: checked"  $__td_checked "0"
+check "split: id"       $__td_id      "a1z"
+check "split: tag"      $__td_tag     "turbo"
+check "split: text"     $__td_text    "Hello world"
+
+_todo_split "  - [x] Done thing"
+check "split: checked done" $__td_checked "1"
+check "split: id empty"     "$__td_id"    ""
+check "split: tag empty"    "$__td_tag"   ""
+check "split: text only"    $__td_text    "Done thing"
+
+check "line: full"   (_todo_line 0 a1z turbo "Hello world") "- [ ] Hello world @turbo (a1z)"
+check "line: done"   (_todo_line 1 ddd "" "Old done")       "- [x] Old done (ddd)"
+check "line: notag"  (_todo_line 0 bbb "" "Plain")          "- [ ] Plain (bbb)"
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
