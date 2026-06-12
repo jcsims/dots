@@ -93,6 +93,30 @@ check "blockend: second block to end"             (_todo_block_end 4 $_lines) "5
 set -g _single "- [ ] only (aaa)"
 check "blockend: single line block" (_todo_block_end 1 $_single) "1"
 
+# Flush-left context + a task missing an id, like the real file.
+setup "## Doing
+
+- [ ] Has flush-left ctx
+https://example.com/x
+
+# Todo
+
+- [ ] Already has id (bbb)
+
+## Archive
+"
+_todo_read $TODO_FILE
+_todo_write $TODO_FILE
+set -g _out (cat $TODO_FILE)
+
+# Context line is now indented two spaces (not orphaned, not flush-left).
+check "write: ctx indented" $_out[4] "  https://example.com/x"
+# The id-less task now has a 3-char id.
+check "write: backfilled id" (string match -rq '^- \[ \] Has flush-left ctx \([a-z0-9]{3}\)$' -- $_out[3]; and echo yes; or echo no) "yes"
+# The existing id is preserved.
+check "write: keeps existing id" (contains -- "- [ ] Already has id (bbb)" $_out; and echo yes; or echo no) "yes"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
