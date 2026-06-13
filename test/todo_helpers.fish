@@ -190,6 +190,22 @@ check "dispatch: bare todo exits 1"   (todo 2>/dev/null; echo $status) "1"
 check "help: mentions add"            (todo --help | string match -q '*todo add*'; and echo yes; or echo no) "yes"
 teardown
 
+setup "$SAMPLE"
+todo edit ccc Reworded task >/dev/null
+_todo_read $TODO_FILE
+check "edit: text replaced, tag+id kept" (_todo_get_line todo (_todo_find_id ccc | string split ' ')[2]) "- [ ] Reworded task @admin (ccc)"
+teardown
+
+setup "$SAMPLE"
+todo edit ccc New text @newtag >/dev/null
+_todo_read $TODO_FILE
+check "edit: trailing tag updates tag" (_todo_get_line todo (_todo_find_id ccc | string split ' ')[2]) "- [ ] New text @newtag (ccc)"
+teardown
+
+setup "$SAMPLE"
+check "edit: missing id exits 1" (todo edit zzz nope 2>/dev/null; echo $status) "1"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
