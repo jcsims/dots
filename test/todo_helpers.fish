@@ -206,6 +206,26 @@ setup "$SAMPLE"
 check "edit: missing id exits 1" (todo edit zzz nope 2>/dev/null; echo $status) "1"
 teardown
 
+setup "$SAMPLE"
+todo note bbb https://example.com/ref >/dev/null
+_todo_read $TODO_FILE
+set -l _bbb_loc (_todo_find_id bbb)
+set -l _bbb_idx (string split ' ' -- $_bbb_loc)[2]
+set -l _note_idx (math $_bbb_idx + 1)
+check "note: appended indented under task" (_todo_get_line todo $_note_idx) "  https://example.com/ref"
+check "note: original task intact"         (_todo_get_line todo $_bbb_idx) "- [ ] Backlog one (bbb)"
+teardown
+
+setup "$SAMPLE"
+todo note ccc "second note" >/dev/null
+_todo_read $TODO_FILE
+# ccc already had one context line; new note lands after it (block end = idx+2).
+set -l _ccc_loc (_todo_find_id ccc)
+set -l _ccc_idx (string split ' ' -- $_ccc_loc)[2]
+set -l _note2_idx (math $_ccc_idx + 2)
+check "note: lands at block end" (_todo_get_line todo $_note2_idx) "  second note"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
