@@ -117,6 +117,40 @@ check "write: backfilled id" (string match -rq '^- \[ \] Has flush-left ctx \([a
 check "write: keeps existing id" (contains -- "- [ ] Already has id (bbb)" $_out; and echo yes; or echo no) "yes"
 teardown
 
+setup "$SAMPLE"
+_todo_read $TODO_FILE
+# _todo_read preserves blank lines in section globals.
+# Use _todo_find_id results to drive subsequent helpers (index-independent).
+set -l _ccc_loc (_todo_find_id ccc)
+set -l _aaa_loc (_todo_find_id aaa)
+check "find: locates ccc" "$_ccc_loc" "todo 3"
+check "find: locates aaa" "$_aaa_loc" "doing 2"
+check "find: missing"     (_todo_find_id zzz; and echo found; or echo none) "none"
+
+set -l _ccc_idx (string split ' ' -- $_ccc_loc)[2]
+set -l _bbb_loc (_todo_find_id bbb)
+set -l _bbb_idx (string split ' ' -- $_bbb_loc)[2]
+check "getline: ccc"      (_todo_get_line todo $_ccc_idx) "- [ ] Backlog two @admin (ccc)"
+
+_todo_set_line todo $_bbb_idx "- [ ] Changed (bbb)"
+check "setline: applied" $__td_todo[$_bbb_idx] "- [ ] Changed (bbb)"
+
+check "getblock: ccc has ctx" (count (_todo_get_block todo $_ccc_idx)) "3"
+
+_todo_append_to_block todo $_bbb_idx "  a new note"
+set -l _note_idx (math $_bbb_idx + 1)
+check "append: inserted after block" $__td_todo[$_note_idx] "  a new note"
+
+set -g _taken (_todo_take_block todo $_bbb_idx)
+check "take: returned the line" $_taken[1] "- [ ] Changed (bbb)"
+# After removing the 2-element block [Changed, a new note], next element at _bbb_idx is ccc.
+check "take: removed from section" $__td_todo[$_bbb_idx] "- [ ] Backlog two @admin (ccc)"
+teardown
+
+check "splice: mid"  (string join '|' (_todo_splice 1 NEW a b c)) "a|NEW|b|c"
+check "splice: end"  (string join '|' (_todo_splice 3 NEW a b c)) "a|b|c|NEW"
+check "splice: empty" (_todo_splice 0 NEW) "NEW"
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
