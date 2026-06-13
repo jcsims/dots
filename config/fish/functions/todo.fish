@@ -1,20 +1,42 @@
-function todo --description "Add a task to the backlog (the # Todo section) in ~/todo.md"
+function todo --description "Manage ~/todo.md: add/edit/note/tag/show tasks. Run 'todo --help'."
     set -l file (_todo_file)
-    if not test -f $file
-        echo "No todo.md found"
-        return 1
-    end
 
     if test (count $argv) -eq 0
-        echo "Usage: todo <task text>"
+        _todo_usage >&2
         return 1
     end
 
-    _todo_read $file; or return 1
+    set -l cmd $argv[1]
+    set -l rest $argv[2..-1]
 
-    set -l text (string join ' ' $argv)
-    set -a __td_todo "- [ ] $text"
+    switch $cmd
+        case add
+            if test (count $rest) -eq 0
+                echo "Usage: todo add <task text> [@tag]" >&2
+                return 1
+            end
+            if not test -f $file
+                echo "No todo.md found"
+                return 1
+            end
+            _todo_read $file; or return 1
+            set -l text (string join ' ' -- $rest)
+            set -l tag ''
+            if string match -qr '@\S+\s*$' -- $text
+                set tag (string match -rg '@(\S+)\s*$' -- $text)
+                set text (string replace -r '\s*@\S+\s*$' '' -- $text)
+            end
+            set text (string trim -- $text)
+            set -a __td_todo (_todo_line 0 '' "$tag" "$text")
+            _todo_write $file
+            test -n "$tag"; and echo "Todo: $text @$tag"; or echo "Todo: $text"
 
-    _todo_write $file
-    echo "Todo: $text"
+        case -h --help
+            _todo_usage
+
+        case '*'
+            echo "todo: unknown command '$cmd'" >&2
+            _todo_usage >&2
+            return 1
+    end
 end

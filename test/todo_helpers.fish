@@ -171,6 +171,25 @@ check "splice: mid"  (string join '|' (_todo_splice 1 NEW a b c)) "a|NEW|b|c"
 check "splice: end"  (string join '|' (_todo_splice 3 NEW a b c)) "a|b|c|NEW"
 check "splice: empty" (_todo_splice 0 NEW) "NEW"
 
+setup "$SAMPLE"
+todo add Brand new task >/dev/null
+_todo_read $TODO_FILE
+# _todo_read keeps blank lines; the real last task is at [-2] ([-1] is a trailing blank).
+check "add: appended to todo" (string match -rq '^- \[ \] Brand new task \([a-z0-9]{3}\)$' -- $__td_todo[-2]; and echo yes; or echo no) "yes"
+teardown
+
+setup "$SAMPLE"
+todo add Tagged item @lender >/dev/null
+_todo_read $TODO_FILE
+check "add: parses trailing tag" (string match -rq '^- \[ \] Tagged item @lender \([a-z0-9]{3}\)$' -- $__td_todo[-2]; and echo yes; or echo no) "yes"
+teardown
+
+setup "$SAMPLE"
+check "dispatch: unknown cmd exits 1" (todo bogus 2>/dev/null; echo $status) "1"
+check "dispatch: bare todo exits 1"   (todo 2>/dev/null; echo $status) "1"
+check "help: mentions add"            (todo --help | string match -q '*todo add*'; and echo yes; or echo no) "yes"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
