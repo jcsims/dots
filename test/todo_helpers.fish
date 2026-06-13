@@ -312,6 +312,41 @@ check "next: tag filter excludes turbo" (contains -- "- First doing task @turbo 
 check "next: tag filter includes admin" (contains -- "- Backlog two @admin (ccc)" $_na; and echo yes; or echo no) "yes"
 teardown
 
+setup "## Doing
+
+- [x] Finished work (aaa)
+  some context
+
+# Todo
+
+- [ ] Still open (bbb)
+
+## Archive
+
+- [x] Older (ccc)
+"
+archive >/dev/null
+_todo_read $TODO_FILE
+set -l _aaa_arch_loc (_todo_find_id aaa)
+set -l _aaa_arch_idx (string split ' ' -- $_aaa_arch_loc)[2]
+check "archive: completed moved to top of archive" (_todo_get_line archive $_aaa_arch_idx) "- [x] Finished work (aaa)"
+check "archive: context moved with it (not orphaned)" (_todo_get_line archive (math $_aaa_arch_idx + 1)) "  some context"
+set -l _ccc_arch_loc (_todo_find_id ccc)
+check "archive: existing archive below" (_todo_get_line archive (string split ' ' -- $_ccc_arch_loc)[2]) "- [x] Older (ccc)"
+check "archive: open task remains in todo" (_todo_get_line todo (_todo_find_id bbb | string split ' ')[2]) "- [ ] Still open (bbb)"
+# Doing should have no task lines (may still have blank lines from _todo_read).
+set -l _doing_tasks 0
+for _dl in $__td_doing
+    string match -qr '^\s*- \[[ xX]\]' -- $_dl; and set _doing_tasks (math $_doing_tasks + 1)
+end
+check "archive: doing emptied of completed" $_doing_tasks "0"
+teardown
+
+setup "$SAMPLE"
+# SAMPLE has no completed tasks outside Archive.
+check "archive: nothing to do exits 1" (archive 2>/dev/null; echo $status) "1"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
