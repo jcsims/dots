@@ -279,6 +279,26 @@ _todo_read $TODO_FILE
 check "doing: interruption on top" (string match -rq '^- \[ \] Quick interruption @ops \([a-z0-9]{3}\)$' -- $__td_doing[2]; and echo yes; or echo no) "yes"
 teardown
 
+# No-arg: completes the first incomplete Doing task.
+setup "$SAMPLE"
+done >/dev/null
+_todo_read $TODO_FILE
+set -l _aaa_loc (_todo_find_id aaa)
+check "done: marked doing task x" (_todo_get_line doing (string split ' ' -- $_aaa_loc)[2]) "- [x] First doing task @turbo (aaa)"
+teardown
+
+# By id: completes a specific backlog task.
+setup "$SAMPLE"
+done ccc >/dev/null
+_todo_read $TODO_FILE
+set -l _ccc_loc (_todo_find_id ccc)
+check "done: id-complete" (_todo_get_line todo (string split ' ' -- $_ccc_loc)[2]) "- [x] Backlog two @admin (ccc)"
+teardown
+
+setup "$SAMPLE"
+check "done: missing id exits 1" (done zzz 2>/dev/null; echo $status) "1"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
