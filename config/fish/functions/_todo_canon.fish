@@ -17,10 +17,15 @@ function _todo_canon --description "Echo canonical task-block lines for a sectio
             set -a out (_todo_line $__td_checked $id "$__td_tag" "$__td_text")
 
             set -l end (_todo_block_end $i $lines)
-            for k in (seq (math $i + 1) $end)
-                set -l c $lines[$k]
-                test -z (string trim -- "$c"); and continue
-                set -a out "  "(string trim -- "$c")
+            # Guard: when the block has no context lines, end == i, and
+            # `seq (i+1) i` would descend (fish quirk) and slurp adjacent task
+            # lines in as bogus context. Only iterate a genuine ascending range.
+            if test $end -gt $i
+                for k in (seq (math $i + 1) $end)
+                    set -l c $lines[$k]
+                    test -z (string trim -- "$c"); and continue
+                    set -a out "  "(string trim -- "$c")
+                end
             end
             set i (math $end + 1)
         else

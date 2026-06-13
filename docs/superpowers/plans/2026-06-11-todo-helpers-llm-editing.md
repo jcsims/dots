@@ -436,10 +436,15 @@ function _todo_canon --description "Echo canonical task-block lines for a sectio
             set -a out (_todo_line $__td_checked $id "$__td_tag" "$__td_text")
 
             set -l end (_todo_block_end $i $lines)
-            for k in (seq (math $i + 1) $end)
-                set -l c $lines[$k]
-                test -z (string trim -- "$c"); and continue
-                set -a out "  "(string trim -- "$c")
+            # Guard: when the block has no context lines, end == i, and
+            # `seq (i+1) i` would descend (fish quirk) and slurp adjacent task
+            # lines in as bogus context. Only iterate a genuine ascending range.
+            if test $end -gt $i
+                for k in (seq (math $i + 1) $end)
+                    set -l c $lines[$k]
+                    test -z (string trim -- "$c"); and continue
+                    set -a out "  "(string trim -- "$c")
+                end
             end
             set i (math $end + 1)
         else
@@ -1391,9 +1396,11 @@ function next --description "Print the Doing list and the next n backlog tasks (
         _todo_split $line
         if test -z "$tag"; or test "$__td_tag" = "$tag"
             set -a doing_out (string replace -r '^\s*- \[[ xX]\] ' '- ' -- $line)
-            for k in (seq (math $i + 1) $end)
-                test -z (string trim -- "$__td_doing[$k]"); and continue
-                set -a doing_out $__td_doing[$k]
+            if test $end -gt $i
+                for k in (seq (math $i + 1) $end)
+                    test -z (string trim -- "$__td_doing[$k]"); and continue
+                    set -a doing_out $__td_doing[$k]
+                end
             end
         end
         set i (math $end + 1)
@@ -1414,9 +1421,11 @@ function next --description "Print the Doing list and the next n backlog tasks (
         _todo_split $line
         if test -z "$tag"; or test "$__td_tag" = "$tag"
             set -a todo_out (string replace -r '^\s*- \[[ xX]\] ' '- ' -- $line)
-            for k in (seq (math $i + 1) $end)
-                test -z (string trim -- "$__td_todo[$k]"); and continue
-                set -a todo_out $__td_todo[$k]
+            if test $end -gt $i
+                for k in (seq (math $i + 1) $end)
+                    test -z (string trim -- "$__td_todo[$k]"); and continue
+                    set -a todo_out $__td_todo[$k]
+                end
             end
             set cnt (math $cnt + 1)
         end

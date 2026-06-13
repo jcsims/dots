@@ -117,6 +117,26 @@ check "write: backfilled id" (string match -rq '^- \[ \] Has flush-left ctx \([a
 check "write: keeps existing id" (contains -- "- [ ] Already has id (bbb)" $_out; and echo yes; or echo no) "yes"
 teardown
 
+# Regression: two adjacent context-free tasks must NOT slurp each other in as
+# context. (fish `seq (i+1) i` descends, so a missing guard would duplicate the
+# next/own task line as bogus indented context.)
+setup "## Doing
+
+# Todo
+
+- [ ] First task
+- [ ] Second task
+
+## Archive
+"
+_todo_read $TODO_FILE
+_todo_write $TODO_FILE
+set -g _out (cat $TODO_FILE)
+check "write: no bogus context line 1" (string match -rq '^- \[ \] First task \([a-z0-9]{3}\)$' -- $_out[5]; and echo yes; or echo no) "yes"
+check "write: no bogus context line 2" (string match -rq '^- \[ \] Second task \([a-z0-9]{3}\)$' -- $_out[6]; and echo yes; or echo no) "yes"
+check "write: no indented task lines" (string match -q '*  - [*' -- (string join -- '|' $_out); and echo bad; or echo good) "good"
+teardown
+
 setup "$SAMPLE"
 _todo_read $TODO_FILE
 # _todo_read preserves blank lines in section globals.
