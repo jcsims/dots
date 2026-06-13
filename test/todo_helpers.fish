@@ -299,6 +299,19 @@ setup "$SAMPLE"
 check "done: missing id exits 1" (done zzz 2>/dev/null; echo $status) "1"
 teardown
 
+setup "$SAMPLE"
+set -g _n (next 5)
+check "next: doing header"    $_n[1] "Doing:"
+check "next: doing shows id"  $_n[2] "- First doing task @turbo (aaa)"
+teardown
+
+# Tag filter narrows both Doing and backlog to @admin.
+setup "$SAMPLE"
+set -g _na (next 5 @admin)
+check "next: tag filter excludes turbo" (contains -- "- First doing task @turbo (aaa)" $_na; and echo bad; or echo good) "good"
+check "next: tag filter includes admin" (contains -- "- Backlog two @admin (ccc)" $_na; and echo yes; or echo no) "yes"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
