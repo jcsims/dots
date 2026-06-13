@@ -244,6 +244,13 @@ _todo_read $TODO_FILE
 check "tag: leading @ accepted" (_todo_get_line todo (_todo_find_id bbb | string split ' ')[2]) "- [ ] Backlog one @withat (bbb)"
 teardown
 
+setup "$SAMPLE"
+set -g _show (todo show ccc)
+check "show: line 1 is the task" $_show[1] "- [ ] Backlog two @admin (ccc)"
+check "show: line 2 is context"  $_show[2] "  context line for two"
+check "show: missing exits 1"    (todo show zzz 2>/dev/null; echo $status) "1"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)

@@ -103,6 +103,23 @@ function todo --description "Manage ~/todo.md: add/edit/note/tag/show tasks. Run
             _todo_write $file
             test -n "$newtag"; and echo "Tag ($id): @$newtag"; or echo "Tag ($id): cleared"
 
+        case show
+            if test (count $rest) -ne 1
+                echo "Usage: todo show <id>" >&2
+                return 1
+            end
+            if not test -f $file; echo "No todo.md found"; return 1; end
+            _todo_read $file; or return 1
+            set -l loc (_todo_find_id $rest[1])
+            if test -z "$loc"
+                echo "todo: no task with id '$rest[1]'" >&2
+                set -e __td_doing __td_todo __td_archive
+                return 1
+            end
+            set -l p (string split ' ' -- $loc)
+            _todo_get_block $p[1] $p[2]
+            set -e __td_doing __td_todo __td_archive
+
         case -h --help
             _todo_usage
 
