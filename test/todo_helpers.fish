@@ -226,6 +226,24 @@ set -l _note2_idx (math $_ccc_idx + 2)
 check "note: lands at block end" (_todo_get_line todo $_note2_idx) "  second note"
 teardown
 
+setup "$SAMPLE"
+todo tag bbb backend >/dev/null
+_todo_read $TODO_FILE
+check "tag: set on untagged task" (_todo_get_line todo (_todo_find_id bbb | string split ' ')[2]) "- [ ] Backlog one @backend (bbb)"
+teardown
+
+setup "$SAMPLE"
+todo tag ccc - >/dev/null
+_todo_read $TODO_FILE
+check "tag: dash clears tag" (_todo_get_line todo (_todo_find_id ccc | string split ' ')[2]) "- [ ] Backlog two (ccc)"
+teardown
+
+setup "$SAMPLE"
+todo tag bbb @withat >/dev/null
+_todo_read $TODO_FILE
+check "tag: leading @ accepted" (_todo_get_line todo (_todo_find_id bbb | string split ' ')[2]) "- [ ] Backlog one @withat (bbb)"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)

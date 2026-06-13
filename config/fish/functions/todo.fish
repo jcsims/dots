@@ -81,6 +81,28 @@ function todo --description "Manage ~/todo.md: add/edit/note/tag/show tasks. Run
             _todo_write $file
             echo "Note ($id): $note"
 
+        case tag
+            if test (count $rest) -ne 2
+                echo "Usage: todo tag <id> <tag|->   (- clears the tag)" >&2
+                return 1
+            end
+            if not test -f $file; echo "No todo.md found"; return 1; end
+            set -l id $rest[1]
+            set -l newtag (string replace -r '^@' '' -- $rest[2])
+            test "$newtag" = "-"; and set newtag ''
+            _todo_read $file; or return 1
+            set -l loc (_todo_find_id $id)
+            if test -z "$loc"
+                echo "todo: no task with id '$id'" >&2
+                set -e __td_doing __td_todo __td_archive
+                return 1
+            end
+            set -l p (string split ' ' -- $loc)
+            _todo_split (_todo_get_line $p[1] $p[2])
+            _todo_set_line $p[1] $p[2] (_todo_line $__td_checked $id "$newtag" "$__td_text")
+            _todo_write $file
+            test -n "$newtag"; and echo "Tag ($id): @$newtag"; or echo "Tag ($id): cleared"
+
         case -h --help
             _todo_usage
 
