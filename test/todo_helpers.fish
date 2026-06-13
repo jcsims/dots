@@ -251,6 +251,34 @@ check "show: line 2 is context"  $_show[2] "  context line for two"
 check "show: missing exits 1"    (todo show zzz 2>/dev/null; echo $status) "1"
 teardown
 
+# No-arg: promote first incomplete backlog task to bottom of Doing.
+setup "$SAMPLE"
+doing >/dev/null
+_todo_read $TODO_FILE
+set -l _bbb_doing_loc (_todo_find_id bbb)
+check "doing: promoted bbb to doing bottom" (_todo_get_line doing (string split ' ' -- $_bbb_doing_loc)[2]) "- [ ] Backlog one (bbb)"
+set -l _ccc_todo_loc (_todo_find_id ccc)
+check "doing: removed from backlog top"     (_todo_get_line todo (string split ' ' -- $_ccc_todo_loc)[2]) "- [ ] Backlog two @admin (ccc)"
+teardown
+
+# By id: promote a specific task, carrying its context.
+setup "$SAMPLE"
+doing ccc >/dev/null
+_todo_read $TODO_FILE
+set -l _ccc_doing_loc (_todo_find_id ccc)
+set -l _ccc_doing_idx (string split ' ' -- $_ccc_doing_loc)[2]
+check "doing: id-promote task line" (_todo_get_line doing $_ccc_doing_idx) "- [ ] Backlog two @admin (ccc)"
+check "doing: id-promote context"   (_todo_get_line doing (math $_ccc_doing_idx + 1)) "  context line for two"
+teardown
+
+# Free text: interruption to TOP of Doing.
+setup "$SAMPLE"
+doing Quick interruption @ops >/dev/null
+_todo_read $TODO_FILE
+# After write+read, doing section: index 1 is blank, index 2 is the new interruption (on top).
+check "doing: interruption on top" (string match -rq '^- \[ \] Quick interruption @ops \([a-z0-9]{3}\)$' -- $__td_doing[2]; and echo yes; or echo no) "yes"
+teardown
+
 echo ""
 echo "passed: $_pass   failed: $_fail"
 exit (test $_fail -eq 0; and echo 0; or echo 1)
