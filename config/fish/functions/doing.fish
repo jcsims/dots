@@ -29,7 +29,7 @@ function doing --description "Start the top backlog task, promote a task by id, 
 
     if test (count $argv) -gt 0
         # Interruption text: new task at the TOP of Doing.
-        set -l text (string join ' ' $argv)
+        set -l text (string join ' ' -- $argv)
         set -l tag ''
         if string match -qr '@\S+\s*$' -- $text
             set tag (string match -rg '@(\S+)\s*$' -- $text)

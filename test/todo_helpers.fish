@@ -70,6 +70,21 @@ check "split: id empty"     "$__td_id"    ""
 check "split: tag empty"    "$__td_tag"   ""
 check "split: text only"    $__td_text    "Done thing"
 
+# @ in the middle of text must not be treated as a tag.
+_todo_split "- [ ] Email me@example.com about things @work (abc)"
+check "split: @ mid-text not tag"  $__td_tag  "work"
+check "split: @ mid-text in text"  $__td_text "Email me@example.com about things"
+
+# Parens that look like an id but have more than 3 chars must not be parsed as id.
+_todo_split "- [ ] Some task (abcd)"
+check "split: 4-char parens not id"   "$__td_id"   ""
+check "split: 4-char parens in text"  $__td_text   "Some task (abcd)"
+
+# Parens with uppercase must not be parsed as id.
+_todo_split "- [ ] Review PR (ABC)"
+check "split: uppercase parens not id"  "$__td_id"  ""
+check "split: uppercase parens in text" $__td_text  "Review PR (ABC)"
+
 check "line: full"   (_todo_line 0 a1z turbo "Hello world") "- [ ] Hello world @turbo (a1z)"
 check "line: done"   (_todo_line 1 ddd "" "Old done")       "- [x] Old done (ddd)"
 check "line: notag"  (_todo_line 0 bbb "" "Plain")          "- [ ] Plain (bbb)"
@@ -345,6 +360,29 @@ teardown
 setup "$SAMPLE"
 # SAMPLE has no completed tasks outside Archive.
 check "archive: nothing to do exits 1" (archive 2>/dev/null; echo $status) "1"
+teardown
+
+# Malformed-file refusal: _todo_read must return 1 (and commands abort) on
+# non-blank content before the first header, or an unexpected header.
+setup "some stray text before any header
+
+## Doing
+
+# Todo
+
+## Archive
+"
+check "malformed: pre-header content -> _todo_read fails" (_todo_read $TODO_FILE; echo $status) "1"
+check "malformed: command aborts (add)" (todo add nope 2>/dev/null; echo $status) "1"
+teardown
+
+setup "## Doing
+
+# Todo
+
+## Bogus
+"
+check "malformed: unexpected header -> _todo_read fails" (_todo_read $TODO_FILE; echo $status) "1"
 teardown
 
 echo ""
