@@ -5,8 +5,6 @@ tap 'clojure-lsp/brew'
 tap 'clojure/tools'
 tap 'codecrafters-io/tap'
 tap 'jimeh/emacs-builds'
-tap 'nextjournal/brew'
-tap 'siderolabs/tap'
 
 brew 'borkdude/brew/babashka'
 brew 'babashka/brew/neil'
