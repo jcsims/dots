@@ -959,7 +959,6 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (global-set-key (kbd "C-c e e") (lambda () (interactive) (find-file "~/.emacs.d/init.el")))
   (global-set-key (kbd "C-c e f") (lambda () (interactive) (find-file "~/.config/fish/config.fish")))
   (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.Brewfile")))
-  (global-set-key (kbd "C-c e t") (lambda () (interactive) (find-file "~/todo.md")))
   (global-set-key (kbd "C-c e b") (lambda () (interactive) (find-file "~/.emacs.d/work-links/work-bookmarks.el")))
   (global-set-key (kbd "C-c e j") (lambda () (interactive) (find-file jcs/journelly-file)))
 
