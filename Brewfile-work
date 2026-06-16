@@ -4,6 +4,7 @@ tap 'borkdude/brew'
 tap 'clojure-lsp/brew'
 tap 'clojure/tools'
 tap 'jimeh/emacs-builds'
+tap 'ryanlewis/tap'
 
 brew 'borkdude/brew/babashka'
 brew 'babashka/brew/neil'
@@ -35,6 +36,7 @@ brew 'yarn'
 
 cask 'chromium', args: {'no-quarantine': true}
 cask 'cljstyle'
+cask 'things'
 
 ## Common tools
 brew 'aspell'
