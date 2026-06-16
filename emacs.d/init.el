@@ -819,6 +819,7 @@ same directory as the org-buffer and insert a link to this file."
                (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.25.0" "src"))
                (jsdoc . ("https://github.com/tree-sitter/tree-sitter-jsdoc" "v0.25.0"))
                (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.24.8"))
+               (kotlin . ("https://github.com/fwcd/tree-sitter-kotlin"))
                (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.25.0"))
                (php . ("https://github.com/tree-sitter/tree-sitter-php" "v0.24.2" "php/src"))
                (phpdoc . ("https://github.com/claytonrcarter/tree-sitter-phpdoc" "v0.1.7"))

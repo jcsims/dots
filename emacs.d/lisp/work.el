@@ -26,6 +26,8 @@
 
 (use-package graphql-mode)
 
+(use-package kotlin-ts-mode)
+
 (use-package environ)
 (use-package splash
   :load-path "/Users/csims/code/work/stonehenge/development/emacs/"
