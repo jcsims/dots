@@ -599,7 +599,6 @@ same directory as the org-buffer and insert a link to this file."
          ("C-c e i" . jcs/open-inbox)
          ("C-c e m" . jcs/open-meetings)
          ("C-c e n" . jcs/open-notes)
-         ("C-c e w" . jcs/open-work)
          :map org-mode-map
          ("C-a" . org-beginning-of-line)))
 
@@ -960,6 +959,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (global-set-key (kbd "C-c e f") (lambda () (interactive) (find-file "~/.config/fish/config.fish")))
   (global-set-key (kbd "C-c e p") (lambda () (interactive) (find-file "~/.Brewfile")))
   (global-set-key (kbd "C-c e b") (lambda () (interactive) (find-file "~/.emacs.d/work-links/work-bookmarks.el")))
+  (global-set-key (kbd "C-c e w") (lambda () (interactive) (find-file "~/.emacs.d/lisp/work.el")))
   (global-set-key (kbd "C-c e j") (lambda () (interactive) (find-file jcs/journelly-file)))
 
   ;; Taken from the Emacs Wiki: http://www.emacswiki.org/emacs/InsertDate
