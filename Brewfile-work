@@ -71,6 +71,7 @@ brew 'tmux'
 brew 'tokei'
 brew 'uv'
 brew 'watch'
+brew 'yq'
 
 cask '1password'
 cask '1password-cli'
