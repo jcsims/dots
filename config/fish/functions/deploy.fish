@@ -37,7 +37,7 @@ function deploy
         switch $arg
             case -h --help
                 __deploy_show_help
-                exit 0
+                return 0
             case -d --dry-run
                 set dry_run true
             case -b --branch
@@ -46,7 +46,7 @@ function deploy
                     set branch $argv[$i]
                 else
                     echo "Error: --branch requires an argument" >&2
-                    exit 1
+                    return 1
                 end
             case -e --env --environments
                 set i (math $i + 1)
@@ -54,12 +54,12 @@ function deploy
                     set environments $argv[$i]
                 else
                     echo "Error: --env requires an argument" >&2
-                    exit 1
+                    return 1
                 end
             case '-*'
                 echo "Error: Unknown option: $arg" >&2
                 __deploy_show_help
-                exit 1
+                return 1
             case '*'
                 set -a services $arg
         end
@@ -72,7 +72,7 @@ function deploy
         echo "Error: At least one service must be specified" >&2
         echo ""
         __deploy_show_help
-        exit 1
+        return 1
     end
 
     # Get current branch if not specified
@@ -80,7 +80,7 @@ function deploy
         set branch (git rev-parse --abbrev-ref HEAD)
         if test $status -ne 0
             echo "Error: Failed to get current branch" >&2
-            exit 1
+            return 1
         end
     end
 
@@ -121,7 +121,7 @@ function deploy
         else
             echo ""
             echo "✗ Failed to trigger workflow" >&2
-            exit 1
+            return 1
         end
     end
 
