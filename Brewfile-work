@@ -22,6 +22,7 @@ brew 'clj-kondo'
 brew 'composer'
 brew 'ibazel' # Bazel builds on file changes
 brew 'jira-cli'
+brew 'kotlin'
 brew 'kubectl'
 brew 'php@8.2'
 brew 'php-cs-fixer'
@@ -59,8 +60,8 @@ brew 'htop'
 brew 'helix'
 brew 'jq'
 # For the system Java wrappers to find this JDK, symlink it with
-#   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
-brew 'openjdk'
+#   sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk@25.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+brew 'openjdk@25', link: true
 brew 'mas'
 brew 'neovim'
 brew 'pkg-config' # For jinx module build

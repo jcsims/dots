@@ -26,7 +26,8 @@
 
 (use-package graphql-mode)
 
-(use-package kotlin-ts-mode)
+(use-package kotlin-ts-mode
+  :mode (("\\.kt\\'" . kotlin-ts-mode)))
 
 (use-package environ)
 (use-package splash
@@ -56,7 +57,9 @@
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-               '(php-mode . ("intelephense" "--stdio"))))
+               '(php-mode . ("intelephense" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '(kotlin-ts-mode . ("kotlin-lsp" "--stdio"))))
 
 (use-package ob-php
   :after ob
