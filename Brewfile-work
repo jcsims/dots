@@ -1,10 +1,10 @@
 # -*- mode: ruby-ts;-*-
-tap 'babashka/brew'
-tap 'borkdude/brew'
-tap 'clojure-lsp/brew'
-tap 'clojure/tools'
-tap 'jimeh/emacs-builds'
-tap 'ryanlewis/tap'
+tap 'babashka/brew', trusted: true
+tap 'borkdude/brew', trusted: true
+tap 'clojure-lsp/brew', trusted: true
+tap 'clojure/tools', trusted: true
+tap 'jimeh/emacs-builds', trusted: true
+tap 'ryanlewis/tap', trusted: true
 
 brew 'borkdude/brew/babashka'
 brew 'babashka/brew/neil'
@@ -12,7 +12,7 @@ brew 'clojure-lsp/brew/clojure-lsp-native'
 brew 'clojure/tools/clojure'
 
 ## Work-specific tools
-tap 'hashicorp/tap'
+tap 'hashicorp/tap', trusted: true
 brew 'hashicorp/tap/terraform'
 
 brew 'awscli'
@@ -35,7 +35,8 @@ brew 'typescript-language-server'
 brew 'yarn'
 
 cask 'chromium', args: {'no-quarantine': true}
-cask 'cljstyle'
+cask 'cljstyle', args: {'no-quarantine': true}
+cask 'kotlin-lsp', args: {'no-quarantine': true}
 cask 'things'
 
 ## Common tools
