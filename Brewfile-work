@@ -6,8 +6,9 @@ tap 'clojure/tools', trusted: true
 tap 'jimeh/emacs-builds', trusted: true
 tap 'ryanlewis/tap', trusted: true
 
-brew 'borkdude/brew/babashka'
+brew 'babashka/brew/bbin'
 brew 'babashka/brew/neil'
+brew 'borkdude/brew/babashka'
 brew 'clojure-lsp/brew/clojure-lsp-native'
 brew 'clojure/tools/clojure'
 
