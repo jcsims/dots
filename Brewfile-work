@@ -36,9 +36,9 @@ brew 'terraform-ls'
 brew 'typescript-language-server'
 brew 'yarn'
 
-cask 'chromium', args: {'no-quarantine': true}
-cask 'cljstyle', args: {'no-quarantine': true}
-cask 'kotlin-lsp', args: {'no-quarantine': true}
+cask 'chromium'
+cask 'cljstyle'
+cask 'kotlin-lsp'
 cask 'things'
 
 ## Common tools
