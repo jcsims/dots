@@ -98,7 +98,6 @@ cask 'netnewswire'
 cask 'obsidian'
 cask 'plexamp'
 cask 'rectangle'
-cask 'slack'
 
 mas 'GoodLinks', id: 1_474_335_294
 mas 'Things', id: 904_280_696
