@@ -70,15 +70,33 @@ line two"
 }
 
 @test "append dedupes by key" {
-    daily-note append --section Tasks --key K1 --heading 'TODO Buy milk' </dev/null
-    run bash -c "daily-note append --section Tasks --key K1 --heading 'TODO Buy milk' </dev/null"
+    daily-note append --section Tasks --key K1 --heading 'TODO K1 Buy milk' </dev/null
+    run bash -c "daily-note append --section Tasks --key K1 --heading 'TODO K1 Buy milk' </dev/null"
     [ "$status" -eq 0 ]
     [ "$output" = "skipped: K1" ]
-    [ "$(grep -c 'TODO Buy milk' "$NOTE")" -eq 1 ]
+    [ "$(grep -c 'TODO K1 Buy milk' "$NOTE")" -eq 1 ]
 }
 
 @test "append with missing flags prints usage" {
     run bash -c "daily-note append --section Tasks </dev/null"
     [ "$status" -ne 0 ]
     [[ "$output" == *"Usage"* ]]
+}
+
+@test "append dedupes the second distinct key too" {
+    daily-note append --section Tasks --key K1 --heading 'TODO K1 first' </dev/null
+    daily-note append --section Tasks --key K2 --heading 'TODO K2 second' </dev/null
+    run bash -c "daily-note append --section Tasks --key K2 --heading 'TODO K2 second' </dev/null"
+    [ "$status" -eq 0 ]
+    [ "$output" = "skipped: K2" ]
+    [ "$(grep -c 'TODO K2 second' "$NOTE")" -eq 1 ]
+}
+
+@test "append handles URL-shaped keys" {
+    url="https://splash.slack.com/archives/C123/p999"
+    run bash -c "daily-note append --section Slack --key '$url' --heading '[[$url][#chan: topic]]' </dev/null"
+    [ "$status" -eq 0 ]
+    [ "$output" = "added: $url" ]
+    run bash -c "daily-note append --section Slack --key '$url' --heading '[[$url][#chan: topic]]' </dev/null"
+    [ "$output" = "skipped: $url" ]
 }

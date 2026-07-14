@@ -92,16 +92,6 @@ cmd_append() {
 
     mv "$tmp" "$file"
     rm -f "$entry_file"
-    # Append key to the #+keys: metadata line for dedup tracking
-    # Add the line if it doesn't exist
-    if ! grep -q "^#+keys:" "$file"; then
-        sed -i.bak '/^#+title:/a\
-#+keys:' "$file"
-        rm -f "$file.bak"
-    fi
-    # Now append the key to the #+keys: line
-    sed -i.bak "s/^#+keys:$/&${key} /" "$file"
-    rm -f "$file.bak"
     echo "added: $key"
 }
 
