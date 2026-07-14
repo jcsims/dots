@@ -1,0 +1,86 @@
+#!/usr/bin/env bats
+
+setup() {
+    export DAILY_DIR="$BATS_TEST_TMPDIR/daily"
+    export FIXTURES="$BATS_TEST_TMPDIR/fixtures"
+    export THINGS_LOG="$BATS_TEST_TMPDIR/things.log"
+    STUB_DIR="$BATS_TEST_TMPDIR/stub"
+    mkdir -p "$FIXTURES" "$STUB_DIR"
+
+    # Stub `things`: list serves fixture JSON per view; complete logs the call.
+    cat >"$STUB_DIR/things" <<'EOF'
+#!/usr/bin/env bash
+case "$1" in
+    list)
+        view="$2"
+        f="$FIXTURES/$view.json"
+        if [ -f "$f" ]; then cat "$f"; else echo null; fi
+        ;;
+    complete)
+        echo "complete $2" >>"$THINGS_LOG"
+        exit "${THINGS_COMPLETE_EXIT:-0}"
+        ;;
+    *)
+        echo "unexpected things invocation: $*" >&2
+        exit 1
+        ;;
+esac
+EOF
+    chmod +x "$STUB_DIR/things"
+    PATH="$STUB_DIR:$BATS_TEST_DIRNAME/../bin:$PATH"
+
+    TODAY=$(date +%F)
+    NOTE="$DAILY_DIR/$TODAY.org"
+}
+
+@test "imports a task with notes, completes it in Things" {
+    cat >"$FIXTURES/inbox.json" <<'EOF'
+[{"uuid": "U1", "title": "Ping Ben about the report job", "notes": "context line", "status": "open"}]
+EOF
+    run things-to-daily
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"imported 1 task(s), skipped 0 duplicate(s)"* ]]
+
+    grep -qxF '** TODO Ping Ben about the report job' "$NOTE"
+    grep -qxF ':THINGS_ID: U1' "$NOTE"
+    grep -qxF 'context line' "$NOTE"
+    [ "$(cat "$THINGS_LOG")" = "complete U1" ]
+}
+
+@test "maps deadline and startDate to DEADLINE/SCHEDULED" {
+    cat >"$FIXTURES/today.json" <<'EOF'
+[{"uuid": "U2", "title": "Dated task", "deadline": "2026-07-22", "startDate": "2026-07-14"}]
+EOF
+    run things-to-daily
+    [ "$status" -eq 0 ]
+    grep -qxF 'DEADLINE: <2026-07-22> SCHEDULED: <2026-07-14>' "$NOTE"
+}
+
+@test "same uuid across views is imported and completed once" {
+    echo '[{"uuid": "U3", "title": "Dup"}]' >"$FIXTURES/inbox.json"
+    echo '[{"uuid": "U3", "title": "Dup"}]' >"$FIXTURES/anytime.json"
+    run things-to-daily
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"imported 1 task(s)"* ]]
+    [ "$(grep -c '** TODO Dup' "$NOTE")" -eq 1 ]
+    [ "$(wc -l <"$THINGS_LOG")" -eq 1 ]
+}
+
+@test "re-run skips the duplicate but still completes in Things" {
+    echo '[{"uuid": "U4", "title": "Sticky"}]' >"$FIXTURES/inbox.json"
+    things-to-daily
+    run things-to-daily
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"imported 0 task(s), skipped 1 duplicate(s)"* ]]
+    [ "$(grep -c '** TODO Sticky' "$NOTE")" -eq 1 ]
+    [ "$(grep -c 'complete U4' "$THINGS_LOG")" -eq 2 ]
+}
+
+@test "complete failure warns but exits zero and keeps the entry" {
+    echo '[{"uuid": "U5", "title": "Fragile"}]' >"$FIXTURES/inbox.json"
+    export THINGS_COMPLETE_EXIT=1
+    run things-to-daily
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"warning: failed to complete task in Things: U5"* ]]
+    grep -qxF '** TODO Fragile' "$NOTE"
+}

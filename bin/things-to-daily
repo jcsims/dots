@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Import open Things tasks tagged $THINGS_TAG into today's org-roam daily
+# note, then complete them in Things (one-way capture; org owns them now).
+
+TAG="${THINGS_TAG:-@work}"
+VIEWS=(inbox today upcoming anytime someday)
+
+for cmd in things jq daily-note; do
+    if ! command -v "$cmd" >/dev/null; then
+        echo "missing required command: $cmd" >&2
+        exit 1
+    fi
+done
+
+imported=0
+skipped=0
+seen=" "
+
+for view in "${VIEWS[@]}"; do
+    tasks=$(things list "$view" --tag "$TAG" --json)
+    if [ -z "$tasks" ] || [ "$tasks" = "null" ]; then
+        continue
+    fi
+
+    while IFS= read -r task; do
+        uuid=$(jq -r '.uuid' <<<"$task")
+
+        # A task can show up in more than one view; handle it once.
+        case "$seen" in *" $uuid "*) continue ;; esac
+        seen="$seen$uuid "
+
+        title=$(jq -r '.title' <<<"$task")
+        notes=$(jq -r '.notes // empty' <<<"$task")
+        deadline=$(jq -r '.deadline // empty' <<<"$task")
+        scheduled=$(jq -r '.startDate // empty' <<<"$task")
+
+        planning=""
+        [ -n "$deadline" ] && planning="DEADLINE: <$deadline>"
+        if [ -n "$scheduled" ]; then
+            [ -n "$planning" ] && planning+=" "
+            planning+="SCHEDULED: <$scheduled>"
+        fi
+
+        body=""
+        [ -n "$planning" ] && body+="$planning"$'\n'
+        body+=":PROPERTIES:"$'\n'":THINGS_ID: $uuid"$'\n'":END:"
+        [ -n "$notes" ] && body+=$'\n'"$notes"
+
+        if ! result=$(printf '%s\n' "$body" |
+                          daily-note append --section Tasks --key "$uuid" \
+                                     --heading "TODO $title"); then
+            echo "warning: failed to write entry for: $uuid ($title)" >&2
+            continue
+        fi
+
+        case "$result" in
+            skipped:*) skipped=$((skipped + 1)) ;;
+            *) imported=$((imported + 1)) ;;
+        esac
+
+        # Complete after a successful append OR a dedupe skip — either way
+        # the task lives in org now. Failure here just means it lingers in
+        # Things; the dedupe key prevents a duplicate on the next run.
+        if ! things complete "$uuid"; then
+            echo "warning: failed to complete task in Things: $uuid ($title)" >&2
+        fi
+    done < <(jq -c '.[]' <<<"$tasks")
+done
+
+echo "imported $imported task(s), skipped $skipped duplicate(s)"
