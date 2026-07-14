@@ -789,6 +789,22 @@ canceled tasks."
           (expand-file-name (file-name-as-directory org-roam-directory))
           (file-name-as-directory buffer-file-name)))))
 
+(defun jcs/things-to-daily ()
+  "Import @work-tagged Things tasks into today's daily note, then open it."
+  (interactive)
+  (message "%s" (string-trim
+                 (shell-command-to-string "~/bin/things-to-daily")))
+  (let* ((daily (expand-file-name
+                 (format-time-string "daily/%Y-%m-%d.org")
+                 jcs/org-roam-dir))
+         (buf (find-buffer-visiting daily)))
+    (when buf
+      (with-current-buffer buf
+        (revert-buffer :ignore-auto :noconfirm))))
+  (org-roam-dailies-goto-today))
+
+(global-set-key (kbd "C-c o t") #'jcs/things-to-daily)
+
 (use-package org-tempo :ensure f)
 
 (use-package paredit
