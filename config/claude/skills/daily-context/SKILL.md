@@ -40,6 +40,7 @@ failed.
   daily-note append --section <Section> --key '<KEY>' --heading '<HEADING>' </dev/null
   ```
 
+- Headings and bodies may contain quotes/apostrophes — quote shell arguments accordingly (prefer single quotes, or escape as needed).
 - `skipped: <KEY>` output means the entry already exists — count it as a
   duplicate, not an error.
 - The KEY must appear in the heading or body. Headings are org links, so a
