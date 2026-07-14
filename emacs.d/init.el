@@ -793,7 +793,7 @@ canceled tasks."
   "Import @work-tagged Things tasks into today's daily note, then open it."
   (interactive)
   (message "%s" (string-trim
-                 (shell-command-to-string "~/bin/things-to-daily")))
+                 (shell-command-to-string "~/bin/things-to-daily 2>&1")))
   (let* ((daily (expand-file-name
                  (format-time-string "daily/%Y-%m-%d.org")
                  jcs/org-roam-dir))
