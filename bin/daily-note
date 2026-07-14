@@ -39,9 +39,15 @@ cmd_append() {
     local section="" key="" heading=""
     while [ $# -gt 0 ]; do
         case "$1" in
-            --section) section="$2"; shift 2 ;;
-            --key)     key="$2";     shift 2 ;;
-            --heading) heading="$2"; shift 2 ;;
+            --section|--key|--heading)
+                [ $# -ge 2 ] && [ -n "${2:-}" ] || usage
+                case "$1" in
+                    --section) section="$2" ;;
+                    --key)     key="$2" ;;
+                    --heading) heading="$2" ;;
+                esac
+                shift 2
+                ;;
             *) usage ;;
         esac
     done
@@ -59,6 +65,18 @@ cmd_append() {
     local body=""
     if [ ! -t 0 ]; then
         body=$(cat)
+    fi
+    if [ -n "$body" ]; then
+        # A body line starting with '*' would parse as an org heading;
+        # prefix it with a space so it stays plain text.
+        body=$(sed 's/^\*/ */' <<<"$body")
+    fi
+
+    local entry_text
+    entry_text=$(printf '** %s\n%s' "$heading" "$body")
+    if ! grep -qF -- "$key" <<<"$entry_text"; then
+        echo "error: key not in entry: $key" >&2
+        exit 2
     fi
 
     # Ensure the section exists (new sections go at end of file)

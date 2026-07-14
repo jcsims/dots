@@ -36,36 +36,36 @@ setup() {
 }
 
 @test "append creates the section and entry" {
-    run bash -c "daily-note append --section Tasks --key K1 --heading 'TODO Buy milk' </dev/null"
+    run bash -c "daily-note append --section Tasks --key K1 --heading 'TODO K1 Buy milk' </dev/null"
     [ "$status" -eq 0 ]
     [ "$output" = "added: K1" ]
 
     expected="* Tasks
-** TODO Buy milk"
+** TODO K1 Buy milk"
     [ "$(tail -n 2 "$NOTE")" = "$expected" ]
 }
 
 @test "append includes body from stdin" {
     printf 'line one\nline two\n' |
-        daily-note append --section Tasks --key K1 --heading 'TODO Buy milk'
+        daily-note append --section Tasks --key K1 --heading 'TODO K1 Buy milk'
 
     expected="* Tasks
-** TODO Buy milk
+** TODO K1 Buy milk
 line one
 line two"
     [ "$(tail -n 4 "$NOTE")" = "$expected" ]
 }
 
 @test "append adds to the end of an existing section, before the next section" {
-    daily-note append --section Tasks --key K1 --heading 'TODO First' </dev/null
-    daily-note append --section Slack --key S1 --heading 'Slack thing' </dev/null
-    daily-note append --section Tasks --key K2 --heading 'TODO Second' </dev/null
+    daily-note append --section Tasks --key K1 --heading 'TODO K1 First' </dev/null
+    daily-note append --section Slack --key S1 --heading 'S1 Slack thing' </dev/null
+    daily-note append --section Tasks --key K2 --heading 'TODO K2 Second' </dev/null
 
     expected="* Tasks
-** TODO First
-** TODO Second
+** TODO K1 First
+** TODO K2 Second
 * Slack
-** Slack thing"
+** S1 Slack thing"
     [ "$(tail -n 5 "$NOTE")" = "$expected" ]
 }
 
@@ -90,6 +90,32 @@ line two"
     [ "$status" -eq 0 ]
     [ "$output" = "skipped: K2" ]
     [ "$(grep -c 'TODO K2 second' "$NOTE")" -eq 1 ]
+}
+
+@test "append escapes body lines that look like org headings" {
+    printf '* a starred bullet\nplain line\n' |
+        daily-note append --section Tasks --key K1 --heading 'TODO K1 Buy milk'
+    daily-note append --section Tasks --key K2 --heading 'TODO K2 Second' </dev/null
+
+    expected="* Tasks
+** TODO K1 Buy milk
+ * a starred bullet
+plain line
+** TODO K2 Second"
+    [ "$(tail -n 5 "$NOTE")" = "$expected" ]
+}
+
+@test "append rejects an entry that does not contain its key" {
+    run bash -c "daily-note append --section Tasks --key NOWHERE --heading 'TODO Buy milk' </dev/null"
+    [ "$status" -eq 2 ]
+    [[ "$output" == *"key not in entry"* ]]
+    [ ! -e "$NOTE" ] || ! grep -qF 'TODO Buy milk' "$NOTE"
+}
+
+@test "append with a flag missing its value prints usage" {
+    run bash -c "daily-note append --section Tasks --key </dev/null"
+    [ "$status" -eq 2 ]
+    [[ "$output" == *"Usage"* ]]
 }
 
 @test "append handles URL-shaped keys" {
