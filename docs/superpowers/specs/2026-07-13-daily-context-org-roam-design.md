@@ -89,10 +89,11 @@ environment variable (used by tests).
 
 Flow:
 
-1. Gather open tasks tagged `@work` (tag name in a variable at the top of the
-   script, overridable via env) across views: inbox, today, upcoming, anytime,
-   someday — via `things list <view> --tag @work --json`, deduped by task UUID
-   across views.
+1. Gather open tasks in the Things **area** `Work` (`--area`, `THINGS_AREA`
+   env override) UNION tasks tagged `@work` (`--tag`, `THINGS_TAG` env
+   override — catches area-less inbox quick-captures) across views: inbox,
+   today, upcoming, anytime, someday — deduped by task UUID across views and
+   filters. (Changed 2026-07-14; originally tag-only.)
 2. For each task, append via `daily-note`:
    - section: `Tasks`
    - key: task UUID
