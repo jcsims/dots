@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DAILY_DIR="${DAILY_DIR:-$HOME/org-roam/daily}"
+
+usage() {
+    cat >&2 <<'EOF'
+Usage:
+  daily-note path
+      Print today's note path, creating the file if needed.
+  daily-note append --section SECTION --key KEY --heading HEADING
+      Append "** HEADING" (plus body from stdin, if any) under "* SECTION"
+      in today's note. If KEY already appears in the file, do nothing.
+EOF
+    exit 2
+}
+
+today_file() {
+    echo "$DAILY_DIR/$(date +%F).org"
+}
+
+ensure_file() {
+    local file="$1"
+    if [ ! -f "$file" ]; then
+        mkdir -p "$DAILY_DIR"
+        printf ':PROPERTIES:\n:ID:       %s\n:END:\n#+title: %s\n' \
+               "$(uuidgen)" "$(date +%F)" >"$file"
+    fi
+}
+
+cmd_path() {
+    local file
+    file=$(today_file)
+    ensure_file "$file"
+    echo "$file"
+}
+
+case "${1:-}" in
+    path) cmd_path ;;
+    *) usage ;;
+esac

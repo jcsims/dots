@@ -16,6 +16,7 @@ brew 'arduino-cli'
 brew 'aspell'
 brew 'bash-language-server'
 brew 'bat'
+brew 'bats-core'
 brew 'coreutils' # timeout
 brew 'enchant' # For jinx module build
 brew 'esptool'
