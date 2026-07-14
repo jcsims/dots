@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Import open Things tasks tagged $THINGS_TAG into today's org-roam daily
-# note, then complete them in Things (one-way capture; org owns them now).
+# Import open Things tasks in the $THINGS_AREA area, unioned with tasks
+# tagged $THINGS_TAG (covers area-less inbox quick-captures), into today's
+# org-roam daily note, then complete them in Things (one-way capture; org
+# owns them now).
 
+AREA="${THINGS_AREA:-Work}"
 TAG="${THINGS_TAG:-@work}"
 VIEWS=(inbox today upcoming anytime someday)
 
@@ -18,10 +21,12 @@ imported=0
 skipped=0
 seen=" "
 
-for view in "${VIEWS[@]}"; do
-    tasks=$(things list "$view" --tag "$TAG" --json)
+process_list() {
+    local view="$1" flag="$2" value="$3"
+    local tasks
+    tasks=$(things list "$view" "$flag" "$value" --json)
     if [ -z "$tasks" ] || [ "$tasks" = "null" ]; then
-        continue
+        return 0
     fi
 
     while IFS= read -r task; do
@@ -67,6 +72,11 @@ for view in "${VIEWS[@]}"; do
             echo "warning: failed to complete task in Things: $uuid ($title)" >&2
         fi
     done < <(jq -c '.[]' <<<"$tasks")
+}
+
+for view in "${VIEWS[@]}"; do
+    process_list "$view" --area "$AREA"
+    process_list "$view" --tag "$TAG"
 done
 
 echo "imported $imported task(s), skipped $skipped duplicate(s)"

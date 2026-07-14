@@ -13,8 +13,12 @@ setup() {
 case "$1" in
     list)
         view="$2"
-        f="$FIXTURES/$view.json"
-        if [ -f "$f" ]; then cat "$f"; else echo null; fi
+        case "$*" in
+            *--area*) f="$FIXTURES/$view-area.json" ;;
+            *--tag*)  f="$FIXTURES/$view-tag.json" ;;
+            *)        f="" ;;
+        esac
+        if [ -n "$f" ] && [ -f "$f" ]; then cat "$f"; else echo null; fi
         ;;
     complete)
         echo "complete $2" >>"$THINGS_LOG"
@@ -34,7 +38,7 @@ EOF
 }
 
 @test "imports a task with notes, completes it in Things" {
-    cat >"$FIXTURES/inbox.json" <<'EOF'
+    cat >"$FIXTURES/inbox-tag.json" <<'EOF'
 [{"uuid": "U1", "title": "Ping Ben about the report job", "notes": "context line", "status": "open"}]
 EOF
     run things-to-daily
@@ -48,7 +52,7 @@ EOF
 }
 
 @test "maps deadline and startDate to DEADLINE/SCHEDULED" {
-    cat >"$FIXTURES/today.json" <<'EOF'
+    cat >"$FIXTURES/today-area.json" <<'EOF'
 [{"uuid": "U2", "title": "Dated task", "deadline": "2026-07-22", "startDate": "2026-07-14"}]
 EOF
     run things-to-daily
@@ -56,9 +60,9 @@ EOF
     grep -qxF 'DEADLINE: <2026-07-22> SCHEDULED: <2026-07-14>' "$NOTE"
 }
 
-@test "same uuid across views is imported and completed once" {
-    echo '[{"uuid": "U3", "title": "Dup"}]' >"$FIXTURES/inbox.json"
-    echo '[{"uuid": "U3", "title": "Dup"}]' >"$FIXTURES/anytime.json"
+@test "same uuid across views and filters is imported and completed once" {
+    echo '[{"uuid": "U3", "title": "Dup"}]' >"$FIXTURES/inbox-tag.json"
+    echo '[{"uuid": "U3", "title": "Dup"}]' >"$FIXTURES/anytime-area.json"
     run things-to-daily
     [ "$status" -eq 0 ]
     [[ "$output" == *"imported 1 task(s)"* ]]
@@ -67,7 +71,7 @@ EOF
 }
 
 @test "re-run skips the duplicate but still completes in Things" {
-    echo '[{"uuid": "U4", "title": "Sticky"}]' >"$FIXTURES/inbox.json"
+    echo '[{"uuid": "U4", "title": "Sticky"}]' >"$FIXTURES/inbox-tag.json"
     things-to-daily
     run things-to-daily
     [ "$status" -eq 0 ]
@@ -77,10 +81,20 @@ EOF
 }
 
 @test "complete failure warns but exits zero and keeps the entry" {
-    echo '[{"uuid": "U5", "title": "Fragile"}]' >"$FIXTURES/inbox.json"
+    echo '[{"uuid": "U5", "title": "Fragile"}]' >"$FIXTURES/inbox-tag.json"
     export THINGS_COMPLETE_EXIT=1
     run things-to-daily
     [ "$status" -eq 0 ]
     [[ "$output" == *"warning: failed to complete task in Things: U5"* ]]
     grep -qxF '** TODO Fragile' "$NOTE"
+}
+
+@test "task in both the area and tag lists is imported once" {
+    echo '[{"uuid": "U6", "title": "Both filters"}]' >"$FIXTURES/today-area.json"
+    echo '[{"uuid": "U6", "title": "Both filters"}]' >"$FIXTURES/today-tag.json"
+    run things-to-daily
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"imported 1 task(s)"* ]]
+    [ "$(grep -c '** TODO Both filters' "$NOTE")" -eq 1 ]
+    [ "$(wc -l <"$THINGS_LOG")" -eq 1 ]
 }
