@@ -35,7 +35,78 @@ cmd_path() {
     echo "$file"
 }
 
+cmd_append() {
+    local section="" key="" heading=""
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --section) section="$2"; shift 2 ;;
+            --key)     key="$2";     shift 2 ;;
+            --heading) heading="$2"; shift 2 ;;
+            *) usage ;;
+        esac
+    done
+    [ -n "$section" ] && [ -n "$key" ] && [ -n "$heading" ] || usage
+
+    local file
+    file=$(today_file)
+    ensure_file "$file"
+
+    if grep -qF -- "$key" "$file"; then
+        echo "skipped: $key"
+        return 0
+    fi
+
+    local body=""
+    if [ ! -t 0 ]; then
+        body=$(cat)
+    fi
+
+    # Ensure the section exists (new sections go at end of file)
+    if ! grep -qxF -- "* $section" "$file"; then
+        printf '* %s\n' "$section" >>"$file"
+    fi
+
+    local entry_file tmp
+    entry_file=$(mktemp)
+    tmp=$(mktemp)
+    printf '** %s\n' "$heading" >"$entry_file"
+    if [ -n "$body" ]; then
+        printf '%s\n' "$body" >>"$entry_file"
+    fi
+
+    # Insert the entry at the end of the section: right before the next
+    # top-level heading after it, or at EOF if it is the last section.
+    awk -v hdr="* $section" -v ef="$entry_file" '
+        function emit(    line) {
+            while ((getline line < ef) > 0) print line
+            close(ef)
+            done = 1
+        }
+        /^\* / {
+            if (insec && !done) emit()
+            insec = ($0 == hdr)
+        }
+        { print }
+        END { if (insec && !done) emit() }
+    ' "$file" >"$tmp"
+
+    mv "$tmp" "$file"
+    rm -f "$entry_file"
+    # Append key to the #+keys: metadata line for dedup tracking
+    # Add the line if it doesn't exist
+    if ! grep -q "^#+keys:" "$file"; then
+        sed -i.bak '/^#+title:/a\
+#+keys:' "$file"
+        rm -f "$file.bak"
+    fi
+    # Now append the key to the #+keys: line
+    sed -i.bak "s/^#+keys:$/&${key} /" "$file"
+    rm -f "$file.bak"
+    echo "added: $key"
+}
+
 case "${1:-}" in
     path) cmd_path ;;
+    append) shift; cmd_append "$@" ;;
     *) usage ;;
 esac
