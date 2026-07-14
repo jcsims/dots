@@ -21,6 +21,9 @@ end
 # Create some directories we need, in case they don't already exist
 mkdir -p ~/bin ~/.claude/skills/jira ~/.emacs.d/lisp ~/Library/KeyBindings
 mkdir -p ~/.config/clojure-lsp ~/.config/fish/completions ~/.config/fish/functions ~/.config/ghostty ~/.config/git
+mkdir -p ~/Library/LaunchAgents ~/Library/Logs
+
+test -e /usr/local/bin || sudo mkdir -p /usr/local/bin
 
 # Link all the things
 
@@ -31,7 +34,7 @@ function work-install
     [ (whoami) = csims ]
 end
 
-function maybe-link -a source_path target_path
+function maybe-link -a source_path target_path use_sudo
     set -l source "$DOTS/$source_path"
 
     if test -e $target_path
@@ -50,7 +53,12 @@ function maybe-link -a source_path target_path
             end
         end
     else
-        ln -s $DOTS/$source_path $target_path
+        set -l cmd ln -s $DOTS/$source_path $target_path
+        if test -n "$use_sudo"
+            sudo $cmd
+        else
+            $cmd
+        end
     end
 end
 
@@ -61,6 +69,7 @@ maybe-link bin/ec ~/bin/ec
 maybe-link bin/jira-adf-extract ~/bin/jira-adf-extract
 maybe-link bin/jira-links ~/bin/jira-links
 maybe-link bin/jira-parent ~/bin/jira-parent
+maybe-link bin/sync-org /usr/local/bin/sync-org true
 if work-install
     maybe-link Brewfile-work ~/.Brewfile
 else
@@ -94,6 +103,14 @@ if [ "$OS" = Darwin ]
     maybe-link DefaultKeyBinding.dict ~/Library/KeyBindings/DefaultKeyBinding.dict
     # mac.fish depends on homebrew being installed
     source $DOTS/bootstrap.d/mac.fish
+
+    # Generate and install sync-org launchd plist
+    set -l plist_dest ~/Library/LaunchAgents/com.jcsims.sync-org.plist
+    sed "s|__HOME__|$HOME|g" $DOTS/launchd/com.jcsims.sync-org.plist.template >$plist_dest
+    if not launchctl list 2>/dev/null | grep -q com.jcsims.sync-org
+        launchctl load $plist_dest
+        info "Loaded sync-org launchd agent"
+    end
 end
 
 info "Updating/installing fisher plugins..."
