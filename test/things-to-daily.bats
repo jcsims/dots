@@ -66,7 +66,7 @@ EOF
     run things-to-daily
     [ "$status" -eq 0 ]
     [[ "$output" == *"imported 1 task(s)"* ]]
-    [ "$(grep -c '** TODO Dup' "$NOTE")" -eq 1 ]
+    [ "$(grep -cF '** TODO Dup' "$NOTE")" -eq 1 ]
     [ "$(wc -l <"$THINGS_LOG")" -eq 1 ]
 }
 
@@ -76,7 +76,7 @@ EOF
     run things-to-daily
     [ "$status" -eq 0 ]
     [[ "$output" == *"imported 0 task(s), skipped 1 duplicate(s)"* ]]
-    [ "$(grep -c '** TODO Sticky' "$NOTE")" -eq 1 ]
+    [ "$(grep -cF '** TODO Sticky' "$NOTE")" -eq 1 ]
     [ "$(grep -c 'complete U4' "$THINGS_LOG")" -eq 2 ]
 }
 
@@ -95,6 +95,6 @@ EOF
     run things-to-daily
     [ "$status" -eq 0 ]
     [[ "$output" == *"imported 1 task(s)"* ]]
-    [ "$(grep -c '** TODO Both filters' "$NOTE")" -eq 1 ]
+    [ "$(grep -cF '** TODO Both filters' "$NOTE")" -eq 1 ]
     [ "$(wc -l <"$THINGS_LOG")" -eq 1 ]
 }

@@ -69,6 +69,7 @@ cmd_append() {
     if [ -n "$body" ]; then
         # A body line starting with '*' would parse as an org heading;
         # prefix it with a space so it stays plain text.
+        # shellcheck disable=SC2001 # ${var//} can't anchor ^ per line
         body=$(sed 's/^\*/ */' <<<"$body")
     fi
 
