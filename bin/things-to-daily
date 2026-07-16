@@ -68,8 +68,12 @@ process_list() {
         # Complete after a successful append OR a dedupe skip — either way
         # the task lives in org now. Failure here just means it lingers in
         # Things; the dedupe key prevents a duplicate on the next run.
+        # `things complete` can also exit 0 without closing the task (it
+        # silently no-ops on repeating tasks), so verify the status after.
         if ! things complete "$uuid"; then
             echo "warning: failed to complete task in Things: $uuid ($title)" >&2
+        elif [ "$(things show "$uuid" --json | jq -r '.status // empty')" = "open" ]; then
+            echo "warning: still open in Things after complete (repeating task?): $uuid ($title)" >&2
         fi
     done < <(jq -c '.[]' <<<"$tasks")
 }

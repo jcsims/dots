@@ -7,7 +7,10 @@ setup() {
     STUB_DIR="$BATS_TEST_TMPDIR/stub"
     mkdir -p "$FIXTURES" "$STUB_DIR"
 
-    # Stub `things`: list serves fixture JSON per view; complete logs the call.
+    # Stub `things`: list serves fixture JSON per view; complete logs the
+    # call; show reports completed only if complete was logged (and
+    # THINGS_COMPLETE_NOOP simulates a complete that silently does nothing,
+    # like the real CLI on a repeating task).
     cat >"$STUB_DIR/things" <<'EOF'
 #!/usr/bin/env bash
 case "$1" in
@@ -23,6 +26,15 @@ case "$1" in
     complete)
         echo "complete $2" >>"$THINGS_LOG"
         exit "${THINGS_COMPLETE_EXIT:-0}"
+        ;;
+    show)
+        uuid="$2"
+        if [ -z "${THINGS_COMPLETE_NOOP:-}" ] &&
+               grep -q "complete $uuid" "$THINGS_LOG" 2>/dev/null; then
+            printf '{"uuid":"%s","status":"completed"}\n' "$uuid"
+        else
+            printf '{"uuid":"%s","status":"open"}\n' "$uuid"
+        fi
         ;;
     *)
         echo "unexpected things invocation: $*" >&2
@@ -97,4 +109,14 @@ EOF
     [[ "$output" == *"imported 1 task(s)"* ]]
     [ "$(grep -cF '** TODO Both filters' "$NOTE")" -eq 1 ]
     [ "$(wc -l <"$THINGS_LOG")" -eq 1 ]
+}
+
+@test "complete that silently no-ops warns about the still-open task" {
+    echo '[{"uuid": "U7", "title": "Repeater"}]' >"$FIXTURES/today-area.json"
+    export THINGS_COMPLETE_NOOP=1
+    run things-to-daily
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"still open in Things after complete"* ]]
+    [[ "$output" == *"U7"* ]]
+    grep -qxF '** TODO Repeater' "$NOTE"
 }
