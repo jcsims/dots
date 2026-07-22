@@ -20,13 +20,13 @@
     "Is this instance of Emacs running on a work laptop?")
 
   (message "Loading %s..." user-init-file)
-  (setq inhibit-startup-buffer-menu t)
-  (setq inhibit-startup-screen t)
-  (setq initial-buffer-choice t)
-  (setq initial-scratch-message "")
-  (setq ring-bell-function 'ignore)
+  (setopt inhibit-startup-buffer-menu t)
+  (setopt inhibit-startup-screen t)
+  (setopt initial-buffer-choice t)
+  (setopt initial-scratch-message "")
+  (setopt ring-bell-function 'ignore)
   (when work-install
-    (setq shell-file-name "/opt/homebrew/bin/fish"))
+    (setopt shell-file-name "/opt/homebrew/bin/fish"))
   (when (fboundp 'scroll-bar-mode)
     (scroll-bar-mode 0))
   (when (fboundp 'tool-bar-mode)
@@ -34,7 +34,7 @@
   (when (fboundp 'tooltip-mode)
     (tooltip-mode 0))
   (menu-bar-mode 0)
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (setopt custom-file (expand-file-name "custom.el" user-emacs-directory))
   (when (file-exists-p custom-file)
     (load custom-file)))
 
@@ -47,11 +47,11 @@
     (package-install 'use-package))
   ;; use-package-enable-imenu-support must be
   ;; set before requiring use-package.
-  (setq use-package-enable-imenu-support t)
+  (setopt use-package-enable-imenu-support t)
   (require 'use-package)
   (require 'bind-key)
-  (setq use-package-verbose t
-        use-package-always-ensure t))
+  (setopt use-package-verbose t
+          use-package-always-ensure t))
 
 (use-package gcmh
   :config (gcmh-mode))
@@ -123,15 +123,15 @@
 (use-package atomic-chrome
   :if (display-graphic-p)
   :config
-  (setq atomic-chrome-url-major-mode-alist
-        '(("github\\.com" . gfm-mode)))
+  (setopt atomic-chrome-url-major-mode-alist
+          '(("github\\.com" . gfm-mode)))
   (atomic-chrome-start-server))
 
 (use-package autorevert
   :ensure f
   :config
-  (setq global-auto-revert-non-file-buffers t ; Refresh dired buffers
-        auto-revert-verbose nil)              ; but do it quietly
+  (setopt global-auto-revert-non-file-buffers t ; Refresh dired buffers
+          auto-revert-verbose nil)              ; but do it quietly
   ;; Auto-refresh buffers
   (global-auto-revert-mode))
 
@@ -141,8 +141,8 @@
 (use-package bug-reference
   :ensure f
   :config
-  (setq bug-reference-bug-regexp "\\(\\(RATE-[0-9]+\\|LOS-[0-9]+\\|AR-[0-9]+\\|RENG-[0-9]+\\)\\)"
-        bug-reference-url-format "https://splashfinancial.atlassian.net/browse/%s")
+  (setopt bug-reference-bug-regexp "\\(\\(RATE-[0-9]+\\|LOS-[0-9]+\\|AR-[0-9]+\\|RENG-[0-9]+\\)\\)"
+          bug-reference-url-format "https://splashfinancial.atlassian.net/browse/%s")
   :hook (prog-mode . bug-reference-prog-mode))
 
 (use-package breadcrumb
@@ -173,8 +173,8 @@
   (add-to-list 'project-kill-buffer-conditions
                '(derived-mode . cider-repl-mode)
                t)
-  (setq cider-repl-display-help-banner nil
-        nrepl-log-messages nil
+  (setopt cider-repl-display-help-banner nil
+          nrepl-log-messages nil
         ;; Let LSP handle eldoc
         ;;cider-eldoc-display-for-symbol-at-point (when (not work-install) t)
         )
@@ -197,15 +197,15 @@
 (use-package clojure-mode
   :after (paredit)
   :mode (("\\.edn\\'" . clojure-mode))
-  :config (setq clojure-indent-style 'always-indent)
+  :config (setopt clojure-indent-style 'always-indent)
   :hook
   (clojure-mode . paredit-mode)
   (clojure-mode . cider-mode))
 
 (use-package company
   :config
-  (setq company-idle-delay .3) ; decrease delay before autocompletion popup shows
-  (setq company-echo-delay 0)  ; remove annoying blinking
+  (setopt company-idle-delay .3) ; decrease delay before autocompletion popup shows
+  (setopt company-echo-delay 0)  ; remove annoying blinking
   (global-company-mode))
 
 (use-package company-quickhelp
@@ -245,7 +245,7 @@
 
 (use-package diff-hl
   :config
-  (setq diff-hl-draw-borders nil)
+  (setopt diff-hl-draw-borders nil)
   (global-diff-hl-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh t))
 
@@ -261,20 +261,20 @@
 (use-package dired
   :ensure f
   :defer t
-  :config (setq dired-listing-switches "-alh")
+  :config (setopt dired-listing-switches "-alh")
   :custom (dired-vc-rename-file t))
 
 (use-package display-line-numbers
   :ensure f
   :config
-  (setq display-line-numbers-width-start t)
+  (setopt display-line-numbers-width-start t)
   (global-display-line-numbers-mode))
 
 (use-package ediff
   :ensure f
   :config
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain))
+  (setopt ediff-split-window-function 'split-window-horizontally)
+  (setopt ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package eglot
   :hook
@@ -288,12 +288,12 @@
    . eglot-ensure)
   (eglot-managed-mode . eglot-inlay-hints-mode)
   :config
-  (setq eglot-autoshutdown t
-        eglot-confirm-server-initiated-edits nil
-        read-process-output-max (* 1024 1024)
-        eglot-extend-to-xref t
-        ;; Don't block on connecting to the lsp server at all
-        eglot-sync-connect nil)
+  (setopt eglot-autoshutdown t
+          eglot-confirm-server-initiated-edits nil
+          read-process-output-max (* 1024 1024)
+          eglot-extend-to-xref t
+          ;; Don't block on connecting to the lsp server at all
+          eglot-sync-connect nil)
   (add-to-list 'eglot-server-programs
                '(fish-mode . ("fish-lsp" "start")))
   :bind (:map eglot-mode-map
@@ -343,10 +343,10 @@
   :custom (confirm-kill-processes nil)
   :config
   (auto-save-visited-mode 1)
-  (setq backup-directory-alist ; Save backups to a central location
-        `(("." . ,(no-littering-expand-var-file-name "backup/")))
-        auto-save-file-name-transforms
-        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
+  (setopt backup-directory-alist ; Save backups to a central location
+          `(("." . ,(no-littering-expand-var-file-name "backup/")))
+          auto-save-file-name-transforms
+          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
 
 (use-package flycheck
   :disabled
@@ -395,9 +395,9 @@
   :config (global-hl-todo-mode))
 
 (eval-and-compile ;    `isearch'
-  (setq isearch-allow-scroll t
-        ;; Show a count of matches in the minibuffer (and which one you're at).
-        isearch-lazy-count t))
+  (setopt isearch-allow-scroll t
+          ;; Show a count of matches in the minibuffer (and which one you're at).
+          isearch-lazy-count t))
 
 ;; Enable emacs to open jar files. This is essential with eglot for reading
 ;; dependency sources!
@@ -434,7 +434,7 @@
 (use-package man
   :ensure f
   :defer t
-  :config (setq Man-width 80))
+  :config (setopt Man-width 80))
 
 (use-package marginalia
   :init (marginalia-mode))
@@ -447,13 +447,13 @@
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :config (setq markdown-fontify-code-blocks-natively t))
+  :config (setopt markdown-fontify-code-blocks-natively t))
 
 (use-package minions
   :config
-  (setq minions-prominent-modes '(eglot-mode
-                                  flycheck-mode
-                                  flymake-mode))
+  (setopt minions-prominent-modes '(eglot-mode
+                                    flycheck-mode
+                                    flymake-mode))
   (minions-mode))
 
 (use-package multiple-cursors
@@ -473,9 +473,9 @@
 
 (use-package orderless
   :init
-  (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
+  (setopt completion-styles '(orderless basic)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles partial-completion)))))
 
 ;; org-babel
 (use-package ob
@@ -517,31 +517,31 @@
   ;;                        ("delegated" . ?d))))
 
   :config
-  (setq org-special-ctrl-a/e t
-        org-hide-leading-stars t
-        org-hide-emphasis-markers t ;; Hide things like `*` for bold, etc.
-        org-pretty-entities t
-        org-ellipsis "…"
-        org-directory org-dir
-        org-log-done 'time
-        org-log-into-drawer t
-        org-startup-indented t
-        org-startup-folded t
-        org-src-fontify-natively t
-        org-use-fast-todo-selection t
-        org-outline-path-complete-in-steps nil
-        ;; Don't ask every time before evaluating an org source block
-        org-confirm-babel-evaluate nil
-        ;; Display images in org by default
-        org-startup-with-inline-images t
-        ;; Try to keep image widths in emacs to a sane value (measured in pixels)
-        org-image-actual-width 1000
-        org-refile-targets '((jcs/work-file . (:maxlevel . 2))
-                             (jcs/meetings-file . (:level . 1))
-                             (jcs/notes-file . (:level . 2)))
-        org-todo-keywords
-        (quote ((sequence "TODO(t)" "DOING(o)" "|" "DONE(d)")
-                (sequence "DELEGATED(e@/!)" "WAITING(w@/!)" "BLOCKED(b@/!)" "HAMMOCK(h@/!)" "|" "CANCELLED(c@/!)"))))
+  (setopt org-special-ctrl-a/e t
+          org-hide-leading-stars t
+          org-hide-emphasis-markers t ;; Hide things like `*` for bold, etc.
+          org-pretty-entities t
+          org-ellipsis "…"
+          org-directory org-dir
+          org-log-done 'time
+          org-log-into-drawer t
+          org-startup-indented t
+          org-startup-folded t
+          org-src-fontify-natively t
+          org-use-fast-todo-selection t
+          org-outline-path-complete-in-steps nil
+          ;; Don't ask every time before evaluating an org source block
+          org-confirm-babel-evaluate nil
+          ;; Display images in org by default
+          org-startup-with-inline-images t
+          ;; Try to keep image widths in emacs to a sane value (measured in pixels)
+          org-image-actual-width 1000
+          org-refile-targets '((jcs/work-file . (:maxlevel . 2))
+                               (jcs/meetings-file . (:level . 1))
+                               (jcs/notes-file . (:level . 2)))
+          org-todo-keywords
+          (quote ((sequence "TODO(t)" "DOING(o)" "|" "DONE(d)")
+                  (sequence "DELEGATED(e@/!)" "WAITING(w@/!)" "BLOCKED(b@/!)" "HAMMOCK(h@/!)" "|" "CANCELLED(c@/!)"))))
 
   ;; These tend to modify files, so save after doing it
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
@@ -608,13 +608,13 @@ same directory as the org-buffer and insert a link to this file."
   :ensure f
   :after (org)
   :config
-  (setq org-agenda-window-setup 'current-window
-        org-agenda-block-separator nil
-        org-agenda-tags-column -80
-        org-agenda-show-future-repeats nil
-        org-agenda-files (list jcs/work-file
-                               jcs/inbox-file
-                               jcs/meetings-file))
+  (setopt org-agenda-window-setup 'current-window
+          org-agenda-block-separator nil
+          org-agenda-tags-column -80
+          org-agenda-show-future-repeats nil
+          org-agenda-files (list jcs/work-file
+                                 jcs/inbox-file
+                                 jcs/meetings-file))
 
   (defun jcs/tomorrow ()
     "Returns a timestamp representing midnight of the next day."
@@ -644,8 +644,8 @@ same directory as the org-buffer and insert a link to this file."
                 'agenda)))             ; Everything else should go in the agenda
       (if (eq result part) dont-skip skip)))
 
-  (setq org-agenda-custom-commands
-        `(("c" "Agenda and tasks"
+  (setopt org-agenda-custom-commands
+          `(("c" "Agenda and tasks"
            ((agenda ""
                     ((org-agenda-skip-function
                       '(org-agenda-skip-if nil '(todo done)))))
@@ -729,14 +729,14 @@ same directory as the org-buffer and insert a link to this file."
 (use-package recentf
   :ensure f
   :config
-  (setq recentf-max-saved-items 1000)
+  (setopt recentf-max-saved-items 1000)
   (add-to-list 'recentf-exclude "^/\\(?:ssh\\|su\\|sudo\\)?x?:")
   (recentf-mode))
 
 (use-package rustic
   :config
-  (setq rustic-format-trigger 'on-save
-        rustic-lsp-client 'eglot)
+  (setopt rustic-format-trigger 'on-save
+          rustic-lsp-client 'eglot)
   :custom
   (rustic-cargo-use-last-stored-arguments t))
 
@@ -763,7 +763,7 @@ same directory as the org-buffer and insert a link to this file."
     (set-face-attribute 'smerge-refined-added   nil :extend t)))
 
 (use-package sqlformat
-  :config (setq sqlformat-command 'sql-formatter))
+  :config (setopt sqlformat-command 'sql-formatter))
 
 ;; Recommended by magit in emacs < 29
 (use-package sqlite3)
@@ -787,10 +787,10 @@ same directory as the org-buffer and insert a link to this file."
   (add-to-list 'tramp-default-proxies-alist '("localhost" nil nil))
   (add-to-list 'tramp-default-proxies-alist
                (list (regexp-quote (system-name)) nil nil))
-  (setq vc-ignore-dir-regexp
-        (format "\\(%s\\)\\|\\(%s\\)"
-                vc-ignore-dir-regexp
-                tramp-file-name-regexp)))
+  (setopt vc-ignore-dir-regexp
+          (format "\\(%s\\)\\|\\(%s\\)"
+                  vc-ignore-dir-regexp
+                  tramp-file-name-regexp)))
 
 (use-package tramp-sh
   :ensure f
@@ -876,7 +876,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
 (use-package vc-hooks
   :ensure f
   ;; Follow links without asking
-  :config (setq vc-follow-symlinks t))
+  :config (setopt vc-follow-symlinks t))
 
 (use-package vundo)
 
@@ -888,8 +888,8 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
 (use-package whitespace
   :ensure f
   :config
-  (setq-default fill-column 80)
-  (setq whitespace-style '(face empty trailing))
+  (setopt fill-column 80)
+  (setopt whitespace-style '(face empty trailing))
   (add-hook 'prog-mode-hook 'whitespace-mode)
   (add-hook 'text-mode-hook 'whitespace-mode))
 
@@ -931,16 +931,16 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
 
 
 (eval-and-compile                       ; personalize
-  (setq sentence-end-double-space nil   ; Sentences can end with a single space.
-        select-enable-primary t         ; Use the clipboard for yank and kill
-        save-interprogram-paste-before-kill t
-        scroll-preserve-screen-position 'always
-        scroll-error-top-bottom t       ; Scroll similar to vim
-        user-full-name "Chris Sims"
-        user-mail-address "chris@jcsi.ms"
-        use-short-answers t
-        ;; Prevent eldoc from using so much of the minibuffer
-        max-mini-window-height 0.2)
+  (setopt sentence-end-double-space nil   ; Sentences can end with a single space.
+          select-enable-primary t         ; Use the clipboard for yank and kill
+          save-interprogram-paste-before-kill t
+          scroll-preserve-screen-position 'always
+          scroll-error-top-bottom t       ; Scroll similar to vim
+          user-full-name "Chris Sims"
+          user-mail-address "chris@jcsi.ms"
+          use-short-answers t
+          ;; Prevent eldoc from using so much of the minibuffer
+          max-mini-window-height 0.2)
 
   ;; Always use UTF-8
   (set-terminal-coding-system 'utf-8)
@@ -948,7 +948,7 @@ Passes ARG onto `zap-to-char` or `backward-kill-word` if used."
   (set-default-coding-systems 'utf-8)
   (prefer-coding-system 'utf-8)
   (set-language-environment 'utf-8)
-  (setq locale-coding-system 'utf-8)
+  (setopt locale-coding-system 'utf-8)
   (set-selection-coding-system 'utf-8)
 
   ;; Get rid of the insert key. I never use it, and I turn it on
