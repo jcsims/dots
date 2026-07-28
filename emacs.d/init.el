@@ -338,15 +338,9 @@
 
 (use-package files
   :ensure f
-  :after (no-littering)
   ;; Dont prompt to kill sub-processes (e.g. a REPL) on exit
   :custom (confirm-kill-processes nil)
-  :config
-  (auto-save-visited-mode 1)
-  (setopt backup-directory-alist ; Save backups to a central location
-          `(("." . ,(no-littering-expand-var-file-name "backup/")))
-          auto-save-file-name-transforms
-          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
+  :config (auto-save-visited-mode 1))
 
 (use-package flycheck
   :disabled
@@ -469,7 +463,12 @@
 (use-package nix-mode
   :hook (before-save . nix-format-before-save))
 
-(use-package no-littering)
+(use-package no-littering
+  :config
+  (setopt backup-directory-alist ; Save backups to a central location
+          `(("." . ,(no-littering-expand-var-file-name "backup/")))
+          auto-save-file-name-transforms
+          `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
 
 (use-package orderless
   :custom
