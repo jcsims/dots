@@ -1,0 +1,210 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Push unchecked Obsidian TODOs into Things as tracked tasks, linking back
+# to the source note; then sync completed Things tasks back to ticked
+# Obsidian checkboxes.
+
+VAULT_DIR="${OBSIDIAN_VAULT_DIR:-$HOME/notes/splash}"
+VAULT_NAME="${OBSIDIAN_VAULT:-splash}"
+AREA="${THINGS_AREA:-Work}"
+TAG="${THINGS_TAG:-@work}"
+
+usage() {
+    cat >&2 <<'EOF'
+Usage:
+  obsidian-todo-to-things [push|sync]
+      push  scan the vault, create Things tasks, link back.
+      sync  tick Obsidian boxes for completed linked Things tasks.
+      (no argument) run push then sync.
+EOF
+    exit 2
+}
+
+for cmd in things jq find; do
+    if ! command -v "$cmd" >/dev/null; then
+        echo "missing required command: $cmd" >&2
+        exit 1
+    fi
+done
+
+urlencode() {
+    jq -rn --arg s "$1" '$s|@uri'
+}
+
+vault_files() {
+    find "$VAULT_DIR" -type f -name '*.md' \
+        -not -path "$VAULT_DIR/archive/*" \
+        -not -path "$VAULT_DIR/templates/*" |
+        sort
+}
+
+things_area_uuids() {
+    things list anytime --area "$AREA" -j | jq -r '.[].uuid' | sort
+}
+
+backlink_for() {
+    local file="$1" rel uri
+    rel="${file#"$VAULT_DIR"/}"
+    rel="${rel%.md}"
+    uri=$(urlencode "$rel")
+    echo "obsidian://open?vault=$VAULT_NAME&file=$uri"
+}
+
+# Collect continuation lines following a task at line index $2 in the
+# nameref array $1: non-blank lines indented deeper than $3 (the task's
+# indent length) that are not themselves task lines. Prints them dedented,
+# one per line.
+collect_continuation() {
+    local -n _lines="$1"
+    local start="$2" indent_len="$3"
+    local n=${#_lines[@]}
+    local j=$start
+    while ((j < n)); do
+        local cline="${_lines[$j]}"
+        local trimmed="${cline//[[:space:]]/}"
+        [[ -z "$trimmed" ]] && break
+
+        [[ $cline =~ ^([[:space:]]*) ]]
+        local cindent="${BASH_REMATCH[1]}"
+        ((${#cindent} > indent_len)) || break
+
+        [[ $cline =~ ^[[:space:]]*-\ \[[\ xX]\]\  ]] && break
+
+        printf '%s\n' "${cline#"$cindent"}"
+        j=$((j + 1))
+    done
+}
+
+push_file() {
+    local file="$1"
+    local backlink
+    backlink=$(backlink_for "$file")
+
+    mapfile -t lines <"$file"
+    local n=${#lines[@]}
+    local changed=0
+    local i
+    for ((i = 0; i < n; i++)); do
+        local line="${lines[$i]}"
+        [[ $line =~ ^([[:space:]]*)-\ \[\ \]\ (.*)$ ]] || continue
+        local indent="${BASH_REMATCH[1]}"
+        local text="${BASH_REMATCH[2]}"
+
+        if [[ $text == *"things:///show?id="* ]]; then
+            push_skipped=$((push_skipped + 1))
+            continue
+        fi
+
+        local title
+        title=$(sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//' <<<"$text")
+
+        local continuation
+        continuation=$(collect_continuation lines "$((i + 1))" "${#indent}")
+        local notes="$backlink"
+        [[ -n "$continuation" ]] && notes="$notes"$'\n'"$continuation"
+
+        local before after new_uuids count
+        before=$(things_area_uuids)
+        things add "$title" --list "$AREA" --tags "$TAG" --notes "$notes" >/dev/null
+        after=$(things_area_uuids)
+        new_uuids=$(comm -13 <(printf '%s\n' "$before") <(printf '%s\n' "$after"))
+        count=$(grep -c . <<<"$new_uuids" || true)
+
+        local new_line
+        if [[ "$count" -eq 1 ]]; then
+            new_line="${indent}- [ ] ${title} [⤴](things:///show?id=${new_uuids})"
+        else
+            echo "warning: things create for '$title' produced $count new task(s) (expected 1); falling back to a query link" >&2
+            push_warnings=$((push_warnings + 1))
+            local query_uri
+            query_uri=$(urlencode "$title")
+            new_line="${indent}- [ ] ${title} [⤴](things:///show?query=${query_uri})"
+        fi
+
+        lines[i]="$new_line"
+        push_pushed=$((push_pushed + 1))
+        changed=1
+    done
+
+    if ((changed)); then
+        local tmp
+        tmp=$(mktemp)
+        printf '%s\n' "${lines[@]}" >"$tmp"
+        mv "$tmp" "$file"
+    fi
+}
+
+cmd_push() {
+    push_pushed=0
+    push_skipped=0
+    push_warnings=0
+
+    local file
+    while IFS= read -r file; do
+        push_file "$file"
+    done < <(vault_files)
+
+    echo "pushed $push_pushed todo(s), skipped $push_skipped already-linked, $push_warnings warning(s)"
+}
+
+sync_file() {
+    local file="$1"
+    mapfile -t lines <"$file"
+    local n=${#lines[@]}
+    local changed=0
+    local i
+    for ((i = 0; i < n; i++)); do
+        local line="${lines[$i]}"
+        [[ $line =~ ^([[:space:]]*)-\ \[\ \]\ (.*)$ ]] || continue
+        local text="${BASH_REMATCH[2]}"
+        [[ $text =~ things:///show\?id=([^\)]+)\) ]] || continue
+        local uuid="${BASH_REMATCH[1]}"
+
+        local shown status
+        shown=$(things show "$uuid" -j || true)
+        status=""
+        [[ -n "$shown" ]] && status=$(jq -r '.status // empty' <<<"$shown" 2>/dev/null || true)
+
+        if [[ -z "$status" ]]; then
+            echo "warning: things show returned no task for uuid: $uuid" >&2
+            sync_warnings=$((sync_warnings + 1))
+            continue
+        fi
+
+        if [[ "$status" == "completed" ]]; then
+            lines[i]="${line/- \[ \]/- [x]}"
+            sync_completed=$((sync_completed + 1))
+            changed=1
+        fi
+    done
+
+    if ((changed)); then
+        local tmp
+        tmp=$(mktemp)
+        printf '%s\n' "${lines[@]}" >"$tmp"
+        mv "$tmp" "$file"
+    fi
+}
+
+cmd_sync() {
+    sync_completed=0
+    sync_warnings=0
+
+    local file
+    while IFS= read -r file; do
+        sync_file "$file"
+    done < <(vault_files)
+
+    echo "completed $sync_completed todo(s) from Things, $sync_warnings warning(s)"
+}
+
+case "${1:-}" in
+    push) cmd_push ;;
+    sync) cmd_sync ;;
+    "")
+        cmd_push
+        cmd_sync
+        ;;
+    *) usage ;;
+esac
