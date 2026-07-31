@@ -581,8 +581,6 @@ same directory as the org-buffer and insert a link to this file."
          :map org-mode-map
          ("C-a" . org-beginning-of-line)))
 
-(defvar jcs/journelly-file "~/Library/Mobile Documents/iCloud~com~xenodium~Journelly/Documents/Journelly.org")
-
 (use-package vulpea)
 
 (use-package org-agenda
@@ -656,8 +654,7 @@ same directory as the org-buffer and insert a link to this file."
 
   (defun vulpea-agenda-files-update (&rest _)
     "Update the value of `org-agenda-files' based on `project' tag."
-    (setq org-agenda-files (-concat (vulpea-project-files)
-                                    (list jcs/journelly-file))))
+    (setq org-agenda-files (vulpea-project-files)))
 
   (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
   (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
