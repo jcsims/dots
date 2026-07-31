@@ -27,6 +27,7 @@ brew 'kotlin'
 brew 'kubectl'
 brew 'php@8.2'
 brew 'php-cs-fixer'
+brew 'pnpm'
 brew 'postgresql@15', link: true
 brew 'python@3.10'
 brew 'python-lsp-server'
