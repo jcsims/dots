@@ -15,7 +15,7 @@
       "Bash(git show:*)",
       "Bash(bazel query:*)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
   "statusLine": {
     "type": "command",
@@ -31,5 +31,7 @@
   "alwaysThinkingEnabled": true,
   "autoUpdatesChannel": "stable",
   "minimumVersion": "2.1.84",
+  "tui": "fullscreen",
+  "theme": "auto",
   "autoCompactEnabled": false
 }
