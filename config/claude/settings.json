@@ -25,7 +25,7 @@
     "clangd-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
     "php-lsp@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true
+    "mattpocock-skills@claude-plugins-official": true
   },
   "model": "opus",
   "alwaysThinkingEnabled": true,
