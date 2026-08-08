@@ -27,11 +27,11 @@
     "php-lsp@claude-plugins-official": true,
     "mattpocock-skills@claude-plugins-official": true
   },
-  "model": "opus",
   "alwaysThinkingEnabled": true,
   "autoUpdatesChannel": "stable",
   "minimumVersion": "2.1.84",
   "tui": "fullscreen",
   "theme": "auto",
-  "autoCompactEnabled": false
+  "autoCompactEnabled": false,
+  "model": "opus"
 }
