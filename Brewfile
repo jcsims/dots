@@ -1,10 +1,11 @@
 # -*- mode: ruby-ts;-*-
-tap 'babashka/brew'
-tap 'borkdude/brew'
-tap 'clojure-lsp/brew'
-tap 'clojure/tools'
-tap 'codecrafters-io/tap'
-tap 'jimeh/emacs-builds'
+tap 'babashka/brew', trusted: true
+tap 'borkdude/brew', trusted: true
+tap 'clojure-lsp/brew', trusted: true
+tap 'clojure/tools', trusted: true
+tap 'codecrafters-io/tap', trusted: true
+tap 'jimeh/emacs-builds', trusted: true
+tap 'devenjarvis/tap', trusted: true
 
 brew 'borkdude/brew/babashka'
 brew 'babashka/brew/neil'
