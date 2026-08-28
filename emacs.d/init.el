@@ -65,17 +65,24 @@
               (server-mode)))
 
 ;; Font
+(defun jcs/set-font (font)
+  "Use FONT in every frame, including ones created later.
+Passing FRAMES as t also records the font in `default-frame-alist',
+without which frames made by `emacsclient -c' fall back to a default
+font."
+  (set-frame-font font nil t))
+
 (if (eq system-type 'gnu/linux)
-    (set-frame-font "Hack Nerd Font 9")
-  (set-frame-font "Hack Nerd Font 12"))
+    (jcs/set-font "Hack Nerd Font 9")
+  (jcs/set-font "Hack Nerd Font 12"))
 
 (defun jcs/set-laptop-font ()
   (interactive)
-  (set-frame-font "Hack Nerd Font 14"))
+  (jcs/set-font "Hack Nerd Font 14"))
 
 (defun jcs/set-docked-font ()
   (interactive)
-  (set-frame-font "Hack Nerd Font 12"))
+  (jcs/set-font "Hack Nerd Font 12"))
 
 (eval-and-compile                       ;theme
   (defvar jcs-active-theme)
