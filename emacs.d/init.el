@@ -286,7 +286,6 @@
     sh-mode
     zig-mode)
    . eglot-ensure)
-  (eglot-managed-mode . eglot-inlay-hints-mode)
   :config
   (setq eglot-autoshutdown t
         eglot-confirm-server-initiated-edits nil
@@ -294,6 +293,17 @@
         eglot-extend-to-xref t
         ;; Don't block on connecting to the lsp server at all
         eglot-sync-connect nil)
+
+  ;; Eglot fontifies with the server's semantic tokens by default, which
+  ;; repaints most of a Clojure buffer on top of cider's dynamic font-lock.
+  ;; Let cider own highlighting there.
+  (defun jcs/eglot-clojure-defer-highlighting-to-cider ()
+    (when (derived-mode-p 'clojure-mode)
+      (eglot-semantic-tokens-mode -1)))
+
+  (add-hook 'eglot-managed-mode-hook
+            #'jcs/eglot-clojure-defer-highlighting-to-cider)
+
   (add-to-list 'eglot-server-programs
                '(fish-mode . ("fish-lsp" "start")))
   :bind (:map eglot-mode-map
