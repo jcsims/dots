@@ -107,14 +107,16 @@ if [ "$OS" = Darwin ]
     # mac.fish depends on homebrew being installed
     source $DOTS/bootstrap.d/mac.fish
 
-    # Generate and install agent-sync launchd plist. Work-only: it needs the
+    # Generate and install the agent launchd plists. Work-only: they need the
     # jira CLI and the plan-doc vault, neither of which exist elsewhere.
     if work-install
-        set -l agent_plist ~/Library/LaunchAgents/com.jcsims.agent-sync.plist
-        sed "s|__HOME__|$HOME|g" $DOTS/launchd/com.jcsims.agent-sync.plist.template >$agent_plist
-        if not launchctl list 2>/dev/null | grep -q com.jcsims.agent-sync
-            launchctl load $agent_plist
-            info "Loaded agent-sync launchd agent"
+        for job in agent-sync agent-sweep
+            set -l agent_plist ~/Library/LaunchAgents/com.jcsims.$job.plist
+            sed "s|__HOME__|$HOME|g" $DOTS/launchd/com.jcsims.$job.plist.template >$agent_plist
+            if not launchctl list 2>/dev/null | grep -q com.jcsims.$job
+                launchctl load $agent_plist
+                info "Loaded $job launchd agent"
+            end
         end
     end
 
