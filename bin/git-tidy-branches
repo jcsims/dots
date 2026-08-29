@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+# Report (or delete) local branches whose work has already landed.
+# Usage: git tidy-branches [--delete] [--include-closed] [--trunk BRANCH]
+set -euo pipefail
+
+do_delete=false
+include_closed=false
+trunk=""
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -d|--delete) do_delete=true ;;
+        --include-closed) include_closed=true ;;
+        --trunk) shift; trunk="${1:-}" ;;
+        -h|--help) sed -n '2,3p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+        *) echo "unknown option: $1" >&2; exit 2 ;;
+    esac
+    shift
+done
+
+git rev-parse --git-dir >/dev/null 2>&1 || { echo "not a git repository" >&2; exit 1; }
+
+# Trunk: whatever origin/HEAD points at, else the usual suspects.
+if [ -z "$trunk" ]; then
+    trunk=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||' || true)
+fi
+if [ -z "$trunk" ]; then
+    for candidate in main master; do
+        if git show-ref --verify --quiet "refs/remotes/origin/$candidate"; then
+            trunk="$candidate"
+            break
+        fi
+    done
+fi
+[ -n "$trunk" ] || { echo "could not determine trunk; pass --trunk" >&2; exit 1; }
+base="origin/$trunk"
+
+have_gh=false
+command -v gh >/dev/null 2>&1 && command -v jq >/dev/null 2>&1 && have_gh=true
+$have_gh || echo "note: gh/jq not found — squash-merged branches will not be detected" >&2
+
+# Never touch the trunk or anything checked out in a worktree.
+protected=$(printf '%s\n%s\n' "$trunk" \
+    "$(git worktree list --porcelain | sed -n 's|^branch refs/heads/||p')")
+
+delete_list=""
+keep_report=""
+delete_report=""
+
+for branch in $(git for-each-ref --format='%(refname:short)' refs/heads/); do
+    if printf '%s\n' "$protected" | grep -Fxq "$branch"; then
+        continue
+    fi
+
+    unique=$(git rev-list --count "$base..$branch" 2>/dev/null || echo 0)
+
+    state="NONE"
+    number=""
+    if $have_gh; then
+        pr=$(gh pr list --head "$branch" --state all --limit 20 \
+                --json number,state 2>/dev/null || echo '[]')
+        state=$(printf '%s' "$pr" | jq -r '
+            ((map(select(.state=="MERGED")) | first)
+             // (map(select(.state=="OPEN")) | first)
+             // first | .state) // "NONE"')
+        number=$(printf '%s' "$pr" | jq -r '
+            ((map(select(.state=="MERGED")) | first)
+             // (map(select(.state=="OPEN")) | first)
+             // first | .number) // ""')
+    fi
+
+    label=""
+    [ -n "$number" ] && label=" (PR #$number)"
+
+    if [ "$state" = "MERGED" ]; then
+        reason="merged$label"
+        drop=true
+    elif [ "$unique" -eq 0 ]; then
+        reason="no commits not already in $base"
+        drop=true
+    elif [ "$state" = "CLOSED" ]; then
+        reason="PR closed without merging$label, $unique unique commit(s)"
+        drop=$include_closed
+    elif [ "$state" = "OPEN" ]; then
+        reason="open$label"
+        drop=false
+    else
+        reason="no PR, $unique unpushed commit(s)"
+        drop=false
+    fi
+
+    line=$(printf '  %-52s %s' "$branch" "$reason")
+    if $drop; then
+        delete_list="$delete_list $branch"
+        delete_report="$delete_report$line"$'\n'
+    else
+        keep_report="$keep_report$line"$'\n'
+    fi
+done
+
+[ -n "$keep_report" ] && printf 'Keeping:\n%s\n' "$keep_report"
+
+if [ -z "$delete_list" ]; then
+    echo "Nothing to clean up."
+    exit 0
+fi
+
+printf 'Landed:\n%s\n' "$delete_report"
+
+if $do_delete; then
+    # -D, not -d: squash-merged branches are not ancestors of the trunk.
+    # shellcheck disable=SC2086
+    git branch -D $delete_list
+else
+    echo "Dry run. Re-run with --delete to remove these."
+fi

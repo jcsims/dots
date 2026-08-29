@@ -71,6 +71,7 @@ maybe-link bin/jira-links ~/bin/jira-links
 maybe-link bin/jira-parent ~/bin/jira-parent
 maybe-link bin/daily-note ~/bin/daily-note
 maybe-link bin/things-to-daily ~/bin/things-to-daily
+maybe-link bin/git-tidy-branches ~/bin/git-tidy-branches
 maybe-link bin/sync-org /usr/local/bin/sync-org true
 if work-install
     maybe-link Brewfile-work ~/.Brewfile
