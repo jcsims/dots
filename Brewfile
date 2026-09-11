@@ -76,7 +76,6 @@ cask 'dash'
 cask 'discord'
 cask 'font-hack-nerd-font'
 cask 'ghostty'
-cask 'helium-browser'
 cask 'istat-menus'
 cask 'jimeh/emacs-builds/emacs-app'
 cask 'devenjarvis/tap/lathe'
@@ -92,10 +91,8 @@ cask 'slack'
 cask 'steam'
 cask 'transmission'
 cask 'transmit'
-cask 'zed'
 
 mas 'GoodLinks', id: 1_474_335_294
 mas 'Ivory', id: 6_444_602_274
 mas 'Parcel', id: 375_589_283
 mas 'Things', id: 904_280_696
-mas 'TickTick', id: 966_085_870
