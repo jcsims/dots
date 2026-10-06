@@ -20,8 +20,8 @@
 		<string>__HOME__</string>
 	</dict>
 	<key>StandardOutPath</key>
-	<string>__HOME__/Library/Logs/sync-org-launchd.log</string>
+	<string>__HOME__/Library/Logs/sync-org.log</string>
 	<key>StandardErrorPath</key>
-	<string>__HOME__/Library/Logs/sync-org-launchd.log</string>
+	<string>__HOME__/Library/Logs/sync-org.log</string>
 </dict>
 </plist>
