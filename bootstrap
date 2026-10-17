@@ -20,7 +20,7 @@ end
 
 # Create some directories we need, in case they don't already exist
 mkdir -p ~/bin ~/.claude/skills/jira ~/.claude/skills/daily-context ~/.emacs.d/lisp ~/Library/KeyBindings
-mkdir -p ~/.config/clojure-lsp ~/.config/fish/completions ~/.config/fish/functions ~/.config/ghostty ~/.config/git
+mkdir -p ~/.config/clojure-lsp ~/.config/fish/completions ~/.config/fish/functions ~/.config/ghostty ~/.config/git ~/.config/rex
 mkdir -p ~/Library/LaunchAgents ~/Library/Logs
 
 test -e /usr/local/bin || sudo mkdir -p /usr/local/bin
@@ -88,6 +88,7 @@ maybe-link config/fish/functions/recent-epics.fish ~/.config/fish/functions/rece
 maybe-link config/ghostty/config ~/.config/ghostty/config
 maybe-link config/git/config ~/.config/git/config
 maybe-link config/git/ignore ~/.config/git/ignore
+maybe-link config/rex/init.lua ~/.config/rex/init.lua
 if work-install
     maybe-link emacs.d/lisp/php-cs-fixer-format.el ~/.emacs.d/lisp/php-cs-fixer-format.el
     maybe-link emacs.d/lisp/work.el ~/.emacs.d/lisp/work.el
