@@ -1,4 +1,4 @@
-;;; package --- Summary
+;;; package --- Summary  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Code to display a lightweight frame for fuzzily completing bookmarks.
