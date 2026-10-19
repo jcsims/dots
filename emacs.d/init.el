@@ -163,7 +163,9 @@ font."
               ("M-s-." . cider-find-var))
   :custom
   (cider-save-file-on-load t)
+  (cider-print-fn 'orchard)
   (cider-repl-use-pretty-printing t)
+  (cider-inspector-pretty-print t)
   (nrepl-use-ssh-fallback-for-remote-hosts t)
   (cider-auto-jump-to-error 'errors-only)
   ;; Remove 'deprecated since LSP does that as well
