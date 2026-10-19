@@ -1,4 +1,4 @@
-;;; php-cs-fixer-format.el --- Format PHP files using php-cs-fixer
+;;; php-cs-fixer-format.el --- Format PHP files using php-cs-fixer  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2024 Chris Sims <chris@jcsi.ms>
 
