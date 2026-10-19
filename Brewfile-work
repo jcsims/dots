@@ -38,7 +38,6 @@ brew 'terraform-ls'
 brew 'typescript-language-server'
 brew 'yarn'
 
-cask 'chromium'
 cask 'cljstyle'
 cask 'kotlin-lsp'
 cask 'things'
@@ -102,6 +101,7 @@ cask 'netnewswire'
 cask 'obsidian'
 cask 'plexamp'
 cask 'rectangle'
+cask 'sublime-merge'
 cask 'zed'
 
 mas 'GoodLinks', id: 1_474_335_294
