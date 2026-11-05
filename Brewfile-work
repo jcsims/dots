@@ -3,9 +3,7 @@ tap 'babashka/brew', trusted: true
 tap 'borkdude/brew', trusted: true
 tap 'clojure-lsp/brew', trusted: true
 tap 'clojure/tools', trusted: true
-tap 'devenjarvis/tap', trusted: true
 tap 'jimeh/emacs-builds', trusted: true
-tap 'ryanlewis/tap', trusted: true
 
 brew 'babashka/brew/bbin'
 brew 'babashka/brew/neil'
@@ -40,7 +38,6 @@ brew 'yarn'
 
 cask 'cljstyle'
 cask 'kotlin-lsp'
-cask 'things'
 
 ## Common tools
 brew 'aspell'
@@ -93,7 +90,6 @@ cask 'google-chrome'
 cask 'istat-menus'
 cask 'jetbrains-toolbox'
 cask 'jimeh/emacs-builds/emacs-app'
-cask 'lathe'
 cask 'launchcontrol'
 cask 'microsoft-teams'
 cask 'monitorcontrol'
