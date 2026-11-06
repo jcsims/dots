@@ -950,57 +950,10 @@ canceled tasks."
 ;; Borrowed mostly from the combobulate README at https://github.com/mickeynp/combobulate
 (use-package treesit
   :ensure f
-  :mode (("\\.tsx\\'" . tsx-ts-mode))
-  :preface
-  (defun jcs/setup-install-grammars ()
-    "Install Tree-sitter grammars if they are absent."
-    (interactive)
-    (dolist (grammar
-             '((bash . ("https://github.com/tree-sitter/tree-sitter-bash" "v0.25.1"))
-               (clojure . ("https://github.com/sogaiu/tree-sitter-clojure" "v0.0.13"))
-               (css . ("https://github.com/tree-sitter/tree-sitter-css" "v0.25.0"))
-               (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile" "v0.2.0"))
-               (go . ("https://github.com/tree-sitter/tree-sitter-go" "v0.25.0"))
-               (gomod . ("https://github.com/camdencheek/tree-sitter-go-mod" "v1.1.0"))
-               (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.23.2"))
-               (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.25.0" "src"))
-               (jsdoc . ("https://github.com/tree-sitter/tree-sitter-jsdoc" "v0.25.0"))
-               (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.24.8"))
-               (kotlin . ("https://github.com/fwcd/tree-sitter-kotlin"))
-               (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.25.0"))
-               (php . ("https://github.com/tree-sitter/tree-sitter-php" "v0.24.2" "php/src"))
-               (phpdoc . ("https://github.com/claytonrcarter/tree-sitter-phpdoc" "v0.1.7"))
-               (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby" "v0.23.1"))
-               (rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.24.0"))
-               (toml . ("https://github.com/tree-sitter/tree-sitter-toml" "v0.5.1"))
-               (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src"))
-               (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src"))
-               (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))))
-      (add-to-list 'treesit-language-source-alist grammar)
-      ;; Only install `grammar' if we don't already have it
-      ;; installed. However, if you want to *update* a grammar then
-      ;; this obviously prevents that from happening.
-      (unless (treesit-language-available-p (car grammar))
-        (treesit-install-language-grammar (car grammar)))))
-
-  ;; Optional, but recommended. Tree-sitter enabled major modes are
-  ;; distinct from their ordinary counterparts.
-  ;;
-  ;; You can remap major modes with `major-mode-remap-alist'. Note
-  ;; that this does *not* extend to hooks! Make sure you migrate them
-  ;; also
-  (dolist (mapping
-           '((python-mode . python-ts-mode)
-             (css-mode . css-ts-mode)
-             (typescript-mode . typescript-ts-mode)
-             (js2-mode . js-ts-mode)
-             (bash-mode . bash-ts-mode)
-             (css-mode . css-ts-mode)
-             (json-mode . json-ts-mode)
-             (js-json-mode . json-ts-mode)))
-    (add-to-list 'major-mode-remap-alist mapping))
-  :config
-  (jcs/setup-install-grammars))
+  :custom
+  ;; Gloriously new in Emacs 31.1
+  (treesit-auto-install-grammar 'always)
+  (treesit-enabled-modes t))
 
 (use-package vertico
   :init
