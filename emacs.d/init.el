@@ -547,8 +547,8 @@ font."
         org-confirm-babel-evaluate nil
         ;; Display images in org by default
         org-startup-with-inline-images t
-        ;; Try to keep image widths in emacs to a sane value (measured in pixels)
-        org-image-actual-width 1000
+        ;; Try to keep image widths in emacs to a sane value (50% of the current width)
+        org-image-actual-width 0.5
         org-todo-keywords
         (quote ((sequence "TODO(t)" "DOING(o)" "|" "DONE(d)")
                 (sequence "DELEGATED(e@/!)" "WAITING(w@/!)" "BLOCKED(b@/!)" "HAMMOCK(h@/!)" "|" "CANCELLED(c@/!)"))))
