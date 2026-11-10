@@ -483,8 +483,7 @@ font."
   :ensure f
   :config (global-set-key [remap comment-dwim] #'comment-line))
 
-(use-package nix-mode
-  :hook (before-save . nix-format-before-save))
+(use-package nix-mode)
 
 (use-package no-littering)
 
