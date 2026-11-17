@@ -26,3 +26,9 @@ killall Dock
 
 info "Configuring Finder"
 defaults write com.apple.finder ShowPathbar -bool true
+
+info "Configuring Rex"
+# Font settings can't be set from init.lua, so they live in Rex's defaults.
+defaults write com.superlogical.rex Workspace.terminalFontName -string "Hack Nerd Font Mono"
+# Rex stores character spacing (in px) as a string.
+defaults write com.superlogical.rex Workspace.terminalCharacterSpacing -string -1
