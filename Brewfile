@@ -44,6 +44,7 @@ brew 'pkg-config' # For jinx module build
 brew 'ripgrep'
 brew 'rsync'
 brew 'rust'
+brew 'rust-analyzer'
 brew 'shellcheck'
 brew 'sops'
 brew 'terminal-notifier'
