@@ -38,6 +38,13 @@
   (when (file-exists-p custom-file)
     (load custom-file)))
 
+;; Pulled from
+;; https://github.com/caldwell/build-emacs/issues/158#issuecomment-5704887553 to
+;; work around these error messages in native compilation:
+;; "clang: error: invalid version number in '-mmacosx-version-min=18.0'"
+(require 'comp)
+(setq native-comp-driver-options (cons "-mmacosx-version-min=11" native-comp-driver-options))
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
