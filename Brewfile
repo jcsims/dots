@@ -5,6 +5,7 @@ tap 'clojure-lsp/brew', trusted: true
 tap 'clojure/tools', trusted: true
 tap 'codecrafters-io/tap', trusted: true
 tap 'jimeh/emacs-builds', trusted: true
+tap 'devenjarvis/tap', trusted: true
 
 brew 'borkdude/brew/babashka'
 brew 'babashka/brew/neil'
@@ -61,6 +62,7 @@ cask 'arduino-ide'
 cask 'arq'
 cask 'balenaetcher'
 cask 'calibre'
+cask 'claude-code'
 cask 'daisydisk'
 cask 'dash'
 cask 'discord'
@@ -68,6 +70,7 @@ cask 'font-hack-nerd-font'
 cask 'ghostty'
 cask 'istat-menus'
 cask 'jimeh/emacs-builds/emacs-app'
+cask 'lathe'
 cask 'launchcontrol'
 cask 'monitorcontrol'
 cask 'netnewswire'
