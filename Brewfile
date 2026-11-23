@@ -20,6 +20,7 @@ brew 'bash-language-server'
 brew 'bat'
 brew 'bats-core'
 brew 'coreutils' # timeout
+brew 'cmake'
 brew 'enchant' # For jinx module build
 brew 'exercism'
 brew 'eza'
