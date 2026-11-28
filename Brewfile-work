@@ -27,11 +27,13 @@ brew 'openjdk@25', link: true
 brew 'mas'
 brew 'neovim'
 brew 'pkg-config' # For jinx module build
+brew 'postgresql'
 brew 'ripgrep'
 brew 'rust'
 brew 'shellcheck'
 brew 'terminal-notifier'
 brew 'tokei'
+brew 'uv'
 brew 'watch'
 brew 'yq'
 
